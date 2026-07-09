@@ -79,11 +79,7 @@ export default function CaseStudy() {
               className={visible ? "animate-fade-up opacity-100" : "translate-y-4 opacity-0"}
               style={{ animationDelay: "380ms" }}
             >
-              <Button
-                href="#contact"
-                variant="outline"
-                className="mt-10 px-9 py-3.5 text-base md:mt-12 md:text-lg"
-              >
+              <Button href="#contact" variant="outline" className="mt-10 md:mt-12 md:text-lg">
                 Learn more
               </Button>
             </div>

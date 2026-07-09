@@ -86,7 +86,7 @@ export default function LocationMap({
       <Polyline
         positions={[...routeCoords, routeCoords[0]]}
         pathOptions={{
-          color: "#FFAA00",
+          color: "#ff5f28",
           weight: 2,
           opacity: 0.55,
           dashArray: "10 14",

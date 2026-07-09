@@ -87,6 +87,67 @@ body {
   filter: drop-shadow(0 0 8px rgba(255, 95, 40, 0.75));
 }
 
+/* Buttons — matches header/hero style */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.95rem 1.85rem;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  transition: all 0.2s ease;
+}
+
+.btn--primary {
+  color: #ffffff;
+  background: #ff5f28;
+  border: 1px solid #ff5f28;
+  box-shadow: 0 0 32px rgba(255, 95, 40, 0.35);
+}
+
+.btn--primary:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 0 40px rgba(255, 95, 40, 0.42);
+}
+
+.btn--primary:active {
+  transform: scale(0.98);
+}
+
+.btn--secondary {
+  color: #ffffff;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn--secondary:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn--secondary:active {
+  transform: scale(0.98);
+}
+
+.btn--outline {
+  color: #ffffff;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn--outline:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn--outline:active {
+  transform: scale(0.98);
+}
+
 @keyframes fade-up {
   from {
     opacity: 0;
@@ -251,14 +312,14 @@ body {
   transform: translate(-50%, -50%);
   border-radius: 9999px;
   border: 2px solid #fff;
-  background: #ffaa00;
-  box-shadow: 0 0 12px rgba(255, 170, 0, 0.7);
+  background: #ff5f28;
+  box-shadow: 0 0 12px rgba(255, 95, 40, 0.7);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .map-marker--active .map-marker__dot {
   transform: translate(-50%, -50%) scale(1.25);
-  box-shadow: 0 0 20px rgba(255, 170, 0, 0.9);
+  box-shadow: 0 0 20px rgba(255, 95, 40, 0.9);
 }
 
 .map-marker__pulse {
@@ -269,7 +330,7 @@ body {
   width: 40px;
   transform: translate(-50%, -50%);
   border-radius: 9999px;
-  background: rgba(255, 170, 0, 0.35);
+  background: rgba(255, 95, 40, 0.35);
   animation: map-pulse 2.4s ease-out infinite;
 }
 
@@ -278,7 +339,7 @@ body {
 }
 
 .map-marker--active .map-marker__pulse {
-  background: rgba(255, 170, 0, 0.5);
+  background: rgba(255, 95, 40, 0.5);
 }
 
 @keyframes map-pulse {
@@ -301,7 +362,7 @@ body {
   border-radius: 12px;
   padding: 0;
   background: #141414;
-  border: 1px solid rgba(255, 170, 0, 0.25);
+  border: 1px solid rgba(255, 95, 40, 0.25);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
 }
 
@@ -323,7 +384,7 @@ body {
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #ffaa00;
+  color: #ff5f28;
 }
 
 .map-popup__city {

@@ -141,14 +141,14 @@ function FeaturedStatCard({
     <div
       className={`group relative overflow-hidden rounded-2xl border p-8 transition-all duration-700 md:p-10 ${
         stat.accent
-          ? "border-[#FFAA00]/30 bg-gradient-to-br from-[#FFAA00]/10 via-[#FFAA00]/5 to-transparent"
+          ? "border-[#ff5f28]/30 bg-gradient-to-br from-[#ff5f28]/10 via-[#ff5f28]/5 to-transparent"
           : "border-white/10 bg-white/[0.03]"
       } ${visible ? "animate-scale-in opacity-100" : "scale-95 opacity-0"}`}
       style={{ animationDelay: `${delay}ms` }}
     >
       <div
         className={`pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full blur-2xl transition-opacity duration-700 ${
-          stat.accent ? "bg-[#FFAA00]/20" : "bg-white/5"
+          stat.accent ? "bg-[#ff5f28]/20" : "bg-white/5"
         } ${visible ? "opacity-100" : "opacity-0"}`}
       />
 
@@ -157,7 +157,7 @@ function FeaturedStatCard({
       </p>
       <p
         className={`text-glow-white mt-4 text-5xl font-bold leading-none tracking-tight md:text-6xl ${
-          stat.accent ? "text-[#FFAA00]" : "text-white"
+          stat.accent ? "text-[#ff5f28]" : "text-white"
         }`}
       >
         <AnimatedNumber value={stat.value} active={visible} />
@@ -167,7 +167,7 @@ function FeaturedStatCard({
       </p>
       <span
         className={`mt-6 block h-px w-10 transition-all duration-500 group-hover:w-16 ${
-          stat.accent ? "bg-[#FFAA00]/70" : "bg-white/30"
+          stat.accent ? "bg-[#ff5f28]/70" : "bg-white/30"
         }`}
       />
     </div>
@@ -225,7 +225,7 @@ function MetricRow({
       <div className="flex flex-col gap-5 py-10 md:grid md:grid-cols-[4rem_7rem_1fr_minmax(0,18rem)] md:items-center md:gap-8 md:py-12 lg:grid-cols-[5rem_8rem_1fr_minmax(0,22rem)] lg:gap-12 lg:py-14">
         <div className="flex items-center gap-4 md:contents">
           <span
-            className={`text-xs font-medium tabular-nums tracking-[0.2em] text-[#FFAA00]/50 transition-all duration-500 ${
+            className={`text-xs font-medium tabular-nums tracking-[0.2em] text-[#ff5f28]/50 transition-all duration-500 ${
               visible ? "translate-x-0 opacity-100" : "-translate-x-4 opacity-0"
             }`}
             style={{ transitionDelay: visible ? "80ms" : "0ms" }}
@@ -234,7 +234,7 @@ function MetricRow({
           </span>
 
           <p
-            className={`text-[11px] font-semibold uppercase tracking-[0.22em] text-[#FFAA00] transition-all duration-500 ${
+            className={`text-[11px] font-semibold uppercase tracking-[0.22em] text-[#ff5f28] transition-all duration-500 ${
               visible ? "translate-x-0 opacity-100" : "-translate-x-4 opacity-0"
             }`}
             style={{ transitionDelay: visible ? "140ms" : "0ms" }}
@@ -244,7 +244,7 @@ function MetricRow({
         </div>
 
         <p
-          className={`text-glow-orange text-5xl font-bold leading-none tracking-tight text-[#FFAA00] transition-all duration-700 sm:text-6xl lg:text-7xl ${
+          className={`text-glow-orange text-5xl font-bold leading-none tracking-tight text-[#ff5f28] transition-all duration-700 sm:text-6xl lg:text-7xl ${
             visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
           }`}
           style={{ transitionDelay: visible ? "200ms" : "0ms" }}
@@ -261,14 +261,14 @@ function MetricRow({
           <p className="text-sm leading-relaxed text-white/70 md:text-base lg:text-lg">
             {metric.label}
           </p>
-          <p className="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#FFAA00]/70">
+          <p className="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#ff5f28]/70">
             {metric.client}
           </p>
         </div>
       </div>
 
       <div
-        className={`h-px w-full origin-left bg-gradient-to-r from-[#FFAA00]/50 via-[#FFAA00]/20 to-transparent transition-transform duration-1000 ${
+        className={`h-px w-full origin-left bg-gradient-to-r from-[#ff5f28]/50 via-[#ff5f28]/20 to-transparent transition-transform duration-1000 ${
           visible ? "scale-x-100" : "scale-x-0"
         }`}
         style={{ transitionDelay: visible ? "400ms" : "0ms" }}
@@ -310,12 +310,12 @@ export default function CustomerResults() {
       className="relative w-full overflow-hidden border-t border-white/[0.06] bg-black"
     >
       <div
-        className={`pointer-events-none absolute left-1/2 top-0 h-px w-2/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-[#FFAA00]/40 to-transparent transition-opacity duration-1000 ${
+        className={`pointer-events-none absolute left-1/2 top-0 h-px w-2/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-[#ff5f28]/40 to-transparent transition-opacity duration-1000 ${
           visible ? "opacity-100" : "opacity-0"
         }`}
       />
       <div
-        className={`pointer-events-none absolute -left-32 top-1/4 h-96 w-96 rounded-full bg-[#FFAA00]/[0.06] blur-3xl transition-opacity duration-1000 ${
+        className={`pointer-events-none absolute -left-32 top-1/4 h-96 w-96 rounded-full bg-[#ff5f28]/[0.06] blur-3xl transition-opacity duration-1000 ${
           visible ? "opacity-100" : "opacity-0"
         }`}
       />
@@ -332,14 +332,14 @@ export default function CustomerResults() {
               visible ? "animate-fade-in-left opacity-100" : "-translate-x-10 opacity-0"
             }`}
           >
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#FFAA00]/25 bg-[#FFAA00]/10 px-4 py-1.5 text-xs font-medium tracking-wide text-[#FFAA00]">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#FFAA00]" />
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#ff5f28]/25 bg-[#ff5f28]/10 px-4 py-1.5 text-xs font-medium tracking-wide text-[#ff5f28]">
+              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#ff5f28]" />
               Proven Impact
             </span>
 
             <h2 className="text-glow-white mt-6 text-4xl font-bold leading-[1.08] tracking-tight text-white md:text-5xl lg:text-6xl">
               Results that{" "}
-              <span className="text-glow-orange text-[#FFAA00]">move the needle</span>
+              <span className="text-glow-orange text-[#ff5f28]">move the needle</span>
             </h2>
 
             <p
@@ -357,10 +357,10 @@ export default function CustomerResults() {
               className={`mt-8 flex flex-wrap gap-3 ${visible ? "animate-fade-up opacity-100" : "opacity-0"}`}
               style={{ animationDelay: "280ms" }}
             >
-              <Button href="#contact" variant="primary" className="px-7 py-3 md:text-base">
+              <Button href="#contact" variant="primary">
                 Book a Call
               </Button>
-              <Button href="#contact" variant="secondary" className="px-7 py-3 md:text-base">
+              <Button href="#contact" variant="secondary">
                 View Case Studies
               </Button>
             </div>
@@ -412,7 +412,7 @@ export default function CustomerResults() {
             }`}
           >
             <div>
-              <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#FFAA00]/60">
+              <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#ff5f28]/60">
                 By the numbers
               </p>
               <h3 className="text-glow-white mt-2 text-2xl font-bold text-white md:text-3xl lg:text-4xl">
@@ -425,7 +425,7 @@ export default function CustomerResults() {
           </div>
 
           <div
-            className={`mb-2 h-px w-full bg-gradient-to-r from-[#FFAA00]/60 via-[#FFAA00]/20 to-transparent ${
+            className={`mb-2 h-px w-full bg-gradient-to-r from-[#ff5f28]/60 via-[#ff5f28]/20 to-transparent ${
               gridReveal.visible ? "animate-line-reveal" : "scale-x-0"
             }`}
           />
@@ -444,28 +444,24 @@ export default function CustomerResults() {
 
         <div
           ref={ctaReveal.ref}
-          className={`mt-20 border-t border-[#FFAA00]/20 pt-16 md:mt-28 md:pt-20 ${
+          className={`mt-20 border-t border-[#ff5f28]/20 pt-16 md:mt-28 md:pt-20 ${
             ctaReveal.visible ? "animate-fade-up opacity-100" : "translate-y-8 opacity-0"
           }`}
         >
           <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between md:gap-12">
             <div className="max-w-2xl">
-              <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#FFAA00]/60">
+              <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#ff5f28]/60">
                 Next step
               </p>
               <h3 className="text-glow-white mt-3 text-3xl font-bold leading-tight text-white md:text-4xl lg:text-5xl">
                 Ready to become our next{" "}
-                <span className="text-glow-orange text-[#FFAA00]">success story?</span>
+                <span className="text-glow-orange text-[#ff5f28]">success story?</span>
               </h3>
               <p className="text-glow-muted mt-4 text-base leading-relaxed text-white/60 md:text-lg">
                 Let&apos;s talk about what we can build together.
               </p>
             </div>
-            <Button
-              href="#contact"
-              variant="primary"
-              className="shrink-0 self-start px-8 py-3.5 text-base md:self-end"
-            >
+            <Button href="#contact" variant="primary" className="shrink-0 self-start md:self-end">
               Start a Project
             </Button>
           </div>

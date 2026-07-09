@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-import { getButtonClass } from "./Button";
+import Button from "./Button";
 
 const navLinks = [
   { label: "Home", href: "#home", active: true },
@@ -14,27 +14,12 @@ const navLinks = [
   { label: "Contact", href: "#contact" },
 ];
 
-function ArrowIcon() {
-  return (
-    <svg
-      className="h-4 w-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      aria-hidden
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H9M17 7V15" />
-    </svg>
-  );
-}
-
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="fixed inset-x-0 top-0 z-50 w-full px-4 pt-5 md:px-8 lg:px-12">
-      <div className="mx-auto max-w-7xl rounded-2xl border border-white/10 bg-black/40 px-6 py-4 backdrop-blur-md md:px-8 md:py-5">
+    <div className="fixed inset-x-0 top-0 z-50 w-full px-4 pt-5 md:px-8 md:pt-5 lg:px-12">
+      <div className="mx-auto max-w-7xl rounded-2xl border border-white/10 bg-black/40 px-5 py-3.5 backdrop-blur-md md:px-8 md:py-5">
         <nav className="flex items-center justify-between gap-6">
           <Link href="/" className="shrink-0">
             <Image
@@ -66,13 +51,12 @@ export default function Navbar() {
           </ul>
 
           <div className="hidden items-center gap-3 lg:flex">
-            <Link href="#contact" className={`${getButtonClass("secondary")} px-6 py-3 text-base`}>
+            <Button href="#contact" variant="secondary">
               Contact
-            </Link>
-            <Link href="#contact" className={`${getButtonClass("primary")} px-6 py-3 text-base`}>
+            </Button>
+            <Button href="#contact" variant="primary">
               Book a Call
-              <ArrowIcon />
-            </Link>
+            </Button>
           </div>
 
           <button
@@ -110,21 +94,12 @@ export default function Navbar() {
               ))}
             </ul>
             <div className="mt-5 flex flex-col gap-3">
-              <Link
-                href="#contact"
-                onClick={() => setMenuOpen(false)}
-                className={`${getButtonClass("secondary")} justify-center px-6 py-3`}
-              >
+              <Button href="#contact" variant="secondary" className="w-full justify-center">
                 Contact
-              </Link>
-              <Link
-                href="#contact"
-                onClick={() => setMenuOpen(false)}
-                className={`${getButtonClass("primary")} justify-center px-6 py-3`}
-              >
+              </Button>
+              <Button href="#contact" variant="primary" className="w-full justify-center">
                 Book a Call
-                <ArrowIcon />
-              </Link>
+              </Button>
             </div>
           </div>
         ) : null}

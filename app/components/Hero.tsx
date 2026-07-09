@@ -43,21 +43,6 @@ const stats = [
   },
 ];
 
-function ArrowIcon() {
-  return (
-    <svg
-      className="h-4 w-4"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      aria-hidden
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H9M17 7V15" />
-    </svg>
-  );
-}
-
 export default function Hero() {
   return (
     <section id="home" className="relative flex flex-1 flex-col px-4 pb-8 pt-28 md:px-8 md:pb-10 md:pt-32 lg:px-12">
@@ -82,11 +67,10 @@ export default function Hero() {
             </p>
 
             <div className="mt-12 flex flex-wrap items-center gap-5 md:mt-14">
-              <Button href="#contact" variant="primary" className="px-8 py-4 text-base md:text-lg">
+              <Button href="#contact" variant="primary" className="md:text-lg">
                 Book a Call
-                <ArrowIcon />
               </Button>
-              <Button href="#services" variant="secondary" className="px-8 py-4 text-base md:text-lg">
+              <Button href="#services" variant="secondary" className="md:text-lg">
                 View Our Services
               </Button>
             </div>

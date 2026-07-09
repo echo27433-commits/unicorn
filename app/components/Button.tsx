@@ -2,17 +2,43 @@ import Link from "next/link";
 
 type ButtonVariant = "primary" | "secondary" | "outline";
 
-const buttonBase =
-  "inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold tracking-wide transition-all duration-200";
+const buttonBase = "btn";
 
 const variantClasses: Record<ButtonVariant, string> = {
-  primary:
-    "border border-[#ff5f28] bg-[#ff5f28] text-white shadow-[0_0_32px_rgba(255,95,40,0.35)] hover:brightness-110 active:scale-[0.98]",
-  secondary:
-    "border border-white/30 bg-transparent text-white hover:border-white/60 hover:bg-white/5 active:scale-[0.98]",
-  outline:
-    "border border-white/30 bg-transparent text-white hover:border-white/60 hover:bg-white/5 active:scale-[0.98]",
+  primary: "btn--primary",
+  secondary: "btn--secondary",
+  outline: "btn--outline",
 };
+
+function ArrowUpRightIcon() {
+  return (
+    <svg
+      className="h-4 w-4 shrink-0"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H9M17 7V15" />
+    </svg>
+  );
+}
+
+function ArrowRightIcon() {
+  return (
+    <svg
+      className="h-4 w-4 shrink-0"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      aria-hidden
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  );
+}
 
 function getButtonClass(variant: ButtonVariant = "primary") {
   return `${buttonBase} ${variantClasses[variant]}`;
@@ -25,18 +51,21 @@ export default function Button({
   children,
   variant = "primary",
   className = "",
+  showIcon = true,
 }: {
   href: string;
   children: React.ReactNode;
   variant?: ButtonVariant;
   className?: string;
+  showIcon?: boolean;
 }) {
   return (
     <Link href={href} className={`${getButtonClass(variant)} ${className}`}>
       {children}
+      {showIcon ? (variant === "primary" ? <ArrowUpRightIcon /> : <ArrowRightIcon />) : null}
     </Link>
   );
 }
 
-export { buttonClass, getButtonClass };
+export { buttonClass, getButtonClass, ArrowUpRightIcon, ArrowRightIcon };
 export type { ButtonVariant };
