@@ -3,7 +3,7 @@
 :root {
   --background: #000000;
   --foreground: #ffffff;
-  --accent: #ffaa00;
+  --accent: #ff5f28;
 }
 
 @theme inline {
@@ -28,8 +28,8 @@ body {
 
 .text-glow-orange {
   text-shadow:
-    0 0 20px rgba(255, 170, 0, 0.35),
-    0 0 40px rgba(255, 170, 0, 0.15),
+    0 0 20px rgba(255, 95, 40, 0.35),
+    0 0 40px rgba(255, 95, 40, 0.15),
     0 0 24px rgba(0, 0, 0, 0.75),
     0 2px 6px rgba(0, 0, 0, 0.5);
 }
@@ -38,6 +38,53 @@ body {
   text-shadow:
     0 0 20px rgba(0, 0, 0, 0.8),
     0 1px 4px rgba(0, 0, 0, 0.45);
+}
+
+.text-gradient-accent {
+  display: inline;
+  background-image: linear-gradient(
+    100deg,
+    #ff2f00 0%,
+    #ff5f28 22%,
+    #ffffff 48%,
+    #ffc49a 72%,
+    #ff5f28 100%
+  );
+  background-size: 100% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.stat-card {
+  border: 1px solid rgba(255, 95, 40, 0.4);
+  background: linear-gradient(145deg, rgba(255, 95, 40, 0.14), rgba(0, 0, 0, 0.55));
+  box-shadow:
+    0 0 28px rgba(255, 95, 40, 0.28),
+    0 0 56px rgba(255, 95, 40, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.stat-card:hover {
+  border-color: rgba(255, 95, 40, 0.65);
+  box-shadow:
+    0 0 36px rgba(255, 95, 40, 0.4),
+    0 0 72px rgba(255, 95, 40, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  transform: translateY(-2px);
+}
+
+.stat-value-glow {
+  color: #ffffff;
+  text-shadow:
+    0 0 18px rgba(255, 95, 40, 0.55),
+    0 0 36px rgba(255, 95, 40, 0.25);
+}
+
+.stat-icon-glow {
+  filter: drop-shadow(0 0 8px rgba(255, 95, 40, 0.75));
 }
 
 @keyframes fade-up {
