@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
+
+import SmoothScroll from "./components/SmoothScroll";
 import "./globals.css";
 
 const ubuntu = Ubuntu({
@@ -21,7 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${ubuntu.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <body className="min-h-full flex flex-col font-sans">
+        <SmoothScroll>{children}</SmoothScroll>
+      </body>
     </html>
   );
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 4617 1075" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g>
+        <g>
+            <circle cx="172.075" cy="262.589" r="80.67" style="fill:none;stroke:white;stroke-width:62.5px;"/>
+            <circle cx="475.886" cy="262.589" r="80.67" style="fill:none;stroke:white;stroke-width:62.5px;"/>
+            <circle cx="787.173" cy="262.589" r="80.67" style="fill:none;stroke:white;stroke-width:62.5px;"/>
+            <circle cx="172.075" cy="576.776" r="80.67" style="fill:none;stroke:white;stroke-width:62.5px;"/>
+            <circle cx="475.886" cy="576.776" r="80.67" style="fill:none;stroke:white;stroke-width:62.5px;"/>
+            <circle cx="787.173" cy="576.776" r="80.67" style="fill:none;stroke:white;stroke-width:62.5px;"/>
+            <circle cx="172.075" cy="881.434" r="80.67" style="fill:none;stroke:white;stroke-width:62.5px;"/>
+            <circle cx="475.886" cy="881.434" r="80.67" style="fill:none;stroke:white;stroke-width:62.5px;"/>
+            <circle cx="787.173" cy="881.434" r="80.67" style="fill:none;stroke:white;stroke-width:62.5px;"/>
+            <rect x="556.556" y="257.836" width="129.718" height="7.648" style="fill:none;stroke:white;stroke-width:62.5px;"/>
+            <rect x="168.251" y="366.388" width="7.648" height="129.718" style="fill:none;stroke:white;stroke-width:62.5px;"/>
+            <rect x="472.062" y="664.164" width="7.648" height="129.718" style="fill:none;stroke:white;stroke-width:62.5px;"/>
+            <path d="M556.556,834.907L558.783,837.134L743.59,652.327L741.363,650.1L556.556,834.907Z" style="fill:none;stroke:white;stroke-width:62.5px;"/>
+        </g>
+        <g>
+            <g transform="matrix(1,0,0,1,1044.290047,865.43)">
+                <text x="0px" y="0px" style="font-family:'Arial-BoldMT', 'Arial', sans-serif;font-weight:700;font-size:982.421px;fill:white;">unic</text>
+            </g>
+            <g transform="matrix(1,0,0,1,3046.948045,865.43)">
+                <text x="0px" y="0px" style="font-family:'Arial-BoldMT', 'Arial', sans-serif;font-weight:700;font-size:982.421px;fill:white;">o<tspan x="596.33px " y="0px ">r</tspan>n</text>
+            </g>
+        </g>
+    </g>
+</svg>

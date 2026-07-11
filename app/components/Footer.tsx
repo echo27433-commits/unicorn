@@ -126,10 +126,10 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Oversized brand logo — full Logo 1.png, fully visible */}
+      {/* Oversized brand logo */}
       <div className="relative mt-8 w-full px-4 pb-10 md:mt-10 md:px-8 md:pb-14 lg:px-12">
         <Image
-          src="/Logo 1.png"
+          src="/Unicorn.svg"
           alt="unicorn"
           width={1600}
           height={320}
