@@ -48,7 +48,7 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
     };
 
     gsap.ticker.add(update);
-    gsap.ticker.lagSmoothing(0);
+    gsap.ticker.lagSmoothing(500, 33);
 
     return () => {
       gsap.ticker.remove(update);
@@ -61,7 +61,7 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
       ref={lenisRef}
       options={{
         autoRaf: false,
-        lerp: 0.09,
+        lerp: 0.12,
         duration: 1.2,
         smoothWheel: true,
         anchors: true,

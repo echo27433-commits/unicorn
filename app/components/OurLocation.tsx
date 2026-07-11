@@ -59,25 +59,20 @@ export default function OurLocation() {
 
       gsap.set(header, {
         autoAlpha: 0,
-        y: 64,
-        scale: 0.88,
-        filter: "blur(12px)",
+        y: 48,
+        scale: 0.96,
       });
       gsap.set(rule, { scaleX: 0, transformOrigin: "left center" });
       gsap.set(cards, {
         autoAlpha: 0,
-        y: 100,
-        scale: 0.78,
-        rotateX: 14,
-        filter: "blur(8px)",
+        y: 56,
+        scale: 0.96,
         transformOrigin: "center bottom",
       });
       gsap.set(map, {
         autoAlpha: 0,
-        y: 120,
-        scale: 0.82,
-        rotateX: 16,
-        filter: "blur(10px)",
+        y: 56,
+        scale: 0.96,
         transformOrigin: "center bottom",
       });
 
@@ -95,23 +90,20 @@ export default function OurLocation() {
         autoAlpha: 1,
         y: 0,
         scale: 1,
-        filter: "blur(0px)",
-        duration: 0.95,
+        duration: 0.85,
         stagger: 0.08,
       })
-        .to(rule, { scaleX: 1, duration: 0.9 }, "-=0.55")
+        .to(rule, { scaleX: 1, duration: 0.8 }, "-=0.5")
         .to(
           cards,
           {
             autoAlpha: 1,
             y: 0,
             scale: 1,
-            rotateX: 0,
-            filter: "blur(0px)",
-            duration: 0.85,
+            duration: 0.75,
             stagger: 0.1,
           },
-          "-=0.55"
+          "-=0.5"
         )
         .to(
           map,
@@ -119,11 +111,9 @@ export default function OurLocation() {
             autoAlpha: 1,
             y: 0,
             scale: 1,
-            rotateX: 0,
-            filter: "blur(0px)",
-            duration: 1.05,
+            duration: 0.9,
           },
-          "-=0.75"
+          "-=0.65"
         );
     }, section);
 
@@ -140,7 +130,6 @@ export default function OurLocation() {
       ref={sectionRef}
       id="locations"
       className="relative w-full overflow-hidden bg-black font-sans text-white"
-      style={{ perspective: "1200px" }}
     >
       <div className="pointer-events-none absolute -right-32 top-0 h-96 w-96 rounded-full bg-[#ff5f28]/[0.1] blur-3xl" />
       <div className="pointer-events-none absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-[#ff5f28]/[0.06] blur-3xl" />
@@ -177,7 +166,6 @@ export default function OurLocation() {
 
         <div
           className="mt-12 grid grid-cols-1 gap-8 lg:mt-16 lg:grid-cols-5 lg:gap-10"
-          style={{ transformStyle: "preserve-3d" }}
         >
           <div className="flex flex-col gap-3 lg:col-span-2">
             {locations.map((loc, index) => {
@@ -189,7 +177,7 @@ export default function OurLocation() {
                   type="button"
                   data-location-card
                   onClick={() => handleSelect(index)}
-                  className={`group w-full rounded-2xl border p-5 text-left will-change-transform transition-colors duration-300 md:p-6 ${
+                  className={`group w-full rounded-2xl border p-5 text-left transition-colors duration-300 md:p-6 ${
                     active
                       ? "border-[#ff5f28]/40 bg-[#ff5f28]/[0.12] shadow-[0_8px_32px_-8px_rgba(255,95,40,0.25)]"
                       : "border-white/10 bg-white/[0.03] hover:border-[#ff5f28]/30 hover:bg-[#ff5f28]/[0.06]"
@@ -245,7 +233,7 @@ export default function OurLocation() {
             </button>
           </div>
 
-          <div data-location-map className="relative will-change-transform lg:col-span-3">
+          <div data-location-map className="relative lg:col-span-3">
             <div className="overflow-hidden rounded-2xl border border-white/10 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.5)]">
               <div className="h-[360px] md:h-[480px] lg:h-[520px]">
                 <LocationMap

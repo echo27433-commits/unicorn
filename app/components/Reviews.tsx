@@ -88,24 +88,19 @@ export default function Reviews() {
 
       gsap.set(header, {
         autoAlpha: 0,
-        y: 64,
-        scale: 0.88,
-        filter: "blur(12px)",
+        y: 48,
+        scale: 0.96,
       });
       gsap.set(featuredCard, {
         autoAlpha: 0,
-        y: 120,
-        scale: 0.82,
-        rotateX: 18,
-        filter: "blur(10px)",
+        y: 56,
+        scale: 0.96,
         transformOrigin: "center bottom",
       });
       gsap.set(cards, {
         autoAlpha: 0,
-        y: 100,
-        scale: 0.78,
-        rotateX: 14,
-        filter: "blur(8px)",
+        y: 56,
+        scale: 0.96,
         transformOrigin: "center bottom",
       });
 
@@ -122,8 +117,7 @@ export default function Reviews() {
         autoAlpha: 1,
         y: 0,
         scale: 1,
-        filter: "blur(0px)",
-        duration: 0.95,
+        duration: 0.85,
         stagger: 0.08,
       })
         .to(
@@ -132,11 +126,9 @@ export default function Reviews() {
             autoAlpha: 1,
             y: 0,
             scale: 1,
-            rotateX: 0,
-            filter: "blur(0px)",
-            duration: 1.05,
+            duration: 0.9,
           },
-          "-=0.45"
+          "-=0.4"
         )
         .to(
           cards,
@@ -144,12 +136,10 @@ export default function Reviews() {
             autoAlpha: 1,
             y: 0,
             scale: 1,
-            rotateX: 0,
-            filter: "blur(0px)",
-            duration: 0.85,
+            duration: 0.75,
             stagger: 0.1,
           },
-          "-=0.65"
+          "-=0.55"
         );
     }, section);
 
@@ -161,7 +151,6 @@ export default function Reviews() {
       ref={sectionRef}
       id="reviews"
       className="relative w-full overflow-hidden bg-[#f7f7f7] font-sans"
-      style={{ perspective: "1200px" }}
     >
       <div className="pointer-events-none absolute -left-24 top-20 h-80 w-80 rounded-full bg-[#ff5f28]/[0.06] blur-3xl" />
       <div className="pointer-events-none absolute -right-20 bottom-10 h-72 w-72 rounded-full bg-[#ff5f28]/[0.05] blur-3xl" />
@@ -185,11 +174,10 @@ export default function Reviews() {
 
         <div
           className="mt-14 grid gap-5 lg:mt-16 lg:grid-cols-12 lg:gap-6 xl:gap-8"
-          style={{ transformStyle: "preserve-3d" }}
         >
           <article
             data-review-featured
-            className="relative min-h-[620px] overflow-hidden rounded-[1.75rem] will-change-transform lg:col-span-5 lg:min-h-[720px]"
+            className="relative min-h-[620px] overflow-hidden rounded-[1.75rem] lg:col-span-5 lg:min-h-[720px]"
           >
             <Image
               src={featured.image}
@@ -233,7 +221,7 @@ export default function Reviews() {
               <article
                 key={review.name}
                 data-review-card
-                className="flex flex-col justify-between rounded-[1.5rem] bg-[#ececec] p-6 will-change-transform md:p-7"
+                className="flex flex-col justify-between rounded-[1.5rem] bg-[#ececec] p-6 md:p-7"
               >
                 <div>
                   <Stars />

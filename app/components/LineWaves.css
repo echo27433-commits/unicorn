@@ -3,8 +3,3 @@
   height: 100%;
   position: relative;
 }
-
-.line-waves-container canvas {
-  filter: drop-shadow(0 0 18px rgba(255, 95, 40, 0.55))
-    drop-shadow(0 0 48px rgba(255, 95, 40, 0.28));
-}

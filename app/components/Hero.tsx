@@ -1,9 +1,9 @@
 import Button from "./Button";
 
 const avatars = [
-  { src: "https://i.pravatar.cc/80?img=11", alt: "Client avatar 1" },
-  { src: "https://i.pravatar.cc/80?img=32", alt: "Client avatar 2" },
-  { src: "https://i.pravatar.cc/80?img=5", alt: "Client avatar 3" },
+  { initials: "SL", label: "Client 1" },
+  { initials: "AR", label: "Client 2" },
+  { initials: "PM", label: "Client 3" },
 ];
 
 const stats = [
@@ -97,14 +97,13 @@ export default function Hero() {
           <div className="mt-8 flex items-center gap-3 md:mt-10">
             <div className="flex -space-x-3">
               {avatars.map((avatar) => (
-                <img
-                  key={avatar.src}
-                  src={avatar.src}
-                  alt={avatar.alt}
-                  width={40}
-                  height={40}
-                  className="h-9 w-9 rounded-full border-2 border-black object-cover md:h-10 md:w-10"
-                />
+                <span
+                  key={avatar.initials}
+                  title={avatar.label}
+                  className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-black bg-[#ff5f28]/25 text-[0.65rem] font-semibold tracking-wide text-white md:h-10 md:w-10 md:text-xs"
+                >
+                  {avatar.initials}
+                </span>
               ))}
             </div>
             <p className="text-sm text-white/55 md:text-base">

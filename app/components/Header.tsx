@@ -35,8 +35,7 @@ const Header = forwardRef<HTMLElement>(function Header(_, ref) {
             color1="#ff5f28"
             color2="#ffc49a"
             color3="#ff3a00"
-            enableMouseInteraction={true}
-            mouseInfluence={2.8}
+            enableMouseInteraction={false}
           />
         </div>
 

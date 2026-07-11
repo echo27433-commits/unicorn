@@ -36,11 +36,10 @@ export default function ScrollHeroCover() {
 
       gsap.fromTo(
         hero,
-        { scale: 1, opacity: 1, filter: "blur(0px)" },
+        { scale: 1, opacity: 1 },
         {
           scale: 0.94,
           opacity: 0.5,
-          filter: "blur(6px)",
           ease: "none",
           scrollTrigger: {
             trigger: cover,

@@ -97,7 +97,7 @@ export default function CaseStudy() {
                 end: () => `+=${window.innerHeight * slides.length * 1.75}`,
               }),
           pin: pin,
-          scrub: 1.15,
+          scrub: 0.85,
           anticipatePin: 1,
           invalidateOnRefresh: true,
           refreshPriority: 0,

@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * Location slides over Case Study (existing).
  * Then Reviews ("What Our Clients Say") slides over Location/map.
- * Scale/blur runs on an inner layer so Case Study never shows through.
+ * Scale runs on an inner layer so Case Study never shows through.
  */
 export default function LocationCover() {
   const locationRef = useRef<HTMLDivElement>(null);
@@ -66,10 +66,9 @@ export default function LocationCover() {
       // Outer shell stays solid black so Case Study #3 never peeks through.
       gsap.fromTo(
         locationInner,
-        { scale: 1, filter: "blur(0px)" },
+        { scale: 1 },
         {
           scale: 0.94,
-          filter: "blur(6px)",
           ease: "none",
           scrollTrigger: {
             trigger: reviews,

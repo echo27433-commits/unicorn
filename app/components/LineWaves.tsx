@@ -161,7 +161,7 @@ export default function LineWaves({
   color1 = "#ffffff",
   color2 = "#ffffff",
   color3 = "#ffffff",
-  enableMouseInteraction = true,
+  enableMouseInteraction = false,
   mouseInfluence = 2.0,
 }: LineWavesProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -169,13 +169,22 @@ export default function LineWaves({
   useEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
-    const renderer = new Renderer({ alpha: true, premultipliedAlpha: false });
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const renderer = new Renderer({
+      alpha: true,
+      premultipliedAlpha: false,
+      dpr,
+    });
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
 
     let program: Program;
     let currentMouse = [0.5, 0.5];
     let targetMouse = [0.5, 0.5];
+    let animationFrameId = 0;
+    let isVisible = true;
+    let isPageVisible = document.visibilityState !== "hidden";
+    let isRunning = false;
 
     function handleMouseMove(e: MouseEvent) {
       const rect = gl.canvas.getBoundingClientRect();
@@ -237,9 +246,8 @@ export default function LineWaves({
       gl.canvas.addEventListener("mouseleave", handleMouseLeave);
     }
 
-    let animationFrameId: number;
-
     function update(time: number) {
+      if (!isRunning) return;
       animationFrameId = requestAnimationFrame(update);
       program.uniforms.uTime.value = time * 0.001;
 
@@ -255,10 +263,46 @@ export default function LineWaves({
 
       renderer.render({ scene: mesh });
     }
-    animationFrameId = requestAnimationFrame(update);
+
+    function start() {
+      if (isRunning || !isVisible || !isPageVisible) return;
+      isRunning = true;
+      animationFrameId = requestAnimationFrame(update);
+    }
+
+    function stop() {
+      if (!isRunning) return;
+      isRunning = false;
+      cancelAnimationFrame(animationFrameId);
+      animationFrameId = 0;
+    }
+
+    function syncPlayback() {
+      if (isVisible && isPageVisible) start();
+      else stop();
+    }
+
+    const intersectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+        syncPlayback();
+      },
+      { threshold: 0.01 }
+    );
+    intersectionObserver.observe(container);
+
+    function handleVisibilityChange() {
+      isPageVisible = document.visibilityState !== "hidden";
+      syncPlayback();
+    }
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    syncPlayback();
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      stop();
+      intersectionObserver.disconnect();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("resize", resize);
       if (enableMouseInteraction) {
         gl.canvas.removeEventListener("mousemove", handleMouseMove);

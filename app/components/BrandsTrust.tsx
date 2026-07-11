@@ -36,16 +36,13 @@ export default function BrandsTrust() {
 
       gsap.set(header, {
         autoAlpha: 0,
-        y: 64,
-        scale: 0.88,
-        filter: "blur(12px)",
+        y: 48,
+        scale: 0.96,
       });
       gsap.set(cards, {
         autoAlpha: 0,
-        y: 100,
-        scale: 0.78,
-        rotateX: 14,
-        filter: "blur(8px)",
+        y: 56,
+        scale: 0.96,
         transformOrigin: "center bottom",
       });
 
@@ -62,8 +59,7 @@ export default function BrandsTrust() {
         autoAlpha: 1,
         y: 0,
         scale: 1,
-        filter: "blur(0px)",
-        duration: 0.95,
+        duration: 0.85,
         stagger: 0.1,
       }).to(
         cards,
@@ -71,12 +67,10 @@ export default function BrandsTrust() {
           autoAlpha: 1,
           y: 0,
           scale: 1,
-          rotateX: 0,
-          filter: "blur(0px)",
-          duration: 0.85,
+          duration: 0.75,
           stagger: 0.08,
         },
-        "-=0.5"
+        "-=0.45"
       );
     }, section);
 
@@ -88,7 +82,6 @@ export default function BrandsTrust() {
       ref={sectionRef}
       id="brands"
       className="relative w-full overflow-hidden bg-black font-sans"
-      style={{ perspective: "1200px" }}
     >
       <div className="pointer-events-none absolute left-1/2 top-0 h-96 w-[40rem] -translate-x-1/2 rounded-full bg-[#ff5f28]/[0.08] blur-3xl" />
 
@@ -145,13 +138,12 @@ export default function BrandsTrust() {
 
         <div
           className="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-3 md:mt-20 md:gap-5 lg:grid-cols-4 lg:gap-6"
-          style={{ transformStyle: "preserve-3d" }}
         >
           {brands.map((brand) => (
             <div
               key={brand.name}
               data-brands-card
-              className="group flex min-h-[140px] items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-10 will-change-transform transition-colors duration-300 hover:border-[#ff5f28]/35 hover:bg-[#ff5f28]/[0.06] md:min-h-[180px] md:px-10 md:py-12"
+              className="group flex min-h-[140px] items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-10 transition-colors duration-300 hover:border-[#ff5f28]/35 hover:bg-[#ff5f28]/[0.06] md:min-h-[180px] md:px-10 md:py-12"
             >
               <Image
                 src={brand.src}
