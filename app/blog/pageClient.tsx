@@ -1,0 +1,405 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+import BlogHeader from "../components/BlogHeader";
+import NewsletterCover from "../components/NewsletterCover";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const blogImages = [
+  "/blogs/b1.webp",
+  "/blogs/b2.webp",
+  "/blogs/b3.jpg",
+  "/blogs/b4.jpg",
+  "/blogs/b5.jpg",
+  "/blogs/b6.jpg",
+];
+
+const posts = [
+  {
+    slug: "future-of-ai-powered-customer-loyalty-gcc",
+    title: "The Future of AI-Powered Customer Loyalty in the GCC",
+    category: "Loyalty",
+    excerpt:
+      "How regional brands can turn loyalty from points programs into intelligent, outcome-driven engagement systems.",
+    readTime: "6 min",
+    image: blogImages[0],
+  },
+  {
+    slug: "why-enterprise-loyalty-programs-fail",
+    title: "Why Enterprise Loyalty Programs Fail",
+    category: "Loyalty",
+    excerpt:
+      "The structural reasons large loyalty initiatives stall — and what AI-native platforms change about the playbook.",
+    readTime: "5 min",
+    image: blogImages[1],
+  },
+  {
+    slug: "conversational-ai-beyond-chatbots",
+    title: "Conversational AI Beyond Chatbots",
+    category: "Conversational AI",
+    excerpt:
+      "From scripted bots to enterprise conversation engines that drive loyalty, support, and growth at scale.",
+    readTime: "7 min",
+    image: blogImages[2],
+  },
+  {
+    slug: "computer-vision-use-cases-retail",
+    title: "Computer Vision Use Cases for Retail",
+    category: "Computer Vision",
+    excerpt:
+      "Shelf intelligence, shopper analytics, and operational visibility — practical CV deployments that move the needle.",
+    readTime: "6 min",
+    image: blogImages[3],
+  },
+  {
+    slug: "gcc-digital-transformation-opportunity",
+    title: "The GCC Digital Transformation Opportunity",
+    category: "Transformation",
+    excerpt:
+      "Why the region is uniquely positioned for AI-led growth — and how enterprises can capture it with clarity.",
+    readTime: "8 min",
+    image: blogImages[4],
+  },
+  {
+    slug: "how-ai-is-changing-customer-engagement",
+    title: "How AI is Changing Customer Engagement",
+    category: "Engagement",
+    excerpt:
+      "Personalization is table stakes. The next wave is predictive, conversational, and measurable engagement.",
+    readTime: "5 min",
+    image: blogImages[5],
+  },
+  {
+    slug: "building-omnichannel-customer-experiences",
+    title: "Building Omnichannel Customer Experiences",
+    category: "Experience",
+    excerpt:
+      "Unifying journeys across channels so every touchpoint feels connected, intelligent, and brand-consistent.",
+    readTime: "6 min",
+    image: blogImages[0],
+  },
+  {
+    slug: "ai-powered-marketing-beyond-personalization",
+    title: "AI-Powered Marketing: Beyond Personalization",
+    category: "Marketing",
+    excerpt:
+      "Moving from segmented campaigns to systems that continuously learn, optimize, and compound performance.",
+    readTime: "7 min",
+    image: blogImages[2],
+  },
+];
+
+function useReducedMotion() {
+  return useMemo(() => {
+    if (typeof window === "undefined") return true;
+    return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+  }, []);
+}
+
+export default function BlogPageClient() {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const coverRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    const cover = coverRef.current;
+    if (!hero || !cover) return;
+
+    const prefersReduced =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+    if (prefersReduced) return;
+
+    const ctx = gsap.context(() => {
+      ScrollTrigger.create({
+        trigger: hero,
+        start: "top top",
+        endTrigger: cover,
+        end: "top top",
+        pin: true,
+        pinSpacing: false,
+        anticipatePin: 1,
+      });
+
+      gsap.fromTo(
+        hero,
+        { scale: 1, opacity: 1 },
+        {
+          scale: 0.94,
+          opacity: 0.5,
+          ease: "none",
+          scrollTrigger: {
+            trigger: cover,
+            start: "top bottom",
+            end: "top top",
+            scrub: 0.9,
+          },
+        }
+      );
+
+      gsap.fromTo(
+        cover,
+        {
+          borderRadius: "32px 32px 0px 0px",
+          boxShadow: "0 -12px 40px rgba(0,0,0,0)",
+        },
+        {
+          borderRadius: "0px 0px 0px 0px",
+          boxShadow: "0 -32px 90px rgba(0,0,0,0.5)",
+          ease: "none",
+          scrollTrigger: {
+            trigger: cover,
+            start: "top bottom",
+            end: "top top",
+            scrub: 0.9,
+          },
+        }
+      );
+    });
+
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener("load", refresh);
+    const timeout = window.setTimeout(refresh, 250);
+
+    return () => {
+      window.removeEventListener("load", refresh);
+      window.clearTimeout(timeout);
+      ctx.revert();
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    if (reducedMotion) return;
+    if (!rootRef.current) return;
+
+    const ctx = gsap.context(() => {
+      const groups = gsap.utils.toArray<HTMLElement>("[data-reveal]");
+
+      groups.forEach((group) => {
+        const items = group.querySelectorAll<HTMLElement>("[data-reveal-item]");
+        gsap.set(items, { opacity: 0, y: 20 });
+
+        ScrollTrigger.create({
+          trigger: group,
+          start: "top 78%",
+          once: true,
+          onEnter: () => {
+            gsap.to(items, {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "power3.out",
+              stagger: 0.08,
+            });
+          },
+        });
+      });
+    }, rootRef);
+
+    return () => ctx.revert();
+  }, [reducedMotion]);
+
+  const featured = posts[0];
+  const rest = posts.slice(1);
+
+  return (
+    <div ref={rootRef} className="min-h-screen bg-black">
+      <BlogHeader ref={heroRef} />
+
+      <div
+        ref={coverRef}
+        className="relative z-20 overflow-hidden bg-black will-change-transform"
+      >
+        <main className="relative bg-black font-sans">
+          <div className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-[#ff5f28]/[0.1] blur-3xl" />
+            <div className="absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-[#ff5f28]/[0.08] blur-3xl" />
+          </div>
+
+          <section
+            id="blog-topics"
+            className="relative mx-auto w-full max-w-7xl px-5 py-20 md:px-8 md:py-28 lg:py-32"
+          >
+            <div data-reveal className="max-w-3xl">
+              <p
+                data-reveal-item
+                className="text-sm font-medium tracking-wide text-[#ff5f28]"
+              >
+                / insights /
+              </p>
+              <h2
+                data-reveal-item
+                className="mt-4 text-4xl font-light leading-[1.1] tracking-tight text-white md:text-5xl lg:text-6xl"
+              >
+                Create authority around{" "}
+                <span className="text-[#ff5f28]">AI</span>
+              </h2>
+              <p
+                data-reveal-item
+                className="mt-5 max-w-xl text-sm leading-relaxed text-white/55 md:text-base"
+              >
+                Thought leadership on loyalty, conversational AI, computer
+                vision, and digital transformation — built for enterprise
+                leaders across the GCC.
+              </p>
+            </div>
+
+            {/* Featured */}
+            <article
+              data-reveal
+              className="mt-14 overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.03] md:mt-16 md:rounded-[2rem]"
+            >
+              <Link
+                href={`/blog#${featured.slug}`}
+                className="group grid gap-0 lg:grid-cols-[1.1fr_0.9fr]"
+              >
+                <div
+                  data-reveal-item
+                  className="relative min-h-[320px] overflow-hidden md:min-h-[420px] lg:min-h-[520px]"
+                >
+                  <Image
+                    src={featured.image}
+                    alt={featured.title}
+                    fill
+                    priority
+                    sizes="(max-width: 1024px) 100vw, 55vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 flex items-end p-8 md:p-10">
+                    <span className="rounded-full border border-[#ff5f28]/40 bg-black/50 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#ff5f28] backdrop-blur-sm">
+                      Featured
+                    </span>
+                  </div>
+                </div>
+                <div data-reveal-item className="flex flex-col justify-center p-8 md:p-10 lg:p-12">
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[#ff5f28]">
+                    {featured.category} · {featured.readTime}
+                  </p>
+                  <h3 className="mt-4 text-2xl font-light leading-snug tracking-tight text-white transition-colors group-hover:text-[#ff5f28] md:text-3xl lg:text-[2rem]">
+                    {featured.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-relaxed text-white/55 md:text-base">
+                    {featured.excerpt}
+                  </p>
+                  <span className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-white transition-colors group-hover:text-[#ff5f28]">
+                    Read article
+                    <svg
+                      className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2.5}
+                      aria-hidden
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M5 12h14M13 6l6 6-6 6"
+                      />
+                    </svg>
+                  </span>
+                </div>
+              </Link>
+            </article>
+
+            {/* Grid */}
+            <div
+              data-reveal
+              className="mt-8 grid gap-5 sm:grid-cols-2 lg:mt-10 lg:grid-cols-3 lg:gap-6"
+            >
+              {rest.map((post) => (
+                <article
+                  key={post.slug}
+                  id={post.slug}
+                  data-reveal-item
+                  className="group flex flex-col overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[0.03] transition-colors hover:border-[#ff5f28]/35 hover:bg-[#ff5f28]/[0.06]"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden md:aspect-[5/4] lg:h-[260px] lg:aspect-auto">
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+                  </div>
+                  <div className="flex flex-1 flex-col p-7 md:p-8">
+                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#ff5f28]">
+                      {post.category} · {post.readTime}
+                    </p>
+                    <h3 className="mt-4 text-xl font-light leading-snug tracking-tight text-white transition-colors group-hover:text-[#ff5f28] md:text-2xl">
+                      <Link href={`/blog#${post.slug}`}>{post.title}</Link>
+                    </h3>
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-white/55">
+                      {post.excerpt}
+                    </p>
+                    <Link
+                      href={`/blog#${post.slug}`}
+                      className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-white/70 transition-colors group-hover:text-[#ff5f28]"
+                    >
+                      Read more
+                      <svg
+                        className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2.5}
+                        aria-hidden
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M5 12h14M13 6l6 6-6 6"
+                        />
+                      </svg>
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+            <div
+              data-reveal
+              className="mt-16 overflow-hidden rounded-[1.75rem] border border-white/10 bg-[radial-gradient(70%_90%_at_15%_10%,rgba(255,95,40,0.16),transparent_55%),radial-gradient(70%_90%_at_85%_90%,rgba(255,95,40,0.1),transparent_55%)] p-8 md:mt-20 md:rounded-[2rem] md:p-12"
+            >
+              <div
+                data-reveal-item
+                className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between md:gap-10"
+              >
+                <div className="max-w-xl">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#ff5f28]">
+                    Have a topic in mind?
+                  </p>
+                  <h3 className="mt-3 text-2xl font-light tracking-tight text-white md:text-3xl">
+                    Let&apos;s explore it together
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-white/55 md:text-base">
+                    Looking for deeper research, a case study, or a briefing for
+                    your leadership team? We&apos;d love to help.
+                  </p>
+                </div>
+                <Link
+                  href="/contact"
+                  className="btn btn--primary inline-flex shrink-0 items-center gap-2"
+                >
+                  Get in touch
+                </Link>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <NewsletterCover />
+    </div>
+  );
+}

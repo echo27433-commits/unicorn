@@ -12,7 +12,7 @@ const navLinks = [
   { label: "About", href: "/about", match: "/about" },
   { label: "Services", href: "/#services", match: null },
   { label: "Work", href: "/#work", match: null },
-  { label: "Blog", href: "/#blog", match: null },
+  { label: "Blog", href: "/blog", match: "/blog" },
   { label: "Contact", href: "/contact", match: "/contact" },
 ];
 
