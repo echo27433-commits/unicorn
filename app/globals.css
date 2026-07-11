@@ -55,6 +55,7 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  text-shadow: none;
 }
 
 .text-gradient-future {
@@ -70,6 +71,7 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  text-shadow: none;
   filter: drop-shadow(0 0 28px rgba(255, 95, 40, 0.55));
 }
 

@@ -2,17 +2,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import Button from "./Button";
 
 const navLinks = [
-  { label: "Home", href: "/#home", active: true },
-  { label: "About", href: "/about" },
-  { label: "Services", href: "/#services" },
-  { label: "Work", href: "/#work" },
-  { label: "Blog", href: "/#blog" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Home", href: "/#home", match: "/" },
+  { label: "About", href: "/about", match: "/about" },
+  { label: "Services", href: "/#services", match: null },
+  { label: "Work", href: "/#work", match: null },
+  { label: "Blog", href: "/#blog", match: null },
+  { label: "Contact", href: "/contact", match: "/contact" },
 ];
 
 function ChatIcon({ className = "h-4 w-4" }: { className?: string }) {
@@ -35,6 +36,7 @@ function ChatIcon({ className = "h-4 w-4" }: { className?: string }) {
 }
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -80,26 +82,34 @@ export default function Navbar() {
               scrolled ? "gap-6 text-xs xl:text-sm" : "gap-8 text-sm xl:text-base"
             }`}
           >
-            {navLinks.map((link) => (
-              <li key={link.label}>
-                <Link
-                  href={link.href}
-                  className={`relative transition-colors hover:text-white ${
-                    link.active ? "text-white" : ""
-                  }`}
-                >
-                  {link.label}
-                  {link.active ? (
-                    <span className="absolute -bottom-1.5 left-0 right-0 h-px bg-[#ff5f28]" />
-                  ) : null}
-                </Link>
-              </li>
-            ))}
+            {navLinks.map((link) => {
+              const active =
+                link.match != null &&
+                (link.match === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(link.match));
+
+              return (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className={`relative transition-colors hover:text-white ${
+                      active ? "text-white" : ""
+                    }`}
+                  >
+                    {link.label}
+                    {active ? (
+                      <span className="absolute -bottom-1.5 left-0 right-0 h-px bg-[#ff5f28]" />
+                    ) : null}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           <div className="hidden items-center gap-3 lg:flex">
             <Link
-              href="#contact"
+              href="/contact"
               className={`btn btn--secondary transition-all duration-300 ease-out ${
                 scrolled ? "!px-4 !py-2 !text-sm" : ""
               }`}
@@ -108,7 +118,7 @@ export default function Navbar() {
               Let&apos;s Talk
             </Link>
             <Button
-              href="#contact"
+              href="/contact"
               variant="primary"
               className={`transition-all duration-300 ease-out ${
                 scrolled ? "!px-4 !py-2 !text-sm" : ""
@@ -146,30 +156,38 @@ export default function Navbar() {
         {menuOpen ? (
           <div className="mt-4 border-t border-white/10 pt-4 lg:hidden">
             <ul className="flex flex-col gap-4 text-base font-medium text-white">
-              {navLinks.map((link) => (
-                <li key={link.label}>
-                  <Link
-                    href={link.href}
-                    onClick={() => setMenuOpen(false)}
-                    className={`block py-2 text-lg transition-colors hover:text-[#ff5f28] ${
-                      link.active ? "text-[#ff5f28]" : ""
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+              {navLinks.map((link) => {
+                const active =
+                  link.match != null &&
+                  (link.match === "/"
+                    ? pathname === "/"
+                    : pathname.startsWith(link.match));
+
+                return (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      onClick={() => setMenuOpen(false)}
+                      className={`block py-2 text-lg transition-colors hover:text-[#ff5f28] ${
+                        active ? "text-[#ff5f28]" : ""
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
             <div className="mt-5 flex flex-col gap-3">
               <Link
-                href="#contact"
+                href="/contact"
                 onClick={() => setMenuOpen(false)}
                 className="btn btn--secondary w-full justify-center"
               >
                 <ChatIcon />
                 Let&apos;s Talk
               </Link>
-              <Button href="#contact" variant="primary" className="w-full justify-center">
+              <Button href="/contact" variant="primary" className="w-full justify-center">
                 Book a Call
               </Button>
             </div>

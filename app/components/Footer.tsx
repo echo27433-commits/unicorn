@@ -10,7 +10,7 @@ const companyLinks = [
 const workLinks = [
   { label: "Work", href: "/#work" },
   { label: "Locations", href: "/#locations" },
-  { label: "Contact", href: "/#contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Footer() {
@@ -63,7 +63,7 @@ export default function Footer() {
         {/* Middle: social + CTA */}
         <div className="mt-14 flex flex-col gap-8 lg:mt-16 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
           <a
-            href="https://www.linkedin.com/"
+            href="https://www.linkedin.com/company/theunicornglobal/?viewAsMember=true"
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-3 text-sm text-white transition-colors hover:text-[#ff5f28]"
@@ -91,7 +91,7 @@ export default function Footer() {
             </div>
 
             <Link
-              href="#newsletter"
+              href="/contact"
               className="btn btn--primary group inline-flex shrink-0 items-center justify-center gap-2 !rounded-full px-5 py-2.5 text-sm"
             >
               Book a Demo

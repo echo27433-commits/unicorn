@@ -63,7 +63,7 @@ export default function Newsletter() {
             </p>
 
             <Link
-              href="#contact"
+              href="/contact"
               className="btn btn--primary group mt-12 inline-flex items-center gap-3 md:mt-14 md:text-lg"
             >
               Book a demo
