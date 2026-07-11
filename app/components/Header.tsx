@@ -1,13 +1,19 @@
+import { forwardRef } from "react";
+
 import Hero from "./Hero";
 import LineWaves from "./LineWaves";
 import Navbar from "./Navbar";
 
-export default function Header() {
+const Header = forwardRef<HTMLElement>(function Header(_, ref) {
   return (
     <>
       <Navbar />
 
-      <header className="relative flex min-h-screen flex-col overflow-hidden bg-black">
+      <header
+        ref={ref}
+        className="relative z-0 flex min-h-screen flex-col overflow-hidden bg-black will-change-transform"
+        style={{ transformOrigin: "center center" }}
+      >
         <div
           className="absolute inset-0 z-0"
           style={{
@@ -25,7 +31,7 @@ export default function Header() {
             rotation={-38}
             edgeFadeWidth={0.08}
             colorCycleSpeed={0.65}
-            brightness={0.9}
+            brightness={0.68}
             color1="#ff5f28"
             color2="#ffc49a"
             color3="#ff3a00"
@@ -43,14 +49,14 @@ export default function Header() {
         />
 
         <div
-          className="pointer-events-none absolute inset-0 z-[1] mix-blend-screen opacity-70"
+          className="pointer-events-none absolute inset-0 z-[1] mix-blend-screen opacity-50"
           style={{
             background:
-              "linear-gradient(to right, transparent 0%, transparent 46%, rgba(255,95,40,0.04) 54%, rgba(255,95,40,0.1) 64%, rgba(255,95,40,0.14) 72%, rgba(255,95,40,0.08) 80%, transparent 90%)",
+              "linear-gradient(to right, transparent 0%, transparent 46%, rgba(255,95,40,0.03) 54%, rgba(255,95,40,0.07) 64%, rgba(255,95,40,0.1) 72%, rgba(255,95,40,0.06) 80%, transparent 90%)",
           }}
         />
 
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-[1] w-[50%] bg-[radial-gradient(ellipse_85%_80%_at_90%_50%,rgba(255,95,40,0.28),transparent_75%)]" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-[1] w-[50%] bg-[radial-gradient(ellipse_85%_80%_at_90%_50%,rgba(255,95,40,0.2),transparent_75%)]" />
 
         <div className="relative z-10 flex min-h-screen flex-col pointer-events-none [&_a]:pointer-events-auto [&_button]:pointer-events-auto">
           <Hero />
@@ -58,4 +64,6 @@ export default function Header() {
       </header>
     </>
   );
-}
+});
+
+export default Header;

@@ -1,68 +1,41 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-import Button from "./Button";
-
-const STAGGER_MS = 220;
-
-const featuredStats = [
+const serviceGroups = [
   {
-    value: "350M",
-    label: "Players reached through Epic Games experiences",
-    client: "Epic Games",
-    accent: true,
+    title: "Digital Growth",
+    accent: "Growth",
+    from: "left" as const,
+    description:
+      "Channels, content, and conversion systems that turn attention into pipeline.",
+    items: [
+      "SEO",
+      "Performance Marketing",
+      "Social Media Strategy",
+      "AI Content Creation",
+      "Conversion Optimization",
+    ],
   },
   {
-    value: "6x",
-    label: "Deployment capacity unlocked for global rollouts",
-    client: "Bacardi",
-    accent: false,
-  },
-];
-
-const metrics = [
-  {
-    value: "16x",
-    label: "Faster website rollouts across 40+ markets",
-    client: "Bacardi",
-    tag: "Speed",
-  },
-  {
-    value: "30%",
-    label: "Increase in online quotes through digital channels",
-    client: "LV= Insurance",
-    tag: "Conversion",
-  },
-  {
-    value: "55+",
-    label: "Countries where we deliver for enterprise clients",
-    client: "Global",
-    tag: "Reach",
-  },
-  {
-    value: "11",
-    label: "Industries served with tailored digital solutions",
-    client: "Cross-sector",
-    tag: "Expertise",
+    title: "AI & Data Intelligence",
+    accent: "Intelligence",
+    from: "right" as const,
+    description:
+      "Models, vision, and analytics that turn raw data into decisions you can act on.",
+    items: [
+      "Computer Vision",
+      "AI Analytics",
+      "Predictive Insights",
+      "Dashboarding",
+      "Business Intelligence",
+    ],
   },
 ];
 
-const clients = ["Bacardi", "Epic Games", "LV= Insurance", "Unilever", "Siemens"];
-
-function parseStatValue(value: string) {
-  const match = value.match(/^([\d.]+)(.*)$/);
-  if (!match) return { number: 0, suffix: value };
-  return { number: parseFloat(match[1]), suffix: match[2] };
-}
-
-function formatCount(number: number, suffix: string) {
-  if (suffix === "M") return `${Math.round(number)}M`;
-  if (suffix === "%") return `${Math.round(number)}%`;
-  if (suffix === "x") return `${Math.round(number)}x`;
-  if (suffix === "+") return `${Math.round(number)}+`;
-  return `${Math.round(number)}${suffix}`;
-}
+const SERVICE_IMAGE = "/servies/soe.jpg";
 
 function useReveal(threshold = 0.12) {
   const ref = useRef<HTMLDivElement>(null);
@@ -89,190 +62,106 @@ function useReveal(threshold = 0.12) {
   return { ref, visible };
 }
 
-function AnimatedNumber({
-  value,
-  active,
-  delay = 0,
+function ServiceGroupBlock({
+  group,
 }: {
-  value: string;
-  active: boolean;
-  delay?: number;
+  group: (typeof serviceGroups)[number];
 }) {
-  const { number, suffix } = parseStatValue(value);
-  const [count, setCount] = useState(0);
+  const { ref, visible } = useReveal(0.1);
+  const titleParts = group.title.split(group.accent);
+  const fromLeft = group.from === "left";
+  const hiddenX = fromLeft ? "-translate-x-[40%]" : "translate-x-[40%]";
 
-  useEffect(() => {
-    if (!active) return;
-
-    const timeout = window.setTimeout(() => {
-      const duration = 1400;
-      const start = performance.now();
-
-      const tick = (now: number) => {
-        const progress = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        setCount(number * eased);
-        if (progress < 1) requestAnimationFrame(tick);
-      };
-
-      requestAnimationFrame(tick);
-    }, delay);
-
-    return () => window.clearTimeout(timeout);
-  }, [active, number, delay]);
-
-  return (
-    <span className="tabular-nums">
-      {active ? formatCount(count, suffix) : `0${suffix}`}
-    </span>
-  );
-}
-
-function FeaturedStatCard({
-  stat,
-  delay,
-  visible,
-}: {
-  stat: (typeof featuredStats)[number];
-  delay: number;
-  visible: boolean;
-}) {
-  return (
+  const imagePanel = (
     <div
-      className={`group relative overflow-hidden rounded-2xl border p-8 transition-all duration-700 md:p-10 ${
-        stat.accent
-          ? "border-[#ff5f28]/30 bg-gradient-to-br from-[#ff5f28]/10 via-[#ff5f28]/5 to-transparent"
-          : "border-white/10 bg-white/[0.03]"
-      } ${visible ? "animate-scale-in opacity-100" : "scale-95 opacity-0"}`}
-      style={{ animationDelay: `${delay}ms` }}
-    >
-      <div
-        className={`pointer-events-none absolute -right-8 -top-8 h-32 w-32 rounded-full blur-2xl transition-opacity duration-700 ${
-          stat.accent ? "bg-[#ff5f28]/20" : "bg-white/5"
-        } ${visible ? "opacity-100" : "opacity-0"}`}
-      />
-
-      <p className="text-xs font-medium uppercase tracking-[0.2em] text-white/40">
-        {stat.client}
-      </p>
-      <p
-        className={`text-glow-white mt-4 text-5xl font-bold leading-none tracking-tight md:text-6xl ${
-          stat.accent ? "text-[#ff5f28]" : "text-white"
-        }`}
-      >
-        <AnimatedNumber value={stat.value} active={visible} />
-      </p>
-      <p className="mt-4 max-w-xs text-sm leading-relaxed text-white/65 md:text-base">
-        {stat.label}
-      </p>
-      <span
-        className={`mt-6 block h-px w-10 transition-all duration-500 group-hover:w-16 ${
-          stat.accent ? "bg-[#ff5f28]/70" : "bg-white/30"
-        }`}
-      />
-    </div>
-  );
-}
-
-function useStaggeredScrollReveal(count: number, gapMs = STAGGER_MS) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [activeIndex, setActiveIndex] = useState(-1);
-  const triggered = useRef(false);
-
-  useEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting || triggered.current) return;
-        triggered.current = true;
-        observer.disconnect();
-
-        for (let i = 0; i < count; i++) {
-          window.setTimeout(() => setActiveIndex(i), i * gapMs);
-        }
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -6% 0px" }
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [count, gapMs]);
-
-  const isVisible = (index: number) => activeIndex >= index;
-
-  return { ref, isVisible };
-}
-
-function MetricRow({
-  metric,
-  index,
-  visible,
-}: {
-  metric: (typeof metrics)[number];
-  index: number;
-  visible: boolean;
-}) {
-  const rowNum = String(index + 1).padStart(2, "0");
-
-  return (
-    <div
-      className={`group relative transition-all duration-700 ${
-        visible ? "animate-fade-up opacity-100" : "translate-y-10 opacity-0"
+      className={`relative overflow-hidden rounded-2xl transition-all duration-1000 ease-out ${
+        visible ? "translate-x-0 opacity-100" : `${hiddenX} opacity-0`
       }`}
     >
-      <div className="flex flex-col gap-5 py-10 md:grid md:grid-cols-[4rem_7rem_1fr_minmax(0,18rem)] md:items-center md:gap-8 md:py-12 lg:grid-cols-[5rem_8rem_1fr_minmax(0,22rem)] lg:gap-12 lg:py-14">
-        <div className="flex items-center gap-4 md:contents">
-          <span
-            className={`text-xs font-medium tabular-nums tracking-[0.2em] text-[#ff5f28]/50 transition-all duration-500 ${
-              visible ? "translate-x-0 opacity-100" : "-translate-x-4 opacity-0"
-            }`}
-            style={{ transitionDelay: visible ? "80ms" : "0ms" }}
-          >
-            {rowNum}
-          </span>
-
-          <p
-            className={`text-[11px] font-semibold uppercase tracking-[0.22em] text-[#ff5f28] transition-all duration-500 ${
-              visible ? "translate-x-0 opacity-100" : "-translate-x-4 opacity-0"
-            }`}
-            style={{ transitionDelay: visible ? "140ms" : "0ms" }}
-          >
-            {metric.tag}
-          </p>
-        </div>
-
-        <p
-          className={`text-glow-orange text-5xl font-bold leading-none tracking-tight text-[#ff5f28] transition-all duration-700 sm:text-6xl lg:text-7xl ${
-            visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-          }`}
-          style={{ transitionDelay: visible ? "200ms" : "0ms" }}
-        >
-          <AnimatedNumber value={metric.value} active={visible} delay={200} />
-        </p>
-
-        <div
-          className={`transition-all duration-700 md:text-right ${
-            visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-          }`}
-          style={{ transitionDelay: visible ? "320ms" : "0ms" }}
-        >
-          <p className="text-sm leading-relaxed text-white/70 md:text-base lg:text-lg">
-            {metric.label}
-          </p>
-          <p className="mt-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#ff5f28]/70">
-            {metric.client}
-          </p>
-        </div>
+      <div className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-[radial-gradient(ellipse_at_center,rgba(255,95,40,0.16),transparent_70%)] blur-2xl" aria-hidden />
+      <div className="relative aspect-[16/11] overflow-hidden rounded-2xl border border-black/10 md:aspect-[16/10] lg:aspect-[5/4]">
+        <Image
+          src={SERVICE_IMAGE}
+          alt={group.title}
+          fill
+          className="object-cover"
+          sizes="(max-width: 1024px) 100vw, 45vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" />
       </div>
+    </div>
+  );
 
+  const listPanel = (
+    <div className="relative flex flex-col justify-center">
       <div
-        className={`h-px w-full origin-left bg-gradient-to-r from-[#ff5f28]/50 via-[#ff5f28]/20 to-transparent transition-transform duration-1000 ${
-          visible ? "scale-x-100" : "scale-x-0"
-        }`}
-        style={{ transitionDelay: visible ? "400ms" : "0ms" }}
+        className="pointer-events-none absolute -inset-x-6 -inset-y-8 z-0 md:-inset-x-10"
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 60% at 20% 30%, rgba(0,0,0,0.04) 0%, rgba(255,95,40,0.03) 45%, transparent 75%)",
+        }}
+        aria-hidden
       />
+
+      <div className="relative z-[1]">
+        <div
+          className={`transition-all duration-1000 ease-out ${
+            visible ? "translate-x-0 opacity-100" : `${hiddenX} opacity-0`
+          }`}
+        >
+          <p className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#ff5f28] md:text-sm">
+            <span aria-hidden>✦</span>
+            Service
+          </p>
+          <h4 className="text-3xl font-light leading-[1.1] tracking-tight text-black md:text-4xl lg:text-5xl">
+            {titleParts[0]}
+            <span className="text-[#ff5f28]">{group.accent}</span>
+            {titleParts[1] ?? ""}
+          </h4>
+          <p className="mt-4 max-w-md text-base leading-relaxed text-black/55 md:mt-5 md:text-lg">
+            {group.description}
+          </p>
+          <div className="mt-6 h-px w-16 bg-gradient-to-r from-[#ff5f28] to-transparent md:mt-8" />
+        </div>
+
+        <ul className="mt-8 space-y-0 md:mt-10">
+          {group.items.map((item, itemIndex) => (
+            <li
+              key={item}
+              className={`group flex items-center gap-5 border-b border-black/10 py-4 transition-all duration-700 ease-out last:border-b-0 md:gap-6 md:py-5 ${
+                visible ? "translate-x-0 opacity-100" : `${hiddenX} opacity-0`
+              }`}
+              style={{ transitionDelay: visible ? `${180 + itemIndex * 90}ms` : "0ms" }}
+            >
+              <span className="w-8 shrink-0 text-sm font-medium tabular-nums tracking-wider text-[#ff5f28]/70 md:text-base">
+                {String(itemIndex + 1).padStart(2, "0")}
+              </span>
+              <span className="text-lg font-light tracking-tight text-black transition-colors duration-200 group-hover:text-[#ff5f28] md:text-xl lg:text-2xl">
+                {item}
+              </span>
+              <span className="ml-auto h-px w-0 bg-[#ff5f28]/50 transition-all duration-300 group-hover:w-10" />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+
+  return (
+    <div ref={ref} className="overflow-hidden">
+      <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-20">
+        {fromLeft ? (
+          <>
+            {imagePanel}
+            {listPanel}
+          </>
+        ) : (
+          <>
+            {listPanel}
+            {imagePanel}
+          </>
+        )}
+      </div>
     </div>
   );
 }
@@ -280,6 +169,8 @@ function MetricRow({
 export default function CustomerResults() {
   const sectionRef = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
+  const visualReveal = useReveal(0.15);
+  const servicesReveal = useReveal(0.12);
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -299,171 +190,150 @@ export default function CustomerResults() {
     return () => observer.disconnect();
   }, []);
 
-  const gridReveal = useReveal(0.1);
-  const metricsScroll = useStaggeredScrollReveal(metrics.length);
-  const ctaReveal = useReveal(0.2);
-
   return (
     <section
       ref={sectionRef}
-      id="results"
-      className="relative w-full overflow-hidden border-t border-white/[0.06] bg-black"
+      id="services"
+      className="relative w-full overflow-hidden bg-white font-sans"
     >
       <div
-        className={`pointer-events-none absolute left-1/2 top-0 h-px w-2/3 -translate-x-1/2 bg-gradient-to-r from-transparent via-[#ff5f28]/40 to-transparent transition-opacity duration-1000 ${
+        className={`pointer-events-none absolute -left-24 top-0 h-[32rem] w-[32rem] rounded-full bg-[#ff5f28]/[0.08] blur-3xl transition-opacity duration-1000 ${
           visible ? "opacity-100" : "opacity-0"
         }`}
       />
       <div
-        className={`pointer-events-none absolute -left-32 top-1/4 h-96 w-96 rounded-full bg-[#ff5f28]/[0.06] blur-3xl transition-opacity duration-1000 ${
-          visible ? "opacity-100" : "opacity-0"
-        }`}
-      />
-      <div
-        className={`pointer-events-none absolute -right-24 bottom-1/4 h-80 w-80 rounded-full bg-white/[0.03] blur-3xl transition-opacity duration-1000 delay-200 ${
+        className={`pointer-events-none absolute -right-16 bottom-0 h-[26rem] w-[26rem] rounded-full bg-[#ff5f28]/[0.06] blur-3xl transition-opacity duration-1000 delay-150 ${
           visible ? "opacity-100" : "opacity-0"
         }`}
       />
 
-      <div className="relative mx-auto w-full max-w-7xl px-5 py-20 md:px-8 md:py-28 lg:px-10 lg:py-32">
-        <div className="grid items-start gap-12 lg:grid-cols-2 lg:gap-16 xl:gap-20">
+      <div className="relative mx-auto w-full max-w-[90rem] px-4 pt-6 pb-24 md:px-8 md:pt-8 md:pb-32 lg:px-12 lg:pt-10 lg:pb-40">
+        <div
+          className={`flex flex-col gap-8 border-b border-black/10 pb-12 md:flex-row md:items-end md:justify-between md:gap-16 md:pb-14 ${
+            visible ? "animate-fade-up opacity-100" : "translate-y-6 opacity-0"
+          }`}
+        >
+          <h2 className="text-4xl font-light uppercase tracking-[0.06em] text-black md:text-5xl lg:text-6xl xl:text-[4rem]">
+            Products &amp;{" "}
+            <span className="text-[#ff5f28]">Services</span>
+          </h2>
+          <p className="max-w-lg text-base leading-relaxed text-black/55 md:text-right md:text-lg lg:text-xl">
+            We build intelligent platforms that help brands converse, convert,
+            and grow — from AI assistants to enterprise engagement systems.
+          </p>
+        </div>
+
+        <div className="mt-16 grid items-center gap-14 lg:mt-20 lg:grid-cols-2 lg:gap-12 xl:gap-20">
           <div
-            className={`transition-all duration-1000 ${
+            className={`relative max-w-2xl transition-all duration-1000 ${
               visible ? "animate-fade-in-left opacity-100" : "-translate-x-10 opacity-0"
             }`}
           >
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#ff5f28]/25 bg-[#ff5f28]/10 px-4 py-1.5 text-xs font-medium tracking-wide text-[#ff5f28]">
-              <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#ff5f28]" />
-              Proven Impact
-            </span>
-
-            <h2 className="text-glow-white mt-6 text-4xl font-bold leading-[1.08] tracking-tight text-white md:text-5xl lg:text-6xl">
-              Results that{" "}
-              <span className="text-glow-orange text-[#ff5f28]">move the needle</span>
-            </h2>
-
-            <p
-              className={`text-glow-muted mt-6 max-w-lg text-base leading-relaxed text-white/70 md:text-lg ${
-                visible ? "animate-fade-up opacity-100" : "opacity-0"
-              }`}
-              style={{ animationDelay: "150ms" }}
-            >
-              From global beverage brands to gaming giants, we help teams ship
-              faster, convert more, and scale without adding headcount. Real
-              outcomes — not vanity metrics.
-            </p>
-
             <div
-              className={`mt-8 flex flex-wrap gap-3 ${visible ? "animate-fade-up opacity-100" : "opacity-0"}`}
-              style={{ animationDelay: "280ms" }}
-            >
-              <Button href="#contact" variant="primary">
-                Book a Call
-              </Button>
-              <Button href="#contact" variant="secondary">
-                View Case Studies
-              </Button>
-            </div>
+              className="pointer-events-none absolute -inset-x-8 -inset-y-10 z-0 md:-inset-x-12 md:-inset-y-14"
+              style={{
+                background:
+                  "radial-gradient(ellipse 70% 65% at 30% 40%, rgba(0,0,0,0.05) 0%, rgba(255,95,40,0.04) 45%, transparent 75%)",
+              }}
+              aria-hidden
+            />
 
-            <div
-              className={`mt-12 border-t border-white/10 pt-8 ${visible ? "animate-fade-up opacity-100" : "opacity-0"}`}
-              style={{ animationDelay: "400ms" }}
-            >
-              <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-white/35">
-                Trusted by industry leaders
+            <div className="relative z-[1]">
+              <Image
+                src="/The_Echo_Logo_v2 (2).png"
+                alt="ECHO — powered by unicorn"
+                width={640}
+                height={180}
+                className="h-24 w-auto object-contain object-left md:h-32 lg:h-40"
+                priority
+              />
+
+              <h3 className="mt-10 text-4xl font-light leading-[1.08] tracking-tight text-black md:mt-12 md:text-5xl lg:text-6xl xl:text-[3.75rem] xl:leading-[1.06]">
+                The AI Engine for{" "}
+                <span className="text-[#ff5f28]">Conversations</span>,{" "}
+                <span className="text-[#ff5f28]">Loyalty</span> &amp;{" "}
+                <span className="text-[#ff5f28]">Growth</span>.
+              </h3>
+
+              <p className="mt-7 max-w-[30.5rem] text-base leading-relaxed text-black/55 md:mt-8 md:text-lg">
+                Echo is our AI-powered platform for enterprise conversations,
+                loyalty, and growth — helping teams automate engagement and
+                deliver measurable outcomes at scale.
               </p>
-              <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
-                {clients.map((client, i) => (
-                  <span
-                    key={client}
-                    className={`text-sm font-medium text-white/45 transition-colors duration-300 hover:text-white/80 ${
-                      visible ? "animate-fade-up opacity-100" : "opacity-0"
-                    }`}
-                    style={{ animationDelay: `${480 + i * 60}ms` }}
+
+              <Link
+                href="#contact"
+                className="btn btn--primary group mt-10 inline-flex items-center gap-3 md:mt-12 md:text-lg"
+              >
+                Visit Echo
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#ff5f28] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                  <svg
+                    className="h-3.5 w-3.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={2.5}
+                    aria-hidden
                   >
-                    {client}
-                  </span>
-                ))}
-              </div>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M7 17L17 7M17 7H9M17 7V15"
+                    />
+                  </svg>
+                </span>
+              </Link>
             </div>
           </div>
 
           <div
-            className={`grid gap-5 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 ${
-              visible ? "animate-fade-in-right opacity-100" : "translate-x-10 opacity-0"
+            ref={visualReveal.ref}
+            className={`relative scale-105 transition-all duration-1000 lg:scale-110 lg:translate-x-4 ${
+              visualReveal.visible
+                ? "animate-fade-in-right opacity-100"
+                : "translate-x-10 opacity-0"
             }`}
-            style={{ transitionDelay: "120ms" }}
           >
-            {featuredStats.map((stat, index) => (
-              <FeaturedStatCard
-                key={stat.client}
-                stat={stat}
-                delay={200 + index * 150}
-                visible={visible}
+            <div
+              className="pointer-events-none absolute -inset-6 rounded-[2rem] bg-[radial-gradient(ellipse_at_70%_50%,rgba(255,95,40,0.22),transparent_65%)] blur-2xl md:-inset-10"
+              aria-hidden
+            />
+            <div className="relative overflow-hidden rounded-2xl">
+              <Image
+                src="/image_1.png"
+                alt="ECHO platform preview on laptop"
+                width={1400}
+                height={1050}
+                className="relative z-[1] h-auto w-full min-h-[280px] object-contain md:min-h-[420px] lg:min-h-[520px]"
+                sizes="(max-width: 1024px) 100vw, 55vw"
+                priority
               />
-            ))}
+            </div>
           </div>
         </div>
 
-        <div ref={gridReveal.ref} className="mt-20 md:mt-28">
+        <div className="mt-24 md:mt-32 lg:mt-36">
           <div
-            className={`mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between ${
-              gridReveal.visible ? "animate-fade-up opacity-100" : "translate-y-6 opacity-0"
+            ref={servicesReveal.ref}
+            className={`mb-12 flex flex-col gap-4 border-b border-black/10 pb-10 md:mb-16 md:flex-row md:items-end md:justify-between md:gap-12 md:pb-12 ${
+              servicesReveal.visible
+                ? "animate-fade-up opacity-100"
+                : "translate-y-8 opacity-0"
             }`}
           >
-            <div>
-              <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#ff5f28]/60">
-                By the numbers
-              </p>
-              <h3 className="text-glow-white mt-2 text-2xl font-bold text-white md:text-3xl lg:text-4xl">
-                Measurable outcomes across every engagement
-              </h3>
-            </div>
-            <p className="max-w-xs text-sm text-white/45">
-              Each metric reveals as you scroll down.
+            <h3 className="text-4xl font-light tracking-tight text-black md:text-5xl lg:text-6xl">
+              Our <span className="text-[#ff5f28]">Services</span>
+            </h3>
+            <p className="max-w-md text-base leading-relaxed text-black/55 md:text-right md:text-lg">
+              End-to-end capabilities that turn data into decisions and digital
+              presence into measurable growth.
             </p>
           </div>
 
-          <div
-            className={`mb-2 h-px w-full bg-gradient-to-r from-[#ff5f28]/60 via-[#ff5f28]/20 to-transparent ${
-              gridReveal.visible ? "animate-line-reveal" : "scale-x-0"
-            }`}
-          />
-
-          <div ref={metricsScroll.ref}>
-            {metrics.map((metric, index) => (
-              <MetricRow
-                key={metric.tag}
-                metric={metric}
-                index={index}
-                visible={metricsScroll.isVisible(index)}
-              />
+          <div className="flex flex-col gap-20 md:gap-28">
+            {serviceGroups.map((group) => (
+              <ServiceGroupBlock key={group.title} group={group} />
             ))}
-          </div>
-        </div>
-
-        <div
-          ref={ctaReveal.ref}
-          className={`mt-20 border-t border-[#ff5f28]/20 pt-16 md:mt-28 md:pt-20 ${
-            ctaReveal.visible ? "animate-fade-up opacity-100" : "translate-y-8 opacity-0"
-          }`}
-        >
-          <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between md:gap-12">
-            <div className="max-w-2xl">
-              <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#ff5f28]/60">
-                Next step
-              </p>
-              <h3 className="text-glow-white mt-3 text-3xl font-bold leading-tight text-white md:text-4xl lg:text-5xl">
-                Ready to become our next{" "}
-                <span className="text-glow-orange text-[#ff5f28]">success story?</span>
-              </h3>
-              <p className="text-glow-muted mt-4 text-base leading-relaxed text-white/60 md:text-lg">
-                Let&apos;s talk about what we can build together.
-              </p>
-            </div>
-            <Button href="#contact" variant="primary" className="shrink-0 self-start md:self-end">
-              Start a Project
-            </Button>
           </div>
         </div>
       </div>

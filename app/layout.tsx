@@ -10,7 +10,8 @@ const ubuntu = Ubuntu({
 
 export const metadata: Metadata = {
   title: "unicorn",
-  description: "Empowering Businesses To Grow With Innovative Digital Solutions.",
+  description:
+    "Build. Scale. Lead the Future. We partner with ambitious businesses to design and deliver digital solutions that spark innovation and accelerate growth.",
 };
 
 export default function RootLayout({

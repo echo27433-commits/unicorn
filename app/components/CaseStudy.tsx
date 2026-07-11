@@ -1,88 +1,283 @@
 "use client";
 
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 import Button from "./Button";
 
+gsap.registerPlugin(ScrollTrigger);
+
+const caseStudies = [
+  {
+    category: "Retail",
+    title: "Nesto Hypermarket & MNS",
+    accent: "MNS",
+    description:
+      "A connected retail experience that unifies in-store operations, customer journeys, and real-time insights across hypermarket environments.",
+    image:
+      "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=2400&q=80",
+    imageAlt: "Modern supermarket aisle with product shelves",
+    logo: "/brands/mark_save_logo_dark.png",
+    logoAlt: "Märk & Save",
+  },
+  {
+    category: "Energy & Sustainability",
+    title: "Masdar Clean Energy",
+    accent: "Energy",
+    description:
+      "Digital platforms and intelligent systems that accelerate sustainable energy initiatives and operational excellence at scale.",
+    image:
+      "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=2400&q=80",
+    imageAlt: "Solar panels under a clear sky",
+    logo: "/brands/masdar_logo_dark.png",
+    logoAlt: "Masdar",
+  },
+  {
+    category: "Retail",
+    title: "MNS Computer Vision",
+    accent: "Vision",
+    description:
+      "AI-powered computer vision that transforms shelf intelligence, shopper analytics, and store operations into measurable growth.",
+    image:
+      "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=2400&q=80",
+    imageAlt: "Robotics and computer vision technology",
+    logo: "/brands/salesforce_logo_dark.png",
+    logoAlt: "Salesforce",
+  },
+];
+
 export default function CaseStudy() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
+  const pinRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const node = sectionRef.current;
-    if (!node) return;
+    const section = sectionRef.current;
+    const pin = pinRef.current;
+    if (!section || !pin) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.disconnect();
+    const prefersReduced =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+
+    const ctx = gsap.context(() => {
+      const slides = gsap.utils.toArray<HTMLElement>("[data-case-slide]");
+      const images = gsap.utils.toArray<HTMLElement>("[data-case-image]");
+      const progressItems = gsap.utils.toArray<HTMLElement>("[data-case-progress]");
+
+      if (slides.length < 2) return;
+
+      gsap.set(slides, { autoAlpha: 0, y: () => window.innerHeight });
+      gsap.set(slides[0], { autoAlpha: 1, y: 0 });
+      gsap.set(images, { autoAlpha: 0, scale: 1.08 });
+      gsap.set(images[0], { autoAlpha: 1, scale: 1 });
+      gsap.set(progressItems, { opacity: 0.28, scaleX: 0.7 });
+      gsap.set(progressItems[0], { opacity: 1, scaleX: 1 });
+
+      if (prefersReduced) {
+        return;
+      }
+
+      // Keep this section's own pin. Location cover is endTrigger only —
+      // a spacer in page.tsx gives scroll room so slides finish before Location covers.
+      const cover = document.querySelector<HTMLElement>("[data-location-cover]");
+
+      const tl = gsap.timeline({
+        defaults: { ease: "none" },
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          ...(cover
+            ? {
+                endTrigger: cover,
+                end: "top top",
+                pinSpacing: false,
+              }
+            : {
+                end: () => `+=${window.innerHeight * slides.length * 1.75}`,
+              }),
+          pin: pin,
+          scrub: 1.15,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          refreshPriority: 0,
+        },
+      });
+
+      slides.forEach((_, index) => {
+        if (index === slides.length - 1) return;
+
+        const currentSlide = slides[index];
+        const nextSlide = slides[index + 1];
+        const currentImage = images[index];
+        const nextImage = images[index + 1];
+        const currentProgress = progressItems[index];
+        const nextProgress = progressItems[index + 1];
+
+        tl.to({}, { duration: 1.1 })
+          .to(
+            currentSlide,
+            {
+              autoAlpha: 0,
+              y: () => -window.innerHeight,
+              duration: 1.45,
+            },
+            "<"
+          )
+          .fromTo(
+            nextSlide,
+            { autoAlpha: 0, y: () => window.innerHeight },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: 1.45,
+            },
+            "<"
+          )
+          .to(
+            currentImage,
+            {
+              autoAlpha: 0,
+              scale: 1.08,
+              duration: 1.45,
+            },
+            "<"
+          )
+          .fromTo(
+            nextImage,
+            { autoAlpha: 0, scale: 1.06 },
+            {
+              autoAlpha: 1,
+              scale: 1,
+              duration: 1.45,
+            },
+            "<"
+          );
+
+        if (currentProgress && nextProgress) {
+          tl.to(
+            currentProgress,
+            { opacity: 0.28, scaleX: 0.7, duration: 0.55 },
+            "<"
+          ).to(nextProgress, { opacity: 1, scaleX: 1, duration: 0.55 }, "<");
         }
-      },
-      { threshold: 0.2 }
-    );
+      });
 
-    observer.observe(node);
-    return () => observer.disconnect();
+      // Hold MNS Computer Vision while Our Location slides over
+      tl.to({}, { duration: cover ? 2.2 : 1.0 });
+    }, section);
+
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener("load", refresh);
+    const timeout = window.setTimeout(refresh, 400);
+
+    return () => {
+      window.removeEventListener("load", refresh);
+      window.clearTimeout(timeout);
+      ctx.revert();
+    };
   }, []);
 
   return (
     <section
       ref={sectionRef}
       id="case-study"
-      className="relative w-full overflow-hidden"
+      className="relative w-full bg-black font-sans"
     >
-      <div className="relative min-h-[70vh] md:min-h-[75vh] lg:min-h-[85vh]">
-        <Image
-          src="/case.png"
-          alt="Analyst reviewing data on a laptop"
-          fill
-          priority={false}
-          sizes="100vw"
-          className="object-cover object-[center_30%]"
+      <div
+        ref={pinRef}
+        className="relative z-0 h-[100vh] min-h-[640px] w-full overflow-hidden"
+      >
+        <div className="absolute inset-0">
+          {caseStudies.map((study, index) => (
+            <div
+              key={study.image}
+              data-case-image
+              className="absolute inset-0 will-change-transform"
+            >
+              <Image
+                src={study.image}
+                alt={study.imageAlt}
+                fill
+                priority={index === 0}
+                sizes="100vw"
+                className="object-cover"
+              />
+            </div>
+          ))}
+        </div>
+
+        <div
+          className="pointer-events-none absolute inset-0 z-[1]"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.55) 28%, rgba(0,0,0,0.18) 48%, transparent 68%)",
+          }}
+          aria-hidden
         />
 
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/25" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/40" />
+        <div className="pointer-events-none absolute inset-0 z-10">
+          {caseStudies.map((study) => {
+            const titleParts = study.title.split(study.accent);
 
-        <div className="relative z-10 mx-auto flex min-h-[70vh] w-full max-w-7xl flex-col justify-end px-5 pb-14 pt-24 md:min-h-[75vh] md:px-8 md:pb-16 lg:min-h-[85vh] lg:px-10 lg:pb-20">
-          <div
-            className={`max-w-2xl transition-all duration-1000 ${
-              visible ? "animate-fade-in-left opacity-100" : "-translate-x-8 opacity-0"
-            }`}
-          >
-            <p className="text-base font-medium text-white/90 md:text-lg">
-              Case Study
-            </p>
+            return (
+              <div
+                key={study.title}
+                data-case-slide
+                className="absolute inset-0 flex items-end will-change-transform"
+              >
+                <div className="mx-auto w-full max-w-7xl px-4 pb-28 pt-28 md:px-8 md:pb-32 md:pt-32 lg:px-12 lg:pb-36">
+                  <div className="pointer-events-auto flex max-w-6xl flex-col gap-10 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
+                    <div className="max-w-xl lg:max-w-2xl">
+                      <p className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#ff5f28] md:mb-6 md:text-sm">
+                        <span aria-hidden>✦</span>
+                        Case Study · {study.category}
+                      </p>
 
-            <h2
-              className={`text-glow-white mt-6 text-4xl font-bold leading-[1.1] tracking-tight text-white md:text-5xl lg:text-6xl xl:text-7xl ${
-                visible ? "animate-fade-up opacity-100" : "translate-y-8 opacity-0"
-              }`}
-              style={{ animationDelay: "120ms" }}
-            >
-              Improving Safety in Life Sciences with AI
-            </h2>
+                      <h2 className="text-glow-white text-5xl font-light leading-[1.06] tracking-tight text-white md:text-6xl lg:text-7xl xl:text-[4.75rem] xl:leading-[1.02]">
+                        {titleParts[0]}
+                        <span className="text-gradient-future">{study.accent}</span>
+                        {titleParts[1] ?? ""}
+                      </h2>
 
-            <p
-              className={`text-glow-muted mt-6 max-w-lg text-base leading-relaxed text-white/75 md:text-lg lg:text-xl ${
-                visible ? "animate-fade-up opacity-100" : "translate-y-6 opacity-0"
-              }`}
-              style={{ animationDelay: "240ms" }}
-            >
-              Our teams of technologists, strategists and designers deliver
-              powerful digital experiences.
-            </p>
+                      <p className="mt-6 max-w-[30.5rem] text-base leading-relaxed text-white/80 md:mt-7 md:text-lg">
+                        {study.description}
+                      </p>
 
-            <div
-              className={visible ? "animate-fade-up opacity-100" : "translate-y-4 opacity-0"}
-              style={{ animationDelay: "380ms" }}
-            >
-              <Button href="#contact" variant="outline" className="mt-10 md:mt-12 md:text-lg">
-                Learn more
-              </Button>
-            </div>
+                      <div className="mt-10 md:mt-12">
+                        <Button href="#contact" variant="primary" className="md:text-lg">
+                          Learn more
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div className="shrink-0 lg:pb-2">
+                      <div className="inline-flex items-center rounded-2xl border border-white/15 bg-black/55 px-6 py-5 backdrop-blur-md md:px-8 md:py-6">
+                        <Image
+                          src={study.logo}
+                          alt={study.logoAlt}
+                          width={360}
+                          height={120}
+                          className="h-16 w-auto max-w-[min(100%,20rem)] object-contain md:h-20 lg:h-24"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20">
+          <div className="mx-auto flex w-full max-w-7xl items-center gap-2.5 px-4 pb-10 md:px-8 md:pb-12 lg:px-12">
+            {caseStudies.map((study) => (
+              <span
+                key={study.title}
+                data-case-progress
+                className="h-1.5 w-8 origin-left rounded-full bg-white"
+              />
+            ))}
           </div>
         </div>
       </div>

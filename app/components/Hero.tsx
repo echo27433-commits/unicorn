@@ -1,5 +1,11 @@
 import Button from "./Button";
 
+const avatars = [
+  { src: "https://i.pravatar.cc/80?img=11", alt: "Client avatar 1" },
+  { src: "https://i.pravatar.cc/80?img=32", alt: "Client avatar 2" },
+  { src: "https://i.pravatar.cc/80?img=5", alt: "Client avatar 3" },
+];
+
 const stats = [
   {
     value: "120+",
@@ -37,7 +43,11 @@ const stats = [
     icon: (
       <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}>
         <circle cx="12" cy="12" r="10" />
-        <path strokeLinecap="round" strokeLinejoin="round" d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+        />
       </svg>
     ),
   },
@@ -45,55 +55,83 @@ const stats = [
 
 export default function Hero() {
   return (
-    <section id="home" className="relative flex flex-1 flex-col px-4 pb-8 pt-28 md:px-8 md:pb-10 md:pt-32 lg:px-12">
-      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col">
-        <div className="flex flex-1 flex-col justify-center">
-          <div className="max-w-4xl">
-            <h1 className="text-5xl font-bold leading-[1.1] tracking-tight text-white md:text-6xl lg:text-7xl xl:text-[4.35rem] xl:leading-[1.06]">
-              Empowering Businesses
-              <br />
-              To Grow With{" "}
-              <span className="inline bg-gradient-to-r from-[#ff2f00] via-[#ffffff] via-50% to-[#ff5f28] bg-clip-text text-transparent [-webkit-text-fill-color:transparent]">
-                Innovative
-                <br />
-                Digital Solutions.
-              </span>
-            </h1>
+    <section id="home" className="relative flex flex-1 flex-col px-4 pb-8 pt-36 md:px-8 md:pb-10 md:pt-44 lg:px-12 lg:pt-48">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center gap-6 md:gap-8">
+        <div className="relative max-w-4xl lg:max-w-5xl">
+          <div
+            className="pointer-events-none absolute -inset-x-8 -inset-y-10 z-0 md:-inset-x-12 md:-inset-y-14"
+            style={{
+              background:
+                "radial-gradient(ellipse 70% 65% at 30% 40%, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.4) 45%, transparent 75%)",
+            }}
+            aria-hidden
+          />
 
-            <p className="mt-8 max-w-xl text-base leading-relaxed text-white/65 md:mt-10 md:text-lg">
-              We help startups and enterprises scale faster with custom web apps,
-              bold branding, and data-driven digital strategies that turn ideas into
-              measurable growth.
-            </p>
+          <div className="relative z-[1]">
+          <p className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#ff5f28] md:mb-6 md:text-sm">
+            <span aria-hidden>✦</span>
+            Digital Solutions That Drive Impact
+          </p>
 
-            <div className="mt-12 flex flex-wrap items-center gap-5 md:mt-14">
-              <Button href="#contact" variant="primary" className="md:text-lg">
-                Book a Call
-              </Button>
-              <Button href="#services" variant="secondary" className="md:text-lg">
-                View Our Services
-              </Button>
+          <h1 className="text-7xl font-light leading-[1.04] tracking-tight text-white md:text-8xl lg:text-9xl xl:text-[7rem] xl:leading-[1.01]">
+            Build. Scale.
+            <br />
+            Lead the{" "}
+            <span className="text-gradient-future">Future.</span>
+          </h1>
+
+          <p className="mt-6 max-w-[30.5rem] text-sm leading-relaxed text-white/55 md:mt-7 md:text-[0.95rem]">
+            We partner with ambitious businesses to design and deliver digital
+            solutions that spark innovation and accelerate growth.
+          </p>
+
+          <div className="mt-10 flex flex-wrap items-center gap-4 md:mt-12 md:gap-5">
+            <Button href="#contact" variant="primary" className="md:text-lg">
+              Book a Call
+            </Button>
+            <Button href="#services" variant="secondary" className="md:text-lg">
+              Explore Services
+            </Button>
+          </div>
+
+          <div className="mt-8 flex items-center gap-3 md:mt-10">
+            <div className="flex -space-x-3">
+              {avatars.map((avatar) => (
+                <img
+                  key={avatar.src}
+                  src={avatar.src}
+                  alt={avatar.alt}
+                  width={40}
+                  height={40}
+                  className="h-9 w-9 rounded-full border-2 border-black object-cover md:h-10 md:w-10"
+                />
+              ))}
             </div>
+            <p className="text-sm text-white/55 md:text-base">
+              Trusted by <span className="font-semibold text-white">100+</span> growing
+              businesses
+            </p>
+          </div>
           </div>
         </div>
 
-        <div className="mt-12 flex justify-end md:absolute md:bottom-0 md:right-0 md:mt-0">
-          <div className="flex flex-col gap-4 sm:flex-row sm:gap-5">
-            {stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="stat-card min-w-[170px] rounded-2xl px-5 py-4 backdrop-blur-md md:min-w-[190px] md:px-6 md:py-5"
-              >
-                <div className="flex items-start gap-3">
-                  <span className="stat-icon-glow mt-0.5 text-[#ff5f28]">{stat.icon}</span>
-                  <div>
-                    <p className="stat-value-glow text-2xl font-bold md:text-3xl">{stat.value}</p>
-                    <p className="mt-1 text-sm text-white/70">{stat.label}</p>
-                  </div>
-                </div>
+        <div className="stats-bar grid grid-cols-1 gap-6 rounded-2xl px-6 py-5 sm:grid-cols-3 sm:gap-0 sm:px-8 sm:py-6 md:px-10">
+          {stats.map((stat, index) => (
+            <div
+              key={stat.label}
+              className={`flex items-center gap-4 ${
+                index > 0 ? "sm:border-l sm:border-white/10 sm:pl-8 md:pl-10" : ""
+              }`}
+            >
+              <span className="stat-icon-wrap flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[#ff5f28]">
+                <span className="stat-icon-glow">{stat.icon}</span>
+              </span>
+              <div>
+                <p className="stat-value-glow text-2xl font-semibold md:text-3xl">{stat.value}</p>
+                <p className="mt-0.5 text-sm text-white/55">{stat.label}</p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

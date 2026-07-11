@@ -57,23 +57,106 @@ body {
   color: transparent;
 }
 
-.stat-card {
-  border: 1px solid rgba(255, 95, 40, 0.4);
-  background: linear-gradient(145deg, rgba(255, 95, 40, 0.14), rgba(0, 0, 0, 0.55));
-  box-shadow:
-    0 0 28px rgba(255, 95, 40, 0.28),
-    0 0 56px rgba(255, 95, 40, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+.text-gradient-future {
+  display: inline;
+  background-image: linear-gradient(
+    105deg,
+    #ff8a4c 0%,
+    #ff5f28 35%,
+    #ffc49a 70%,
+    #ff5f28 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 28px rgba(255, 95, 40, 0.55));
 }
 
-.stat-card:hover {
-  border-color: rgba(255, 95, 40, 0.65);
+.stats-bar {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(255, 95, 40, 0.35);
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 95, 40, 0.18) 0%,
+      rgba(20, 12, 8, 0.92) 28%,
+      rgba(10, 10, 10, 0.88) 55%,
+      rgba(255, 95, 40, 0.12) 100%
+    );
+  backdrop-filter: blur(20px);
   box-shadow:
-    0 0 36px rgba(255, 95, 40, 0.4),
+    0 0 24px rgba(255, 95, 40, 0.22),
+    0 0 56px rgba(255, 95, 40, 0.14),
+    0 0 96px rgba(255, 95, 40, 0.08),
+    inset 0 1px 0 rgba(255, 196, 154, 0.18),
+    inset 0 -1px 0 rgba(255, 95, 40, 0.12);
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.stats-bar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse 55% 80% at 8% 50%, rgba(255, 95, 40, 0.28), transparent 60%),
+    radial-gradient(ellipse 45% 70% at 92% 50%, rgba(255, 95, 40, 0.2), transparent 55%),
+    radial-gradient(ellipse 40% 60% at 50% 120%, rgba(255, 95, 40, 0.16), transparent 50%);
+  pointer-events: none;
+  animation: stat-glow 4s ease-in-out infinite;
+}
+
+.stats-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 196, 154, 0.55),
+    rgba(255, 95, 40, 0.15) 35%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 95, 40, 0.2) 70%,
+    rgba(255, 143, 80, 0.45)
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.stats-bar:hover {
+  border-color: rgba(255, 95, 40, 0.55);
+  box-shadow:
+    0 0 32px rgba(255, 95, 40, 0.32),
     0 0 72px rgba(255, 95, 40, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.14);
-  transform: translateY(-2px);
+    0 0 120px rgba(255, 95, 40, 0.1),
+    inset 0 1px 0 rgba(255, 196, 154, 0.22),
+    inset 0 -1px 0 rgba(255, 95, 40, 0.16);
+}
+
+.stat-icon-wrap {
+  border: 1px solid rgba(255, 95, 40, 0.4);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 95, 40, 0.22),
+    rgba(255, 95, 40, 0.06)
+  );
+  box-shadow:
+    0 0 18px rgba(255, 95, 40, 0.35),
+    inset 0 1px 0 rgba(255, 196, 154, 0.2);
 }
 
 .stat-value-glow {
@@ -146,6 +229,71 @@ body {
 
 .btn--outline:active {
   transform: scale(0.98);
+}
+
+@keyframes newsletter-spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes newsletter-drift {
+  0%,
+  100% {
+    transform: translateX(0%) translateY(0%);
+  }
+  50% {
+    transform: translateX(40%) translateY(15%);
+  }
+}
+
+.newsletter-gradient-spin {
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    #ff5f28 0deg,
+    #ffb089 70deg,
+    #ffffff 140deg,
+    #ff8f5a 210deg,
+    #ffdcc8 280deg,
+    #ff5f28 360deg
+  );
+  filter: blur(48px);
+  opacity: 0.55;
+  will-change: transform;
+  animation: newsletter-spin 10s linear infinite;
+}
+
+.newsletter-gradient-spin-rev {
+  border-radius: 50%;
+  background: conic-gradient(
+    from 180deg,
+    #ff3d00 0deg,
+    transparent 100deg,
+    #ffc49a 180deg,
+    transparent 260deg,
+    #ff5f28 360deg
+  );
+  filter: blur(56px);
+  opacity: 0.5;
+  will-change: transform;
+  animation: newsletter-spin 16s linear infinite reverse;
+}
+
+.newsletter-gradient-drift {
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 95, 40, 0.55) 0%,
+    rgba(255, 176, 137, 0.35) 40%,
+    transparent 70%
+  );
+  filter: blur(40px);
+  will-change: transform;
+  animation: newsletter-drift 7s ease-in-out infinite;
 }
 
 @keyframes fade-up {
