@@ -236,14 +236,21 @@ export default function ServicesPageClient() {
     window.addEventListener("load", refresh);
     const t1 = window.setTimeout(refresh, 250);
     const t2 = window.setTimeout(refresh, 700);
+    const t3 = window.setTimeout(refresh, 1400);
 
     return () => {
       window.removeEventListener("load", refresh);
       window.clearTimeout(t1);
       window.clearTimeout(t2);
+      window.clearTimeout(t3);
       ctx.revert();
     };
   }, []);
+
+  useEffect(() => {
+    const t = window.setTimeout(() => ScrollTrigger.refresh(), 100);
+    return () => window.clearTimeout(t);
+  }, [activeService]);
 
   useLayoutEffect(() => {
     if (reducedMotion) return;
@@ -558,6 +565,9 @@ export default function ServicesPageClient() {
           </div>
         </section>
       </div>
+
+      {/* Restores scroll room lost to pinSpacing:false covers above */}
+      <div className="pointer-events-none h-[30vh] w-full bg-white" aria-hidden />
 
       <NewsletterCover />
     </div>

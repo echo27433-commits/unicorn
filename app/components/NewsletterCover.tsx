@@ -79,14 +79,31 @@ export default function NewsletterCover() {
       sync();
       ScrollTrigger.refresh();
     };
+
     window.addEventListener("load", refresh);
     const t1 = window.setTimeout(refresh, 300);
     const t2 = window.setTimeout(refresh, 900);
+    const t3 = window.setTimeout(refresh, 1600);
+
+    const resizeObserver = new ResizeObserver(() => {
+      refresh();
+    });
+    resizeObserver.observe(footerSlot);
+    resizeObserver.observe(newsletter);
+
+    const images = footerSlot.querySelectorAll("img");
+    images.forEach((img) => {
+      if (!img.complete) {
+        img.addEventListener("load", refresh, { once: true });
+      }
+    });
 
     return () => {
       window.removeEventListener("load", refresh);
       window.clearTimeout(t1);
       window.clearTimeout(t2);
+      window.clearTimeout(t3);
+      resizeObserver.disconnect();
       ctx.revert();
       wrapper.style.height = "";
       newsletter.style.minHeight = "";
@@ -94,7 +111,10 @@ export default function NewsletterCover() {
   }, []);
 
   return (
-    <div ref={wrapperRef} className="relative w-full overflow-hidden bg-black">
+    <div
+      ref={wrapperRef}
+      className="relative z-50 w-full overflow-hidden bg-black"
+    >
       <div
         ref={footerSlotRef}
         className="absolute inset-x-0 top-0 z-0 w-full bg-black"
