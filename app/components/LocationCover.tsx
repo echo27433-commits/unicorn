@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
 
+import { isMobileMotion, prefersReducedMotion, scrubValue } from "../lib/motion";
 import OurLocation from "./OurLocation";
 import Reviews from "./Reviews";
 
@@ -25,32 +26,33 @@ export default function LocationCover() {
     const reviews = reviewsRef.current;
     if (!location || !locationInner || !reviews) return;
 
-    const prefersReduced =
-      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-    if (prefersReduced) return;
+    if (prefersReducedMotion()) return;
+
+    const mobile = isMobileMotion();
+    const scrub = scrubValue(0.9);
 
     const ctx = gsap.context(() => {
-      // Location panel rounded cover over case study
-      gsap.fromTo(
-        location,
-        {
-          borderRadius: "32px 32px 0px 0px",
-          boxShadow: "0 -12px 40px rgba(0,0,0,0)",
-        },
-        {
-          borderRadius: "0px 0px 0px 0px",
-          boxShadow: "0 -32px 90px rgba(0,0,0,0.45)",
-          ease: "none",
-          scrollTrigger: {
-            trigger: location,
-            start: "top bottom",
-            end: "top top",
-            scrub: 0.9,
+      if (!mobile) {
+        gsap.fromTo(
+          location,
+          {
+            borderRadius: "32px 32px 0px 0px",
+            boxShadow: "0 -12px 40px rgba(0,0,0,0)",
           },
-        }
-      );
+          {
+            borderRadius: "0px 0px 0px 0px",
+            boxShadow: "0 -32px 90px rgba(0,0,0,0.45)",
+            ease: "none",
+            scrollTrigger: {
+              trigger: location,
+              start: "top bottom",
+              end: "top top",
+              scrub,
+            },
+          }
+        );
+      }
 
-      // Hold Location/map, then Reviews slide over it
       ScrollTrigger.create({
         trigger: location,
         start: "bottom bottom",
@@ -58,45 +60,46 @@ export default function LocationCover() {
         end: "top top",
         pin: true,
         pinSpacing: false,
-        anticipatePin: 1,
+        anticipatePin: mobile ? 0 : 1,
         invalidateOnRefresh: true,
       });
 
-      // Same motion as Products → Hero, but only on inner content.
-      // Outer shell stays solid black so Case Study #3 never peeks through.
-      gsap.fromTo(
-        locationInner,
-        { scale: 1 },
-        {
-          scale: 0.94,
-          ease: "none",
-          scrollTrigger: {
-            trigger: reviews,
-            start: "top bottom",
-            end: "top top",
-            scrub: 0.9,
-          },
-        }
-      );
+      if (!mobile) {
+        gsap.fromTo(
+          locationInner,
+          { scale: 1 },
+          {
+            scale: 0.94,
+            ease: "none",
+            force3D: true,
+            scrollTrigger: {
+              trigger: reviews,
+              start: "top bottom",
+              end: "top top",
+              scrub,
+            },
+          }
+        );
 
-      gsap.fromTo(
-        reviews,
-        {
-          borderRadius: "32px 32px 0px 0px",
-          boxShadow: "0 -12px 40px rgba(0,0,0,0)",
-        },
-        {
-          borderRadius: "0px 0px 0px 0px",
-          boxShadow: "0 -32px 90px rgba(0,0,0,0.5)",
-          ease: "none",
-          scrollTrigger: {
-            trigger: reviews,
-            start: "top bottom",
-            end: "top top",
-            scrub: 0.9,
+        gsap.fromTo(
+          reviews,
+          {
+            borderRadius: "32px 32px 0px 0px",
+            boxShadow: "0 -12px 40px rgba(0,0,0,0)",
           },
-        }
-      );
+          {
+            borderRadius: "0px 0px 0px 0px",
+            boxShadow: "0 -32px 90px rgba(0,0,0,0.5)",
+            ease: "none",
+            scrollTrigger: {
+              trigger: reviews,
+              start: "top bottom",
+              end: "top top",
+              scrub,
+            },
+          }
+        );
+      }
     });
 
     const refresh = () => ScrollTrigger.refresh();
@@ -119,14 +122,14 @@ export default function LocationCover() {
       >
         <div
           ref={locationInnerRef}
-          className="origin-center will-change-transform"
+          className="origin-center md:will-change-transform"
         >
           <OurLocation />
         </div>
       </div>
       <div
         ref={reviewsRef}
-        className="relative z-40 min-w-0 overflow-x-clip bg-[#f7f7f7] will-change-transform"
+        className="relative z-40 min-w-0 overflow-x-clip bg-[#f7f7f7] md:will-change-transform"
       >
         <Reviews />
       </div>

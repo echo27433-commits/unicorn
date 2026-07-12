@@ -197,12 +197,12 @@ export default function CustomerResults() {
       className="relative w-full overflow-hidden bg-white font-sans"
     >
       <div
-        className={`pointer-events-none absolute -left-24 top-0 h-[32rem] w-[32rem] rounded-full bg-[#ff5f28]/[0.08] blur-3xl transition-opacity duration-1000 ${
+        className={`pointer-events-none absolute -left-24 top-0 hidden h-[32rem] w-[32rem] rounded-full bg-[#ff5f28]/[0.08] blur-3xl transition-opacity duration-1000 md:block ${
           visible ? "opacity-100" : "opacity-0"
         }`}
       />
       <div
-        className={`pointer-events-none absolute -right-16 bottom-0 h-[26rem] w-[26rem] rounded-full bg-[#ff5f28]/[0.06] blur-3xl transition-opacity duration-1000 delay-150 ${
+        className={`pointer-events-none absolute -right-16 bottom-0 hidden h-[26rem] w-[26rem] rounded-full bg-[#ff5f28]/[0.06] blur-3xl transition-opacity duration-1000 delay-150 md:block ${
           visible ? "opacity-100" : "opacity-0"
         }`}
       />

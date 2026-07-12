@@ -7,9 +7,13 @@ import type { LenisRef } from "lenis/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, type ReactNode } from "react";
 
+import { isMobileMotion } from "../lib/motion";
+
 import "lenis/dist/lenis.css";
 
 gsap.registerPlugin(ScrollTrigger);
+
+ScrollTrigger.config({ ignoreMobileResize: true });
 
 function LenisGsapBridge() {
   const pathname = usePathname();
@@ -17,6 +21,15 @@ function LenisGsapBridge() {
 
   useEffect(() => {
     if (!lenis) return;
+
+    // Touch devices: stop Lenis so native scroll drives ScrollTrigger.
+    if (isMobileMotion()) {
+      lenis.stop();
+      ScrollTrigger.refresh();
+      return () => {
+        lenis.start();
+      };
+    }
 
     const onScroll = () => ScrollTrigger.update();
     lenis.on("scroll", onScroll);
@@ -28,8 +41,10 @@ function LenisGsapBridge() {
   }, [lenis]);
 
   useEffect(() => {
+    if (!lenis || isMobileMotion()) return;
+
     const id = window.setTimeout(() => {
-      lenis?.resize();
+      lenis.resize();
       ScrollTrigger.refresh();
     }, 120);
 
@@ -43,6 +58,9 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
   const lenisRef = useRef<LenisRef>(null);
 
   useEffect(() => {
+    // Skip driving Lenis from the GSAP ticker on mobile (native scroll only).
+    if (isMobileMotion()) return;
+
     const update = (time: number) => {
       lenisRef.current?.lenis?.raf(time * 1000);
     };

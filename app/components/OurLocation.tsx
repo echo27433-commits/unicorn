@@ -131,8 +131,8 @@ export default function OurLocation() {
       id="locations"
       className="relative w-full overflow-hidden bg-black font-sans text-white"
     >
-      <div className="pointer-events-none absolute -right-32 top-0 h-96 w-96 rounded-full bg-[#ff5f28]/[0.1] blur-3xl" />
-      <div className="pointer-events-none absolute -left-24 bottom-0 h-80 w-80 rounded-full bg-[#ff5f28]/[0.06] blur-3xl" />
+      <div className="pointer-events-none absolute -right-32 top-0 hidden h-96 w-96 rounded-full bg-[#ff5f28]/[0.1] blur-3xl md:block" />
+      <div className="pointer-events-none absolute -left-24 bottom-0 hidden h-80 w-80 rounded-full bg-[#ff5f28]/[0.06] blur-3xl md:block" />
 
       <div className="relative mx-auto w-full max-w-[90rem] px-4 py-20 md:px-8 md:py-28 lg:px-12 lg:py-32">
         <div className="max-w-4xl">

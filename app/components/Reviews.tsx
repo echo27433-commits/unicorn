@@ -284,8 +284,8 @@ export default function Reviews() {
       id="reviews"
       className="relative w-full overflow-x-clip bg-[#f7f7f7] font-sans"
     >
-      <div className="pointer-events-none absolute -left-24 top-20 h-80 w-80 rounded-full bg-[#ff5f28]/[0.06] blur-3xl" />
-      <div className="pointer-events-none absolute -right-20 bottom-10 h-72 w-72 rounded-full bg-[#ff5f28]/[0.05] blur-3xl" />
+      <div className="pointer-events-none absolute -left-24 top-20 hidden h-80 w-80 rounded-full bg-[#ff5f28]/[0.06] blur-3xl md:block" />
+      <div className="pointer-events-none absolute -right-20 bottom-10 hidden h-72 w-72 rounded-full bg-[#ff5f28]/[0.05] blur-3xl md:block" />
 
       <div className="relative mx-auto w-full max-w-[90rem] min-w-0 px-4 py-14 sm:py-20 md:px-8 md:py-28 lg:px-12 lg:py-32">
         <div className="mx-auto max-w-3xl text-center">

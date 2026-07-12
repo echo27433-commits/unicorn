@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 
 import Footer from "./Footer";
 import Newsletter from "./Newsletter";
+import { prefersReducedMotion, scrubValue } from "../lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,10 +27,9 @@ export default function NewsletterCover() {
     const footerSlot = footerSlotRef.current;
     if (!wrapper || !newsletter || !newsletterContent || !footerSlot) return;
 
-    const prefersReduced =
-      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-    if (prefersReduced) return;
+    if (prefersReducedMotion()) return;
 
+    const scrub = scrubValue(0.85);
     let stackHeight = 0;
     let syncing = false;
 
@@ -77,7 +77,7 @@ export default function NewsletterCover() {
             trigger: wrapper,
             start: "top top",
             end: () => `+=${stackHeight || sync()}`,
-            scrub: 0.85,
+            scrub,
             invalidateOnRefresh: true,
           },
         }
@@ -141,7 +141,7 @@ export default function NewsletterCover() {
 
       <div
         ref={newsletterRef}
-        className="relative z-10 w-full bg-white will-change-transform"
+        className="relative z-10 w-full bg-white md:will-change-transform"
       >
         <div ref={newsletterContentRef}>
           <Newsletter />

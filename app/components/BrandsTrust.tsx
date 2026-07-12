@@ -30,19 +30,21 @@ export default function BrandsTrust() {
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
     if (prefersReduced) return;
 
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+
     const ctx = gsap.context(() => {
       const header = section.querySelectorAll("[data-brands-header]");
       const cards = section.querySelectorAll("[data-brands-card]");
 
       gsap.set(header, {
         autoAlpha: 0,
-        y: 48,
-        scale: 0.96,
+        y: isMobile ? 20 : 48,
+        scale: isMobile ? 1 : 0.96,
       });
       gsap.set(cards, {
         autoAlpha: 0,
-        y: 56,
-        scale: 0.96,
+        y: isMobile ? 16 : 56,
+        scale: isMobile ? 1 : 0.96,
         transformOrigin: "center bottom",
       });
 
@@ -59,18 +61,18 @@ export default function BrandsTrust() {
         autoAlpha: 1,
         y: 0,
         scale: 1,
-        duration: 0.85,
-        stagger: 0.1,
+        duration: isMobile ? 0.55 : 0.85,
+        stagger: isMobile ? 0.05 : 0.1,
       }).to(
         cards,
         {
           autoAlpha: 1,
           y: 0,
           scale: 1,
-          duration: 0.75,
-          stagger: 0.08,
+          duration: isMobile ? 0.5 : 0.75,
+          stagger: isMobile ? 0.04 : 0.08,
         },
-        "-=0.45"
+        isMobile ? "-=0.3" : "-=0.45"
       );
     }, section);
 
@@ -83,7 +85,7 @@ export default function BrandsTrust() {
       id="brands"
       className="relative w-full overflow-hidden bg-black font-sans"
     >
-      <div className="pointer-events-none absolute left-1/2 top-0 h-96 w-[40rem] -translate-x-1/2 rounded-full bg-[#ff5f28]/[0.08] blur-3xl" />
+      <div className="pointer-events-none absolute left-1/2 top-0 hidden h-96 w-[40rem] -translate-x-1/2 rounded-full bg-[#ff5f28]/[0.08] blur-3xl md:block" />
 
       <div className="relative mx-auto w-full max-w-[90rem] px-4 py-20 md:px-8 md:py-28 lg:px-12 lg:py-32">
         <div className="mx-auto flex max-w-3xl flex-col items-center text-center">

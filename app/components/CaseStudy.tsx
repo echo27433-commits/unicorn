@@ -5,6 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 
+import { isMobileMotion, prefersReducedMotion, scrubValue } from "../lib/motion";
 import Button from "./Button";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -57,8 +58,10 @@ export default function CaseStudy() {
     const pin = pinRef.current;
     if (!section || !pin) return;
 
-    const prefersReduced =
-      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+    if (prefersReducedMotion()) return;
+
+    const mobile = isMobileMotion();
+    const scrub = scrubValue(0.85);
 
     const ctx = gsap.context(() => {
       const slides = gsap.utils.toArray<HTMLElement>("[data-case-slide]");
@@ -67,16 +70,20 @@ export default function CaseStudy() {
 
       if (slides.length < 2) return;
 
-      gsap.set(slides, { autoAlpha: 0, y: () => window.innerHeight });
-      gsap.set(slides[0], { autoAlpha: 1, y: 0 });
-      gsap.set(images, { autoAlpha: 0, scale: 1.08 });
-      gsap.set(images[0], { autoAlpha: 1, scale: 1 });
+      // Mobile: opacity-only crossfades (no full-viewport y / image scale).
+      if (mobile) {
+        gsap.set(slides, { autoAlpha: 0 });
+        gsap.set(slides[0], { autoAlpha: 1 });
+        gsap.set(images, { autoAlpha: 0 });
+        gsap.set(images[0], { autoAlpha: 1 });
+      } else {
+        gsap.set(slides, { autoAlpha: 0, y: () => window.innerHeight });
+        gsap.set(slides[0], { autoAlpha: 1, y: 0 });
+        gsap.set(images, { autoAlpha: 0, scale: 1.08 });
+        gsap.set(images[0], { autoAlpha: 1, scale: 1 });
+      }
       gsap.set(progressItems, { opacity: 0.28, scaleX: 0.7 });
       gsap.set(progressItems[0], { opacity: 1, scaleX: 1 });
-
-      if (prefersReduced) {
-        return;
-      }
 
       // Keep this section's own pin. Location cover is endTrigger only —
       // a spacer in page.tsx gives scroll room so slides finish before Location covers.
@@ -94,11 +101,11 @@ export default function CaseStudy() {
                 pinSpacing: false,
               }
             : {
-                end: () => `+=${window.innerHeight * slides.length * 1.75}`,
+                end: () => `+=${window.innerHeight * slides.length * (mobile ? 1.2 : 1.75)}`,
               }),
           pin: pin,
-          scrub: 0.85,
-          anticipatePin: 1,
+          scrub,
+          anticipatePin: mobile ? 0 : 1,
           invalidateOnRefresh: true,
           refreshPriority: 0,
         },
@@ -114,57 +121,69 @@ export default function CaseStudy() {
         const currentProgress = progressItems[index];
         const nextProgress = progressItems[index + 1];
 
-        tl.to({}, { duration: 1.1 })
-          .to(
-            currentSlide,
-            {
-              autoAlpha: 0,
-              y: () => -window.innerHeight,
-              duration: 1.45,
-            },
-            "<"
-          )
-          .fromTo(
-            nextSlide,
-            { autoAlpha: 0, y: () => window.innerHeight },
-            {
-              autoAlpha: 1,
-              y: 0,
-              duration: 1.45,
-            },
-            "<"
-          )
-          .to(
-            currentImage,
-            {
-              autoAlpha: 0,
-              scale: 1.08,
-              duration: 1.45,
-            },
-            "<"
-          )
-          .fromTo(
-            nextImage,
-            { autoAlpha: 0, scale: 1.06 },
-            {
-              autoAlpha: 1,
-              scale: 1,
-              duration: 1.45,
-            },
-            "<"
-          );
+        if (mobile) {
+          tl.to({}, { duration: 0.85 })
+            .to(currentSlide, { autoAlpha: 0, duration: 0.9 }, "<")
+            .to(nextSlide, { autoAlpha: 1, duration: 0.9 }, "<")
+            .to(currentImage, { autoAlpha: 0, duration: 0.9 }, "<")
+            .to(nextImage, { autoAlpha: 1, duration: 0.9 }, "<");
+        } else {
+          tl.to({}, { duration: 1.1 })
+            .to(
+              currentSlide,
+              {
+                autoAlpha: 0,
+                y: () => -window.innerHeight,
+                duration: 1.45,
+              },
+              "<"
+            )
+            .fromTo(
+              nextSlide,
+              { autoAlpha: 0, y: () => window.innerHeight },
+              {
+                autoAlpha: 1,
+                y: 0,
+                duration: 1.45,
+              },
+              "<"
+            )
+            .to(
+              currentImage,
+              {
+                autoAlpha: 0,
+                scale: 1.08,
+                duration: 1.45,
+              },
+              "<"
+            )
+            .fromTo(
+              nextImage,
+              { autoAlpha: 0, scale: 1.06 },
+              {
+                autoAlpha: 1,
+                scale: 1,
+                duration: 1.45,
+              },
+              "<"
+            );
+        }
 
         if (currentProgress && nextProgress) {
           tl.to(
             currentProgress,
-            { opacity: 0.28, scaleX: 0.7, duration: 0.55 },
+            { opacity: 0.28, scaleX: 0.7, duration: mobile ? 0.4 : 0.55 },
             "<"
-          ).to(nextProgress, { opacity: 1, scaleX: 1, duration: 0.55 }, "<");
+          ).to(
+            nextProgress,
+            { opacity: 1, scaleX: 1, duration: mobile ? 0.4 : 0.55 },
+            "<"
+          );
         }
       });
 
       // Hold MNS Computer Vision while Our Location slides over
-      tl.to({}, { duration: cover ? 2.2 : 1.0 });
+      tl.to({}, { duration: cover ? (mobile ? 1.4 : 2.2) : 1.0 });
     }, section);
 
     const refresh = () => ScrollTrigger.refresh();
@@ -193,7 +212,7 @@ export default function CaseStudy() {
             <div
               key={study.image}
               data-case-image
-              className="absolute inset-0 will-change-transform"
+              className="absolute inset-0 md:will-change-transform"
             >
               <Image
                 src={study.image}
@@ -224,7 +243,7 @@ export default function CaseStudy() {
               <div
                 key={study.title}
                 data-case-slide
-                className="absolute inset-0 flex items-end will-change-transform"
+                className="absolute inset-0 flex items-end md:will-change-transform"
               >
                 <div className="mx-auto w-full max-w-7xl px-4 pb-28 pt-28 md:px-8 md:pb-32 md:pt-32 lg:px-12 lg:pb-36">
                   <div className="pointer-events-auto flex max-w-6xl flex-col gap-10 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
@@ -252,7 +271,7 @@ export default function CaseStudy() {
                     </div>
 
                     <div className="shrink-0 lg:pb-2">
-                      <div className="inline-flex items-center rounded-2xl border border-white/15 bg-black/55 px-6 py-5 backdrop-blur-md md:px-8 md:py-6">
+                      <div className="inline-flex items-center rounded-2xl border border-white/15 bg-black/80 px-6 py-5 md:bg-black/55 md:px-8 md:py-6 md:backdrop-blur-md">
                         <Image
                           src={study.logo}
                           alt={study.logoAlt}

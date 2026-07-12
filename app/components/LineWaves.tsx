@@ -169,7 +169,8 @@ export default function LineWaves({
   useEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    const mobile = window.matchMedia("(max-width: 767px)").matches;
+    const dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1 : 1.5);
     const renderer = new Renderer({
       alpha: true,
       premultipliedAlpha: false,
@@ -184,7 +185,13 @@ export default function LineWaves({
     let animationFrameId = 0;
     let isVisible = true;
     let isPageVisible = document.visibilityState !== "hidden";
+    let isScrollPaused = false;
     let isRunning = false;
+
+    // Lower shader cost on phones.
+    const effectiveInner = mobile ? Math.min(innerLineCount, 22) : innerLineCount;
+    const effectiveOuter = mobile ? Math.min(outerLineCount, 26) : outerLineCount;
+    const effectiveWarp = mobile ? Math.min(warpIntensity, 0.85) : warpIntensity;
 
     function handleMouseMove(e: MouseEvent) {
       const rect = gl.canvas.getBoundingClientRect();
@@ -222,9 +229,9 @@ export default function LineWaves({
           value: [gl.canvas.width, gl.canvas.height, gl.canvas.width / gl.canvas.height],
         },
         uSpeed: { value: speed },
-        uInnerLines: { value: innerLineCount },
-        uOuterLines: { value: outerLineCount },
-        uWarpIntensity: { value: warpIntensity },
+        uInnerLines: { value: effectiveInner },
+        uOuterLines: { value: effectiveOuter },
+        uWarpIntensity: { value: effectiveWarp },
         uRotation: { value: rotationRad },
         uEdgeFadeWidth: { value: edgeFadeWidth },
         uColorCycleSpeed: { value: colorCycleSpeed },
@@ -278,9 +285,22 @@ export default function LineWaves({
     }
 
     function syncPlayback() {
-      if (isVisible && isPageVisible) start();
+      if (isVisible && isPageVisible && !isScrollPaused) start();
       else stop();
     }
+
+    const host =
+      (container.closest("header") as HTMLElement | null) ?? container;
+
+    const pauseObserver = new MutationObserver(() => {
+      isScrollPaused = host.hasAttribute("data-waves-paused");
+      syncPlayback();
+    });
+    pauseObserver.observe(host, {
+      attributes: true,
+      attributeFilter: ["data-waves-paused"],
+    });
+    isScrollPaused = host.hasAttribute("data-waves-paused");
 
     const intersectionObserver = new IntersectionObserver(
       ([entry]) => {
@@ -301,6 +321,7 @@ export default function LineWaves({
 
     return () => {
       stop();
+      pauseObserver.disconnect();
       intersectionObserver.disconnect();
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("resize", resize);

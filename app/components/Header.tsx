@@ -11,7 +11,7 @@ const Header = forwardRef<HTMLElement>(function Header(_, ref) {
 
       <header
         ref={ref}
-        className="relative z-0 flex min-h-[100svh] flex-col overflow-hidden bg-black will-change-transform md:min-h-screen"
+        className="relative z-0 flex min-h-[100svh] flex-col overflow-hidden bg-black md:min-h-screen md:will-change-transform"
         style={{ transformOrigin: "center center" }}
       >
         <div

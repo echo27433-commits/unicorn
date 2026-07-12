@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
 
+import { isMobileMotion, prefersReducedMotion, scrubValue } from "../lib/motion";
 import CustomerResults from "./CustomerResults";
 import Header from "./Header";
 
@@ -18,10 +19,10 @@ export default function ScrollHeroCover() {
     const cover = coverRef.current;
     if (!hero || !cover) return;
 
-    const prefersReduced =
-      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+    if (prefersReducedMotion()) return;
 
-    if (prefersReduced) return;
+    const mobile = isMobileMotion();
+    const scrub = scrubValue(0.9);
 
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
@@ -31,43 +32,72 @@ export default function ScrollHeroCover() {
         end: "top top",
         pin: true,
         pinSpacing: false,
-        anticipatePin: 1,
+        anticipatePin: mobile ? 0 : 1,
       });
 
-      gsap.fromTo(
-        hero,
-        { scale: 1, opacity: 1 },
-        {
-          scale: 0.94,
-          opacity: 0.5,
-          ease: "none",
-          scrollTrigger: {
-            trigger: cover,
-            start: "top bottom",
-            end: "top top",
-            scrub: 0.9,
-          },
-        }
-      );
+      // Pause WebGL waves once the next section covers the hero (pinned hero
+      // stays "visible" to IntersectionObserver otherwise).
+      ScrollTrigger.create({
+        trigger: cover,
+        start: "top 92%",
+        onEnter: () => hero.setAttribute("data-waves-paused", ""),
+        onLeaveBack: () => hero.removeAttribute("data-waves-paused"),
+      });
 
-      gsap.fromTo(
-        cover,
-        {
-          borderRadius: "32px 32px 0px 0px",
-          boxShadow: "0 -12px 40px rgba(0,0,0,0)",
-        },
-        {
-          borderRadius: "0px 0px 0px 0px",
-          boxShadow: "0 -32px 90px rgba(0,0,0,0.5)",
-          ease: "none",
-          scrollTrigger: {
-            trigger: cover,
-            start: "top bottom",
-            end: "top top",
-            scrub: 0.9,
+      if (mobile) {
+        // Transform-only opacity fade — skip scale / radius / shadow paints.
+        gsap.fromTo(
+          hero,
+          { opacity: 1 },
+          {
+            opacity: 0.35,
+            ease: "none",
+            force3D: true,
+            scrollTrigger: {
+              trigger: cover,
+              start: "top bottom",
+              end: "top top",
+              scrub,
+            },
+          }
+        );
+      } else {
+        gsap.fromTo(
+          hero,
+          { scale: 1, opacity: 1 },
+          {
+            scale: 0.94,
+            opacity: 0.5,
+            ease: "none",
+            force3D: true,
+            scrollTrigger: {
+              trigger: cover,
+              start: "top bottom",
+              end: "top top",
+              scrub,
+            },
+          }
+        );
+
+        gsap.fromTo(
+          cover,
+          {
+            borderRadius: "32px 32px 0px 0px",
+            boxShadow: "0 -12px 40px rgba(0,0,0,0)",
           },
-        }
-      );
+          {
+            borderRadius: "0px 0px 0px 0px",
+            boxShadow: "0 -32px 90px rgba(0,0,0,0.5)",
+            ease: "none",
+            scrollTrigger: {
+              trigger: cover,
+              start: "top bottom",
+              end: "top top",
+              scrub,
+            },
+          }
+        );
+      }
     });
 
     const refresh = () => ScrollTrigger.refresh();
@@ -77,6 +107,7 @@ export default function ScrollHeroCover() {
     return () => {
       window.removeEventListener("load", refresh);
       window.clearTimeout(timeout);
+      hero.removeAttribute("data-waves-paused");
       ctx.revert();
     };
   }, []);
@@ -86,7 +117,7 @@ export default function ScrollHeroCover() {
       <Header ref={heroRef} />
       <div
         ref={coverRef}
-        className="relative z-20 overflow-hidden will-change-transform"
+        className="relative z-20 overflow-hidden md:will-change-transform"
       >
         <CustomerResults />
       </div>
