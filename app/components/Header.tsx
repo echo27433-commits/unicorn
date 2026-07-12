@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 
 import Hero from "./Hero";
-import LineWaves from "./LineWaves";
+import LineWaves from "./DynamicLineWaves";
 import Navbar from "./Navbar";
 
 const Header = forwardRef<HTMLElement>(function Header(_, ref) {

@@ -83,6 +83,7 @@ export default function Footer() {
                 alt="unicorn"
                 width={140}
                 height={40}
+                sizes="140px"
                 className="h-7 w-auto shrink-0 object-contain sm:h-8"
               />
               <p className="text-sm font-medium text-white md:text-base">
@@ -133,7 +134,7 @@ export default function Footer() {
           alt="unicorn"
           width={1600}
           height={320}
-          priority
+          sizes="(max-width: 1440px) 100vw, 1440px"
           className="mx-auto h-auto w-full max-w-[90rem] object-contain"
         />
       </div>

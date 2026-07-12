@@ -244,8 +244,8 @@ export default function ServicesPageClient() {
                     alt="ECHO — powered by unicorn"
                     width={640}
                     height={180}
+                    sizes="(max-width: 768px) 70vw, 280px"
                     className="h-20 w-auto object-contain object-left md:h-28 lg:h-32"
-                    priority
                   />
 
                   <h3 className="mt-8 text-3xl font-light leading-[1.1] tracking-tight text-black md:mt-10 md:text-4xl lg:text-5xl">

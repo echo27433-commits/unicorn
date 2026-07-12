@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 
 import Button from "./Button";
-import LineWaves from "./LineWaves";
+import LineWaves from "./DynamicLineWaves";
 import Navbar from "./Navbar";
 
 const regions = ["UAE", "Saudi Arabia", "Bahrain", "Qatar", "India"];

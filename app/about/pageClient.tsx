@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -118,6 +118,8 @@ function setupCover(
   cover: HTMLElement,
   pinnedInner?: HTMLElement | null
 ) {
+  const scrubTarget = pinnedInner ?? pinned;
+
   ScrollTrigger.create({
     trigger: pinned,
     start: "top top",
@@ -126,20 +128,23 @@ function setupCover(
     pin: true,
     pinSpacing: false,
     anticipatePin: 1,
+    fastScrollEnd: true,
   });
 
   gsap.fromTo(
-    pinnedInner ?? pinned,
-    { scale: 1, opacity: pinnedInner ? 1 : 1 },
+    scrubTarget,
+    { scale: 1, ...(pinnedInner ? {} : { opacity: 1 }) },
     {
-      scale: 0.94,
-      ...(pinnedInner ? {} : { opacity: 0.5 }),
+      scale: 0.96,
+      ...(pinnedInner ? {} : { opacity: 0.55 }),
       ease: "none",
+      force3D: true,
       scrollTrigger: {
         trigger: cover,
         start: "top bottom",
         end: "top top",
-        scrub: 0.9,
+        scrub: 0.5,
+        fastScrollEnd: true,
       },
     }
   );
@@ -147,18 +152,19 @@ function setupCover(
   gsap.fromTo(
     cover,
     {
-      borderRadius: "32px 32px 0px 0px",
-      boxShadow: "0 -12px 40px rgba(0,0,0,0)",
+      borderRadius: "28px 28px 0px 0px",
+      boxShadow: "0 -8px 24px rgba(0,0,0,0)",
     },
     {
       borderRadius: "0px 0px 0px 0px",
-      boxShadow: "0 -32px 90px rgba(0,0,0,0.5)",
+      boxShadow: "0 -20px 48px rgba(0,0,0,0.35)",
       ease: "none",
       scrollTrigger: {
         trigger: cover,
         start: "top bottom",
         end: "top top",
-        scrub: 0.9,
+        scrub: 0.5,
+        fastScrollEnd: true,
       },
     }
   );
@@ -174,130 +180,76 @@ export default function AboutPageClient() {
   const reducedMotion = useReducedMotion();
   const [openFaq, setOpenFaq] = useState(1);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const root = rootRef.current;
     const header = headerRef.current;
     const mission = missionRef.current;
     const missionInner = missionInnerRef.current;
     const why = whyRef.current;
     const how = howRef.current;
-    if (!header || !mission || !why || !how) return;
+    if (!root || !header || !mission || !why || !how) return;
 
-    const prefersReduced =
-      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-    if (prefersReduced) return;
+    if (reducedMotion) return;
 
     const ctx = gsap.context(() => {
       setupCover(header, mission);
       setupCover(mission, why, missionInner);
 
-      // Don't pin Why under How — tall card grid gets clipped. Keep cover entrance only.
       gsap.fromTo(
         how,
         {
-          borderRadius: "32px 32px 0px 0px",
-          boxShadow: "0 -12px 40px rgba(0,0,0,0)",
+          borderRadius: "28px 28px 0px 0px",
+          boxShadow: "0 -8px 24px rgba(0,0,0,0)",
         },
         {
           borderRadius: "0px 0px 0px 0px",
-          boxShadow: "0 -32px 90px rgba(0,0,0,0.5)",
+          boxShadow: "0 -20px 48px rgba(0,0,0,0.35)",
           ease: "none",
           scrollTrigger: {
             trigger: how,
             start: "top bottom",
             end: "top top",
-            scrub: 0.9,
+            scrub: 0.5,
+            fastScrollEnd: true,
           },
         }
       );
-    });
 
-    const refresh = () => ScrollTrigger.refresh();
-    window.addEventListener("load", refresh);
-    const t1 = window.setTimeout(refresh, 250);
-    const t2 = window.setTimeout(refresh, 700);
-
-    return () => {
-      window.removeEventListener("load", refresh);
-      window.clearTimeout(t1);
-      window.clearTimeout(t2);
-      ctx.revert();
-    };
-  }, []);
-
-  useLayoutEffect(() => {
-    if (reducedMotion) return;
-    if (!rootRef.current) return;
-
-    const ctx = gsap.context(() => {
+      /* —— Section reveals (transform + opacity only) —— */
       const groups = gsap.utils.toArray<HTMLElement>("[data-reveal]");
 
       groups.forEach((group) => {
         const items = group.querySelectorAll<HTMLElement>("[data-reveal-item]");
+        if (!items.length) return;
+
         const isCardStagger = group.hasAttribute("data-stagger-cards");
 
         gsap.set(items, {
           opacity: 0,
-          y: isCardStagger ? 48 : 20,
-          ...(isCardStagger ? { scale: 0.96 } : {}),
+          y: isCardStagger ? 32 : 16,
+          force3D: true,
         });
 
         ScrollTrigger.create({
           trigger: group,
-          start: isCardStagger ? "top 82%" : "top 78%",
+          start: "top 85%",
           once: true,
+          fastScrollEnd: true,
           onEnter: () => {
             gsap.to(items, {
               opacity: 1,
               y: 0,
-              ...(isCardStagger ? { scale: 1 } : {}),
-              duration: isCardStagger ? 0.75 : 0.8,
-              ease: "power3.out",
-              stagger: isCardStagger ? 0.22 : 0.08,
+              duration: isCardStagger ? 0.55 : 0.6,
+              ease: "power2.out",
+              stagger: isCardStagger ? 0.1 : 0.06,
+              overwrite: "auto",
             });
           },
         });
       });
 
-      const timelineCards =
-        gsap.utils.toArray<HTMLElement>("[data-timeline-card]");
-
-      const timelineCardState = timelineCards.map((card) => {
-        const side = card.getAttribute("data-side");
-        const num = card.querySelector<HTMLElement>("[data-timeline-num]");
-        const dot = card.querySelector<HTMLElement>("[data-timeline-dot]");
-        const fromX = side === "right" ? 72 : -72;
-
-        gsap.set(card, { opacity: 0, x: fromX, y: 36 });
-        if (num) {
-          gsap.set(num, {
-            color: "rgba(255,255,255,0.04)",
-            scale: 0.92,
-            transformOrigin: "100% 0%",
-          });
-        }
-        if (dot) {
-          gsap.set(dot, { backgroundColor: "#000000", scale: 0.7 });
-        }
-
-        ScrollTrigger.create({
-          trigger: card,
-          start: "top 82%",
-          once: true,
-          onEnter: () => {
-            gsap.to(card, {
-              opacity: 1,
-              x: 0,
-              y: 0,
-              duration: 0.9,
-              ease: "power3.out",
-            });
-          },
-        });
-
-        return { card, num, dot, lit: false };
-      });
-
-      const timelineTrack = rootRef.current?.querySelector<HTMLElement>(
+      /* —— Why Unicorn timeline —— */
+      const timelineTrack = root.querySelector<HTMLElement>(
         "[data-timeline-track]"
       );
       const timelineProgress = timelineTrack?.querySelector<HTMLElement>(
@@ -306,83 +258,150 @@ export default function AboutPageClient() {
       const timelineTip = timelineTrack?.querySelector<HTMLElement>(
         "[data-timeline-tip]"
       );
+      const timelineCards =
+        gsap.utils.toArray<HTMLElement>("[data-timeline-card]");
 
-      const syncTimelineGlow = (progress: number) => {
+      type CardState = {
+        card: HTMLElement;
+        num: HTMLElement | null;
+        dot: HTMLElement | null;
+        lit: boolean;
+        threshold: number;
+      };
+
+      const timelineCardState: CardState[] = timelineCards.map((card) => {
+        const side = card.getAttribute("data-side");
+        const num = card.querySelector<HTMLElement>("[data-timeline-num]");
+        const dot = card.querySelector<HTMLElement>("[data-timeline-dot]");
+        const fromX = side === "right" ? 48 : -48;
+
+        gsap.set(card, { opacity: 0, x: fromX, y: 24, force3D: true });
+        if (num) {
+          gsap.set(num, {
+            color: "rgba(255,255,255,0.04)",
+            scale: 0.94,
+            transformOrigin: "100% 0%",
+          });
+        }
+        if (dot) {
+          gsap.set(dot, { backgroundColor: "#000000", scale: 0.75 });
+        }
+
+        ScrollTrigger.create({
+          trigger: card,
+          start: "top 88%",
+          once: true,
+          fastScrollEnd: true,
+          onEnter: () => {
+            gsap.to(card, {
+              opacity: 1,
+              x: 0,
+              y: 0,
+              duration: 0.65,
+              ease: "power2.out",
+              overwrite: "auto",
+            });
+          },
+        });
+
+        return { card, num, dot, lit: false, threshold: 0 };
+      });
+
+      const measureThresholds = () => {
         if (!timelineTrack) return;
-
-        const trackRect = timelineTrack.getBoundingClientRect();
-        const tipY = trackRect.top + trackRect.height * progress;
+        const trackTop = timelineTrack.getBoundingClientRect().top;
+        const trackHeight = timelineTrack.offsetHeight || 1;
 
         timelineCardState.forEach((state) => {
-          if (!state.dot) return;
-
+          if (!state.dot) {
+            state.threshold = 1;
+            return;
+          }
           const dotRect = state.dot.getBoundingClientRect();
-          const dotY = dotRect.top + dotRect.height / 2;
-          const shouldLit = tipY >= dotY - 6;
+          const dotY = dotRect.top + dotRect.height / 2 - trackTop;
+          state.threshold = Math.min(1, Math.max(0, dotY / trackHeight));
+        });
+      };
 
+      const syncTimelineGlow = (progress: number) => {
+        timelineCardState.forEach((state) => {
+          const shouldLit = progress >= state.threshold - 0.01;
           if (shouldLit === state.lit) return;
           state.lit = shouldLit;
 
           if (state.num) {
             gsap.to(state.num, {
               color: shouldLit ? "#ff5f28" : "rgba(255,255,255,0.04)",
-              scale: shouldLit ? 1 : 0.92,
-              duration: 0.45,
+              scale: shouldLit ? 1 : 0.94,
+              duration: 0.35,
               ease: "power2.out",
               overwrite: "auto",
             });
           }
 
-          gsap.to(state.dot, {
-            backgroundColor: shouldLit ? "#ff5f28" : "#000000",
-            scale: shouldLit ? 1 : 0.7,
-            duration: 0.4,
-            ease: shouldLit ? "back.out(2)" : "power2.out",
-            overwrite: "auto",
-          });
+          if (state.dot) {
+            gsap.to(state.dot, {
+              backgroundColor: shouldLit ? "#ff5f28" : "#000000",
+              scale: shouldLit ? 1 : 0.75,
+              duration: 0.3,
+              ease: "power2.out",
+              overwrite: "auto",
+            });
+          }
         });
       };
 
       if (timelineTrack && timelineProgress) {
+        measureThresholds();
         gsap.set(timelineProgress, {
           scaleY: 0,
           transformOrigin: "top center",
+          force3D: true,
         });
 
-        gsap.to(timelineProgress, {
-          scaleY: 1,
-          ease: "none",
+        const glowTl = gsap.timeline({
           scrollTrigger: {
             trigger: timelineTrack,
-            start: "top 70%",
-            end: "bottom 30%",
-            scrub: 0.4,
+            start: "top 75%",
+            end: "bottom 35%",
+            scrub: 0.35,
+            fastScrollEnd: true,
+            invalidateOnRefresh: true,
+            onRefresh: (self) => {
+              measureThresholds();
+              syncTimelineGlow(self.progress);
+            },
             onUpdate: (self) => syncTimelineGlow(self.progress),
-            onRefresh: (self) => syncTimelineGlow(self.progress),
           },
         });
-      }
 
-      if (timelineTrack && timelineTip) {
-        gsap.fromTo(
-          timelineTip,
-          { top: "0%", yPercent: -50 },
-          {
-            top: "100%",
-            yPercent: -50,
-            ease: "none",
-            scrollTrigger: {
-              trigger: timelineTrack,
-              start: "top 70%",
-              end: "bottom 30%",
-              scrub: 0.4,
-            },
-          }
+        glowTl.fromTo(
+          timelineProgress,
+          { scaleY: 0 },
+          { scaleY: 1, ease: "none" },
+          0
         );
-      }
-    }, rootRef);
 
-    return () => ctx.revert();
+        if (timelineTip) {
+          glowTl.fromTo(
+            timelineTip,
+            { top: "0%", yPercent: -50 },
+            { top: "100%", yPercent: -50, ease: "none" },
+            0
+          );
+        }
+      }
+    }, root);
+
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener("load", refresh);
+    const t1 = window.setTimeout(refresh, 200);
+
+    return () => {
+      window.removeEventListener("load", refresh);
+      window.clearTimeout(t1);
+      ctx.revert();
+    };
   }, [reducedMotion]);
 
   return (
@@ -392,9 +411,9 @@ export default function AboutPageClient() {
       {/* White — Mission / Vision */}
       <div
         ref={missionRef}
-        className="relative z-20 overflow-hidden bg-white will-change-transform"
+        className="relative z-20 overflow-hidden bg-white"
       >
-        <div ref={missionInnerRef} className="origin-center will-change-transform">
+        <div ref={missionInnerRef} className="origin-center">
           <section className="relative mx-auto w-full max-w-[90rem] px-5 py-20 md:px-8 md:py-28 lg:px-12 lg:py-32">
             <div
               data-reveal
@@ -475,21 +494,19 @@ export default function AboutPageClient() {
                 </div>
               </div>
             </div>
-          </section>        </div>
+          </section>
+        </div>
       </div>
 
       {/* Black — Why Unicorn */}
-      <div
-        ref={whyRef}
-        className="relative z-30 bg-black will-change-transform"
-      >
+      <div ref={whyRef} className="relative z-30 bg-black">
         <section className="relative mx-auto w-full max-w-[90rem] px-5 py-20 pb-28 md:px-8 md:py-28 md:pb-36 lg:px-12 lg:py-32 lg:pb-40">
             <div
-              className="pointer-events-none absolute -left-24 top-24 h-80 w-80 rounded-full bg-[#ff5f28]/[0.07] blur-3xl"
+              className="pointer-events-none absolute -left-16 top-20 h-64 w-64 rounded-full bg-[#ff5f28]/[0.06]"
               aria-hidden
             />
             <div
-              className="pointer-events-none absolute -right-20 bottom-16 h-72 w-72 rounded-full bg-[#ff5f28]/[0.05] blur-3xl"
+              className="pointer-events-none absolute -right-12 bottom-12 h-56 w-56 rounded-full bg-[#ff5f28]/[0.04]"
               aria-hidden
             />
 
@@ -530,26 +547,22 @@ export default function AboutPageClient() {
                 className="pointer-events-none absolute left-4 top-0 bottom-0 w-px bg-white/15 md:left-1/2 md:-translate-x-1/2"
                 aria-hidden
               />
-              {/* Filled glow that stays from 01 → current scroll position */}
               <div
                 data-timeline-progress
                 className="pointer-events-none absolute left-4 top-0 z-[1] h-full w-[2px] -translate-x-1/2 md:left-1/2"
                 style={{
                   background:
-                    "linear-gradient(to bottom, #ff5f28 0%, #ff8f5c 50%, #ff5f28 100%)",
-                  boxShadow:
-                    "0 0 12px 1px rgba(255,95,40,0.75), 0 0 28px 4px rgba(255,95,40,0.35)",
+                    "linear-gradient(to bottom, #ff5f28 0%, #ff8f5c 55%, #ff5f28 100%)",
+                  boxShadow: "0 0 10px 1px rgba(255,95,40,0.45)",
                 }}
                 aria-hidden
               />
-              {/* Bright tip at the leading edge */}
               <div
                 data-timeline-tip
-                className="pointer-events-none absolute left-4 z-[2] h-24 w-16 -translate-x-1/2 md:left-1/2 md:w-20"
+                className="pointer-events-none absolute left-4 z-[2] h-16 w-10 -translate-x-1/2 md:left-1/2 md:w-12"
                 style={{
                   background:
-                    "radial-gradient(ellipse at center, rgba(255,95,40,0.7) 0%, rgba(255,95,40,0.25) 35%, transparent 70%)",
-                  filter: "blur(6px)",
+                    "radial-gradient(ellipse at center, rgba(255,95,40,0.55) 0%, rgba(255,95,40,0.15) 45%, transparent 72%)",
                 }}
                 aria-hidden
               />
@@ -575,7 +588,7 @@ export default function AboutPageClient() {
                       />
 
                       <article
-                        className={`group relative w-full overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.03] p-7 transition-colors duration-300 hover:border-[#ff5f28]/45 hover:bg-white/[0.05] md:w-[calc(50%-2.5rem)] md:p-9 lg:w-[calc(50%-3.5rem)] ${
+                        className={`group relative w-full overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.03] p-7 transition-colors duration-200 hover:border-[#ff5f28]/45 hover:bg-white/[0.05] md:w-[calc(50%-2.5rem)] md:p-9 lg:w-[calc(50%-3.5rem)] ${
                           isLeft ? "md:mr-auto" : "md:ml-auto"
                         }`}
                       >
@@ -612,10 +625,7 @@ export default function AboutPageClient() {
       </div>
 
       {/* White — How we work */}
-      <div
-        ref={howRef}
-        className="relative z-40 overflow-hidden bg-white will-change-transform"
-      >
+      <div ref={howRef} className="relative z-40 overflow-hidden bg-white">
         <section className="relative mx-auto w-full max-w-[90rem] px-5 py-20 md:px-8 md:py-28 lg:px-12 lg:py-32">
           <div
             data-reveal
@@ -659,7 +669,7 @@ export default function AboutPageClient() {
                 <article
                   key={item.title}
                   data-reveal-item
-                  className="flex min-h-[320px] flex-col overflow-hidden rounded-[1.25rem] border border-black/10 bg-white shadow-[0_12px_40px_-24px_rgba(0,0,0,0.25)] md:min-h-[360px]"
+                  className="flex min-h-[300px] flex-col overflow-hidden rounded-[1.25rem] border border-black/10 bg-white md:min-h-[340px]"
                 >
                   <div className="relative flex flex-1 flex-col overflow-hidden px-8 pb-10 pt-10 md:px-9 md:pt-12">
                     <span
@@ -719,7 +729,7 @@ export default function AboutPageClient() {
                   return (
                     <div
                       key={faq.question}
-                      className={`overflow-hidden rounded-2xl transition-colors duration-300 ${
+                      className={`overflow-hidden rounded-2xl transition-colors duration-200 ${
                         open
                           ? "bg-black text-white"
                           : "bg-[#efefef] text-black"
@@ -751,7 +761,11 @@ export default function AboutPageClient() {
                         }`}
                       >
                         <div className="overflow-hidden">
-                          <p className="px-5 pb-5 text-sm leading-relaxed text-white/70 md:px-6 md:pb-6 md:text-base">
+                          <p
+                            className={`px-5 pb-5 text-sm leading-relaxed md:px-6 md:pb-6 md:text-base ${
+                              open ? "text-white/70" : "text-black/55"
+                            }`}
+                          >
                             {faq.answer}
                           </p>
                         </div>

@@ -150,6 +150,7 @@ export default function BrandsTrust() {
                 alt={brand.name}
                 width={280}
                 height={90}
+                sizes="(max-width: 768px) 40vw, 180px"
                 className="h-12 w-auto max-w-full object-contain opacity-80 transition-opacity duration-300 group-hover:opacity-100 md:h-16 lg:h-[4.5rem]"
               />
             </div>

@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 
 import Button from "./Button";
-import LineWaves from "./LineWaves";
+import LineWaves from "./DynamicLineWaves";
 import Navbar from "./Navbar";
 
 const AboutHeader = forwardRef<HTMLElement>(function AboutHeader(_, ref) {

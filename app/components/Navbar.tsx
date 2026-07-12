@@ -71,6 +71,7 @@ export default function Navbar() {
               width={180}
               height={52}
               priority
+              sizes="180px"
               className={`w-auto transition-all duration-300 ease-out ${
                 scrolled ? "h-7 md:h-8" : "h-10 md:h-12"
               }`}

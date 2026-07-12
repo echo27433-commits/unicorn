@@ -185,7 +185,6 @@ export default function Reviews() {
               fill
               className="object-cover object-[center_20%]"
               sizes="(max-width: 1024px) 100vw, 42vw"
-              priority
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent" />
 
@@ -199,6 +198,7 @@ export default function Reviews() {
                   alt={featured.name}
                   width={44}
                   height={44}
+                  sizes="44px"
                   className="h-11 w-11 rounded-full object-cover ring-2 ring-white/40"
                 />
                 <div>
@@ -235,6 +235,7 @@ export default function Reviews() {
                     alt={review.name}
                     width={44}
                     height={44}
+                    sizes="44px"
                     className="h-11 w-11 rounded-full object-cover"
                   />
                   <div>
