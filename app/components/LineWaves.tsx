@@ -206,7 +206,10 @@ export default function LineWaves({
     }
 
     function resize() {
-      renderer.setSize(container.offsetWidth, container.offsetHeight);
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+      if (!width || !height) return;
+      renderer.setSize(width, height);
       if (program) {
         program.uniforms.uResolution.value = [
           gl.canvas.width,
@@ -216,7 +219,8 @@ export default function LineWaves({
       }
     }
     window.addEventListener("resize", resize);
-    resize();
+    // Defer first layout read to next frame to avoid forced reflow during paint.
+    requestAnimationFrame(resize);
 
     const geometry = new Triangle(gl);
     const rotationRad = (rotation * Math.PI) / 180;

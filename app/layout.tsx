@@ -8,6 +8,8 @@ const ubuntu = Ubuntu({
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
   variable: "--font-ubuntu",
+  display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {

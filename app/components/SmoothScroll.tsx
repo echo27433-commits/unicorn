@@ -68,8 +68,6 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
         smoothWheel: true,
         anchors: true,
         allowNestedScroll: true,
-        // Native touch scrolling — do not call lenis.stop() on mobile
-        // (that sets overflow:clip and locks the page).
         syncTouch: false,
         touchMultiplier: 1.5,
         wheelMultiplier: 0.95,

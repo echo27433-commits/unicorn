@@ -27,6 +27,8 @@ export default function PageHeaderBackdrop({
   intensity = "default",
 }: PageHeaderBackdropProps) {
   const [isMobile, setIsMobile] = useState(false);
+  // Defer WebGL until after first paint — CSS glow covers the gap (helps LCP).
+  const [showWaves, setShowWaves] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
@@ -34,6 +36,34 @@ export default function PageHeaderBackdrop({
     sync();
     mq.addEventListener("change", sync);
     return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    const reduced =
+      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+    if (reduced) return;
+
+    let cancelled = false;
+    let idleId = 0;
+    let timeoutId = 0;
+
+    const enable = () => {
+      if (!cancelled) setShowWaves(true);
+    };
+
+    if (typeof window.requestIdleCallback === "function") {
+      idleId = window.requestIdleCallback(enable, { timeout: 1800 });
+    } else {
+      timeoutId = window.setTimeout(enable, 400);
+    }
+
+    return () => {
+      cancelled = true;
+      if (idleId && typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
   }, []);
 
   const wavesMask = isMobile ? mobileWavesMask : desktopWavesMask;
@@ -48,21 +78,23 @@ export default function PageHeaderBackdrop({
           WebkitMaskImage: wavesMask,
         }}
       >
-        <LineWaves
-          key={`${isMobile ? "mobile" : "desktop"}-${intensity}`}
-          speed={isMobile ? 0.11 : isHome ? 0.16 : 0.14}
-          innerLineCount={isMobile ? 26 : isHome ? 44 : 40}
-          outerLineCount={isMobile ? 30 : isHome ? 52 : 48}
-          warpIntensity={isMobile ? 0.95 : isHome ? 1.25 : 1.15}
-          rotation={isMobile ? -24 : -38}
-          edgeFadeWidth={isMobile ? 0.14 : 0.08}
-          colorCycleSpeed={isMobile ? 0.45 : isHome ? 0.65 : 0.55}
-          brightness={isMobile ? 0.58 : isHome ? 0.68 : 0.62}
-          color1="#ff5f28"
-          color2="#ffc49a"
-          color3="#ff3a00"
-          enableMouseInteraction={false}
-        />
+        {showWaves ? (
+          <LineWaves
+            key={`${isMobile ? "mobile" : "desktop"}-${intensity}`}
+            speed={isMobile ? 0.11 : isHome ? 0.16 : 0.14}
+            innerLineCount={isMobile ? 26 : isHome ? 44 : 40}
+            outerLineCount={isMobile ? 30 : isHome ? 52 : 48}
+            warpIntensity={isMobile ? 0.95 : isHome ? 1.25 : 1.15}
+            rotation={isMobile ? -24 : -38}
+            edgeFadeWidth={isMobile ? 0.14 : 0.08}
+            colorCycleSpeed={isMobile ? 0.45 : isHome ? 0.65 : 0.55}
+            brightness={isMobile ? 0.58 : isHome ? 0.68 : 0.62}
+            color1="#ff5f28"
+            color2="#ffc49a"
+            color3="#ff3a00"
+            enableMouseInteraction={false}
+          />
+        ) : null}
       </div>
 
       <div

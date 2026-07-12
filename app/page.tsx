@@ -1,8 +1,22 @@
-import BrandsTrust from "./components/BrandsTrust";
-import CaseStudy from "./components/CaseStudy";
-import LocationCover from "./components/LocationCover";
-import NewsletterCover from "./components/NewsletterCover";
+import dynamic from "next/dynamic";
+
 import ScrollHeroCover from "./components/ScrollHeroCover";
+
+const CaseStudy = dynamic(() => import("./components/CaseStudy"), {
+  loading: () => <div className="h-[100vh] min-h-[640px] w-full bg-black" aria-hidden />,
+});
+
+const LocationCover = dynamic(() => import("./components/LocationCover"), {
+  loading: () => <div className="min-h-[50vh] w-full bg-black" aria-hidden />,
+});
+
+const BrandsTrust = dynamic(() => import("./components/BrandsTrust"), {
+  loading: () => <div className="min-h-[40vh] w-full bg-black" aria-hidden />,
+});
+
+const NewsletterCover = dynamic(() => import("./components/NewsletterCover"), {
+  loading: () => <div className="min-h-[50vh] w-full bg-black" aria-hidden />,
+});
 
 export default function Home() {
   return (

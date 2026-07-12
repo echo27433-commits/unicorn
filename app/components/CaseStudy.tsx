@@ -18,7 +18,7 @@ const caseStudies = [
     description:
       "A connected retail experience that unifies in-store operations, customer journeys, and real-time insights across hypermarket environments.",
     image:
-      "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=2400&q=80",
+      "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1400&q=70",
     imageAlt: "Modern supermarket aisle with product shelves",
     logo: "/brands/mark_save_logo_dark.png",
     logoAlt: "Märk & Save",
@@ -30,7 +30,7 @@ const caseStudies = [
     description:
       "Digital platforms and intelligent systems that accelerate sustainable energy initiatives and operational excellence at scale.",
     image:
-      "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=2400&q=80",
+      "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1400&q=70",
     imageAlt: "Solar panels under a clear sky",
     logo: "/brands/masdar_logo_dark.png",
     logoAlt: "Masdar",
@@ -42,7 +42,7 @@ const caseStudies = [
     description:
       "AI-powered computer vision that transforms shelf intelligence, shopper analytics, and store operations into measurable growth.",
     image:
-      "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=2400&q=80",
+      "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1400&q=70",
     imageAlt: "Robotics and computer vision technology",
     logo: "/brands/salesforce_logo_dark.png",
     logoAlt: "Salesforce",
@@ -218,8 +218,9 @@ export default function CaseStudy() {
                 src={study.image}
                 alt={study.imageAlt}
                 fill
-                priority={index === 0}
-                sizes="100vw"
+                loading={index === 0 ? "eager" : "lazy"}
+                sizes="(max-width: 768px) 100vw, 100vw"
+                quality={70}
                 className="object-cover"
               />
             </div>
