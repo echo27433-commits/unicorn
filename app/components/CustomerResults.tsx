@@ -260,29 +260,6 @@ export default function CustomerResults() {
                 loyalty, and growth — helping teams automate engagement and
                 deliver measurable outcomes at scale.
               </p>
-
-              <Link
-                href="#contact"
-                className="btn btn--primary group mt-10 inline-flex items-center gap-3 md:mt-12 md:text-lg"
-              >
-                Visit Echo
-                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#ff5f28] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                  <svg
-                    className="h-3.5 w-3.5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={2.5}
-                    aria-hidden
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M7 17L17 7M17 7H9M17 7V15"
-                    />
-                  </svg>
-                </span>
-              </Link>
             </div>
           </div>
 
@@ -308,6 +285,29 @@ export default function CustomerResults() {
                 sizes="(max-width: 1024px) 100vw, 55vw"
               />
             </div>
+
+            <Link
+              href="#contact"
+              className="btn btn--primary group relative z-[1] mt-8 inline-flex items-center gap-3 md:mt-10 md:text-lg"
+            >
+              Visit Echo
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#ff5f28] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                <svg
+                  className="h-3.5 w-3.5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2.5}
+                  aria-hidden
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M7 17L17 7M17 7H9M17 7V15"
+                  />
+                </svg>
+              </span>
+            </Link>
           </div>
         </div>
 

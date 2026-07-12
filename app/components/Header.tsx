@@ -11,11 +11,11 @@ const Header = forwardRef<HTMLElement>(function Header(_, ref) {
 
       <header
         ref={ref}
-        className="relative z-0 flex min-h-screen flex-col overflow-hidden bg-black will-change-transform"
+        className="relative z-0 flex min-h-[100svh] flex-col overflow-hidden bg-black will-change-transform md:min-h-screen"
         style={{ transformOrigin: "center center" }}
       >
         <div
-          className="absolute inset-0 z-0"
+          className="absolute inset-0 z-0 max-md:opacity-90"
           style={{
             maskImage:
               "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.2) 38%, rgba(0,0,0,0.55) 52%, rgba(0,0,0,0.85) 64%, black 76%, black 100%)",
@@ -57,7 +57,7 @@ const Header = forwardRef<HTMLElement>(function Header(_, ref) {
 
         <div className="pointer-events-none absolute inset-y-0 right-0 z-[1] w-[50%] bg-[radial-gradient(ellipse_85%_80%_at_90%_50%,rgba(255,95,40,0.2),transparent_75%)]" />
 
-        <div className="relative z-10 flex min-h-screen flex-col pointer-events-none [&_a]:pointer-events-auto [&_button]:pointer-events-auto">
+        <div className="relative z-10 flex min-h-[100svh] flex-col pointer-events-none md:min-h-screen [&_a]:pointer-events-auto [&_button]:pointer-events-auto">
           <Hero />
         </div>
       </header>

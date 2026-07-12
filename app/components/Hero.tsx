@@ -55,11 +55,14 @@ const stats = [
 
 export default function Hero() {
   return (
-    <section id="home" className="relative flex flex-1 flex-col px-4 pb-8 pt-36 md:px-8 md:pb-10 md:pt-44 lg:px-12 lg:pt-48">
-      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center gap-6 md:gap-8">
+    <section
+      id="home"
+      className="relative flex flex-1 flex-col px-4 pb-6 pt-28 sm:pb-8 sm:pt-32 md:px-8 md:pb-10 md:pt-44 lg:px-12 lg:pt-48"
+    >
+      <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center gap-5 sm:gap-6 md:gap-8">
         <div className="relative max-w-4xl lg:max-w-5xl">
           <div
-            className="pointer-events-none absolute -inset-x-8 -inset-y-10 z-0 md:-inset-x-12 md:-inset-y-14"
+            className="pointer-events-none absolute -inset-x-4 -inset-y-6 z-0 sm:-inset-x-8 sm:-inset-y-10 md:-inset-x-12 md:-inset-y-14"
             style={{
               background:
                 "radial-gradient(ellipse 70% 65% at 30% 40%, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.4) 45%, transparent 75%)",
@@ -68,66 +71,81 @@ export default function Hero() {
           />
 
           <div className="relative z-[1]">
-          <p className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#ff5f28] md:mb-6 md:text-sm">
-            <span aria-hidden>✦</span>
-            Digital Solutions That Drive Impact
-          </p>
-
-          <h1 className="text-7xl font-light leading-[1.04] tracking-tight text-white md:text-8xl lg:text-9xl xl:text-[7rem] xl:leading-[1.01]">
-            Build. Scale.
-            <br />
-            Lead the{" "}
-            <span className="text-gradient-future">Future.</span>
-          </h1>
-
-          <p className="mt-6 max-w-[30.5rem] text-sm leading-relaxed text-white/55 md:mt-7 md:text-[0.95rem]">
-            We partner with ambitious businesses to design and deliver digital
-            solutions that spark innovation and accelerate growth.
-          </p>
-
-          <div className="mt-10 flex flex-wrap items-center gap-4 md:mt-12 md:gap-5">
-            <Button href="#contact" variant="primary" className="md:text-lg">
-              Book a Call
-            </Button>
-            <Button href="#services" variant="secondary" className="md:text-lg">
-              Explore Services
-            </Button>
-          </div>
-
-          <div className="mt-8 flex items-center gap-3 md:mt-10">
-            <div className="flex -space-x-3">
-              {avatars.map((avatar) => (
-                <span
-                  key={avatar.initials}
-                  title={avatar.label}
-                  className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-black bg-[#ff5f28]/25 text-[0.65rem] font-semibold tracking-wide text-white md:h-10 md:w-10 md:text-xs"
-                >
-                  {avatar.initials}
-                </span>
-              ))}
-            </div>
-            <p className="text-sm text-white/55 md:text-base">
-              Trusted by <span className="font-semibold text-white">100+</span> growing
-              businesses
+            <p className="mb-4 flex max-w-[18rem] items-center gap-2 text-[0.65rem] font-semibold uppercase leading-snug tracking-[0.14em] text-[#ff5f28] sm:max-w-none sm:text-xs sm:tracking-[0.18em] md:mb-6 md:text-sm">
+              <span aria-hidden>✦</span>
+              Digital Solutions That Drive Impact
             </p>
-          </div>
+
+            <h1 className="text-[2.75rem] font-light leading-[1.06] tracking-tight text-white sm:text-6xl sm:leading-[1.04] md:text-8xl lg:text-9xl xl:text-[7rem] xl:leading-[1.01]">
+              Build. Scale.
+              <br />
+              Lead the{" "}
+              <span className="text-gradient-future">Future.</span>
+            </h1>
+
+            <p className="mt-5 max-w-[30.5rem] text-[0.8125rem] leading-relaxed text-white/55 sm:text-sm md:mt-7 md:text-[0.95rem]">
+              We partner with ambitious businesses to design and deliver digital
+              solutions that spark innovation and accelerate growth.
+            </p>
+
+            <div className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-12 md:gap-5">
+              <Button
+                href="#contact"
+                variant="primary"
+                className="w-full justify-center sm:w-auto md:text-lg"
+              >
+                Book a Call
+              </Button>
+              <Button
+                href="#services"
+                variant="secondary"
+                className="w-full justify-center sm:w-auto md:text-lg"
+              >
+                Explore Services
+              </Button>
+            </div>
+
+            <div className="mt-6 flex items-center gap-3 sm:mt-8 md:mt-10">
+              <div className="flex -space-x-3">
+                {avatars.map((avatar) => (
+                  <span
+                    key={avatar.initials}
+                    title={avatar.label}
+                    className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-black bg-[#ff5f28]/25 text-[0.6rem] font-semibold tracking-wide text-white sm:h-9 sm:w-9 sm:text-[0.65rem] md:h-10 md:w-10 md:text-xs"
+                  >
+                    {avatar.initials}
+                  </span>
+                ))}
+              </div>
+              <p className="text-xs text-white/55 sm:text-sm md:text-base">
+                Trusted by{" "}
+                <span className="font-semibold text-white">100+</span> growing
+                businesses
+              </p>
+            </div>
           </div>
         </div>
 
-        <div className="stats-bar grid grid-cols-1 gap-6 rounded-2xl px-6 py-5 sm:grid-cols-3 sm:gap-0 sm:px-8 sm:py-6 md:px-10">
+        <div className="stats-bar grid grid-cols-1 gap-4 rounded-2xl px-4 py-4 sm:grid-cols-3 sm:gap-0 sm:px-8 sm:py-6 md:px-10">
           {stats.map((stat, index) => (
             <div
               key={stat.label}
-              className={`flex items-center gap-4 ${
-                index > 0 ? "sm:border-l sm:border-white/10 sm:pl-8 md:pl-10" : ""
+              className={`flex items-center gap-3 sm:gap-4 ${
+                index > 0
+                  ? "border-t border-white/10 pt-4 sm:border-t-0 sm:border-l sm:border-white/10 sm:pt-0 sm:pl-8 md:pl-10"
+                  : ""
               }`}
             >
-              <span className="stat-icon-wrap flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[#ff5f28]">
+              <span className="stat-icon-wrap flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[#ff5f28] sm:h-11 sm:w-11">
                 <span className="stat-icon-glow">{stat.icon}</span>
               </span>
               <div>
-                <p className="stat-value-glow text-2xl font-semibold md:text-3xl">{stat.value}</p>
-                <p className="mt-0.5 text-sm text-white/55">{stat.label}</p>
+                <p className="stat-value-glow text-xl font-semibold sm:text-2xl md:text-3xl">
+                  {stat.value}
+                </p>
+                <p className="mt-0.5 text-xs text-white/55 sm:text-sm">
+                  {stat.label}
+                </p>
               </div>
             </div>
           ))}

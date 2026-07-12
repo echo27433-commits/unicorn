@@ -31,9 +31,9 @@ export default function Newsletter() {
       id="newsletter"
       className="relative w-full overflow-hidden bg-white font-sans"
     >
-      <div className="relative mx-auto w-full max-w-[90rem] px-4 py-20 md:px-8 md:py-28 lg:px-12 lg:py-36">
+      <div className="relative mx-auto w-full max-w-[90rem] px-4 py-5 pb-3 sm:py-16 md:px-8 md:py-28 lg:px-12 lg:py-36">
         <div
-          className={`relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-black/8 bg-[#fff5f0] px-8 py-20 shadow-[0_24px_80px_-40px_rgba(0,0,0,0.18)] transition-all duration-1000 md:rounded-[2.75rem] md:px-16 md:py-28 lg:px-24 lg:py-32 ${
+          className={`relative mx-auto max-w-6xl overflow-hidden rounded-[1.5rem] border border-black/8 bg-[#fff5f0] px-5 py-6 shadow-[0_24px_80px_-40px_rgba(0,0,0,0.18)] transition-all duration-1000 sm:rounded-[2rem] sm:px-8 sm:py-16 md:rounded-[2.75rem] md:px-16 md:py-28 lg:px-24 lg:py-32 ${
             visible ? "animate-fade-up opacity-100" : "translate-y-8 opacity-0"
           }`}
         >
@@ -42,29 +42,29 @@ export default function Newsletter() {
             className="pointer-events-none absolute inset-0 overflow-hidden"
             aria-hidden
           >
-            <div className="newsletter-gradient-spin absolute left-1/2 top-1/2 h-[180%] w-[180%]" />
-            <div className="newsletter-gradient-spin-rev absolute left-[20%] top-[30%] h-[120%] w-[120%]" />
-            <div className="newsletter-gradient-drift absolute -left-1/4 top-0 h-full w-[70%]" />
+            <div className="newsletter-gradient-spin absolute left-1/2 top-1/2 h-[180%] w-[180%] max-md:opacity-80" />
+            <div className="newsletter-gradient-spin-rev absolute left-[20%] top-[30%] h-[120%] w-[120%] max-md:opacity-70" />
+            <div className="newsletter-gradient-drift absolute -left-1/4 top-0 h-full w-[70%] max-md:opacity-80" />
           </div>
 
           <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
-            <span className="inline-flex items-center rounded-lg border border-[#ff5f28]/40 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#ff5f28] md:text-xs">
+            <span className="inline-flex items-center rounded-lg border border-[#ff5f28]/40 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#ff5f28] sm:px-4 sm:py-1.5 sm:text-[11px] sm:tracking-[0.2em] md:text-xs">
               Stay Updated
             </span>
 
-            <h2 className="mt-8 text-4xl font-light leading-[1.1] tracking-tight text-black md:mt-10 md:text-5xl lg:text-6xl xl:text-[4.25rem] xl:leading-[1.06]">
+            <h2 className="mt-4 text-[1.75rem] font-light leading-[1.12] tracking-tight text-black sm:mt-8 sm:text-4xl sm:leading-[1.1] md:mt-10 md:text-5xl lg:text-6xl xl:text-[4.25rem] xl:leading-[1.06]">
               Insights that help you{" "}
               <span className="text-[#ff5f28]">build, scale &amp; lead.</span>
             </h2>
 
-            <p className="mt-6 max-w-2xl text-sm leading-relaxed text-black/55 md:mt-8 md:text-lg">
+            <p className="mt-3 max-w-2xl text-[0.8125rem] leading-relaxed text-black/55 sm:mt-6 sm:text-sm md:mt-8 md:text-lg">
               Get product updates, case studies, and digital growth ideas — no
               noise, just signal.
             </p>
 
             <Link
               href="/contact"
-              className="btn btn--primary group mt-12 inline-flex items-center gap-3 md:mt-14 md:text-lg"
+              className="btn btn--primary group mt-5 inline-flex w-full items-center justify-center gap-3 sm:mt-10 sm:w-auto md:mt-14 md:text-lg"
             >
               Book a demo
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#ff5f28] transition-transform duration-200 group-hover:translate-x-0.5">

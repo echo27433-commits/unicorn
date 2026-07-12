@@ -126,7 +126,7 @@ export default function LocationCover() {
       </div>
       <div
         ref={reviewsRef}
-        className="relative z-40 overflow-hidden bg-[#f7f7f7] will-change-transform"
+        className="relative z-40 min-w-0 overflow-x-clip bg-[#f7f7f7] will-change-transform"
       >
         <Reviews />
       </div>

@@ -75,6 +75,12 @@ body {
   filter: drop-shadow(0 0 28px rgba(255, 95, 40, 0.55));
 }
 
+@media (max-width: 767px) {
+  .text-gradient-future {
+    filter: drop-shadow(0 0 16px rgba(255, 95, 40, 0.4));
+  }
+}
+
 .stats-bar {
   position: relative;
   isolation: isolate;
