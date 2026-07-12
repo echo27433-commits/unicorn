@@ -337,18 +337,18 @@ export default function ServicesPageClient() {
                   <Image
                     src="/The_Echo_Logo_v2 (2).png"
                     alt="ECHO — powered by unicorn"
-                    width={640}
-                    height={180}
-                    sizes="(max-width: 768px) 70vw, 280px"
-                    className="h-20 w-auto object-contain object-left md:h-28 lg:h-32"
+                    width={720}
+                    height={200}
+                    sizes="(max-width: 768px) 80vw, 420px"
+                    className="h-28 w-auto object-contain object-left md:h-36 lg:h-44"
                   />
 
-                  <h3 className="mt-8 text-3xl font-light leading-[1.1] tracking-tight text-white md:mt-10 md:text-4xl lg:text-5xl">
+                  <h3 className="mt-8 text-4xl font-light leading-[1.08] tracking-tight text-white md:mt-10 md:text-5xl lg:text-6xl xl:text-[3.75rem] xl:leading-[1.06]">
                     AI Powered Customer{" "}
                     <span className="text-[#ff5f28]">Engagement</span> Platform
                   </h3>
 
-                  <p className="mt-5 max-w-md text-base leading-relaxed text-white/55 md:mt-6 md:text-lg">
+                  <p className="mt-5 max-w-lg text-base leading-relaxed text-white/55 md:mt-6 md:text-lg lg:text-xl">
                     Echo is our AI-powered platform for enterprise conversations,
                     loyalty, and growth — helping teams automate engagement and
                     deliver measurable outcomes at scale.
@@ -379,18 +379,16 @@ export default function ServicesPageClient() {
                 </div>
               </div>
 
-              <div data-reveal-item className="relative">
-                <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04]">
-                  <Image
-                    src="/image_1.png"
-                    alt="ECHO platform preview"
-                    width={1400}
-                    height={1050}
-                    className="h-auto w-full object-contain"
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    priority
-                  />
-                </div>
+              <div data-reveal-item className="relative scale-105 lg:scale-110 lg:translate-x-2">
+                <Image
+                  src="/image_1.png"
+                  alt="ECHO platform preview"
+                  width={1600}
+                  height={1200}
+                  className="h-auto w-full min-h-[300px] object-contain md:min-h-[440px] lg:min-h-[540px]"
+                  sizes="(max-width: 1024px) 100vw, 55vw"
+                  priority
+                />
               </div>
             </div>
 
