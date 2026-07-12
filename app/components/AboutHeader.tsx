@@ -11,7 +11,7 @@ const AboutHeader = forwardRef<HTMLElement>(function AboutHeader(_, ref) {
 
       <header
         ref={ref}
-        className="relative z-0 flex min-h-[100svh] flex-col overflow-hidden bg-black md:min-h-[85vh] md:will-change-transform"
+        className="relative z-0 flex flex-col overflow-hidden bg-black md:min-h-[85vh] md:will-change-transform"
         style={{ transformOrigin: "center center" }}
       >
         <div
@@ -57,9 +57,9 @@ const AboutHeader = forwardRef<HTMLElement>(function AboutHeader(_, ref) {
 
         <div className="pointer-events-none absolute inset-y-0 right-0 z-[1] w-[50%] bg-[radial-gradient(ellipse_85%_80%_at_90%_50%,rgba(255,95,40,0.2),transparent_75%)]" />
 
-        <div className="relative z-10 flex min-h-[100svh] flex-1 flex-col pointer-events-none md:min-h-0 [&_a]:pointer-events-auto [&_button]:pointer-events-auto">
-          <section className="relative flex flex-1 flex-col px-4 pb-10 pt-28 sm:pb-12 sm:pt-32 md:px-8 md:pb-20 md:pt-44 lg:px-12 lg:pt-48">
-            <div className="relative mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center">
+        <div className="relative z-10 flex flex-1 flex-col pointer-events-none [&_a]:pointer-events-auto [&_button]:pointer-events-auto">
+          <section className="relative flex flex-col px-4 pb-8 pt-24 sm:pb-12 sm:pt-32 md:flex-1 md:px-8 md:pb-20 md:pt-44 lg:px-12 lg:pt-48">
+            <div className="relative mx-auto flex w-full max-w-7xl flex-col justify-start md:flex-1 md:justify-center">
               <div className="relative max-w-4xl lg:max-w-5xl">
                 <div
                   className="pointer-events-none absolute -inset-x-4 -inset-y-6 z-0 sm:-inset-x-8 sm:-inset-y-10 md:-inset-x-12 md:-inset-y-14"
