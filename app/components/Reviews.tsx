@@ -221,7 +221,7 @@ export default function Reviews() {
               <article
                 key={review.name}
                 data-review-card
-                className="flex flex-col justify-between rounded-[1.5rem] bg-[#ececec] p-6 md:p-7"
+                className="flex flex-col justify-between rounded-[1.5rem] border-2 border-black/10 bg-[#ececec] p-6 md:p-7"
               >
                 <div>
                   <Stars />
