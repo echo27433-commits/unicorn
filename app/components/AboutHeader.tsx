@@ -30,7 +30,7 @@ const AboutHeader = forwardRef<HTMLElement>(function AboutHeader(_, ref) {
                 />
 
                 <div className="relative z-[1] text-left">
-                  <p className="mb-5 flex items-center justify-start gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[#ff5f28] sm:mb-4 sm:text-xs sm:tracking-[0.18em] md:mb-6 md:text-sm">
+                  <p className="mb-5 flex items-center justify-start gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-[#ff5f28] sm:mb-4 sm:tracking-[0.18em] md:mb-6 md:text-sm">
                     <span aria-hidden>✦</span>
                     About Us
                   </p>
