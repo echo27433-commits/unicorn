@@ -76,7 +76,7 @@ export default function Hero() {
               Digital Solutions That Drive Impact
             </p>
 
-            <h1 className="text-[2.75rem] font-light leading-[1.06] tracking-tight text-white sm:text-6xl sm:leading-[1.04] md:text-8xl lg:text-9xl xl:text-[7rem] xl:leading-[1.01]">
+            <h1 className="text-[3.35rem] font-light leading-[1.05] tracking-tight text-white sm:text-6xl sm:leading-[1.04] md:text-8xl lg:text-9xl xl:text-[7rem] xl:leading-[1.01]">
               Build. Scale.
               <br />
               Lead the{" "}
@@ -88,18 +88,18 @@ export default function Hero() {
               solutions that spark innovation and accelerate growth.
             </p>
 
-            <div className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-12 md:gap-5">
+            <div className="mt-8 flex w-full flex-col gap-2.5 sm:mt-10 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-12 md:gap-5">
               <Button
                 href="#contact"
                 variant="primary"
-                className="w-full justify-center sm:w-auto md:text-lg"
+                className="w-full justify-center px-4 py-2.5 text-sm sm:w-auto sm:px-[1.85rem] sm:py-[0.95rem] sm:text-base md:text-lg"
               >
                 Book a Call
               </Button>
               <Button
                 href="#services"
                 variant="secondary"
-                className="w-full justify-center sm:w-auto md:text-lg"
+                className="w-full justify-center px-4 py-2.5 text-sm sm:w-auto sm:px-[1.85rem] sm:py-[0.95rem] sm:text-base md:text-lg"
               >
                 Explore Services
               </Button>
@@ -126,24 +126,24 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="stats-bar grid grid-cols-1 gap-4 rounded-2xl px-4 py-4 sm:grid-cols-3 sm:gap-0 sm:px-8 sm:py-6 md:px-10">
+        <div className="stats-bar grid grid-cols-1 gap-2.5 rounded-2xl px-3 py-3 sm:grid-cols-3 sm:gap-0 sm:px-8 sm:py-6 md:px-10">
           {stats.map((stat, index) => (
             <div
               key={stat.label}
-              className={`flex items-center gap-3 sm:gap-4 ${
+              className={`flex items-center gap-2.5 sm:gap-4 ${
                 index > 0
-                  ? "border-t border-white/10 pt-4 sm:border-t-0 sm:border-l sm:border-white/10 sm:pt-0 sm:pl-8 md:pl-10"
+                  ? "border-t border-white/10 pt-2.5 sm:border-t-0 sm:border-l sm:border-white/10 sm:pt-0 sm:pl-8 md:pl-10"
                   : ""
               }`}
             >
-              <span className="stat-icon-wrap flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[#ff5f28] sm:h-11 sm:w-11">
+              <span className="stat-icon-wrap flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[#ff5f28] sm:h-11 sm:w-11 [&_svg]:h-4 [&_svg]:w-4 sm:[&_svg]:h-5 sm:[&_svg]:w-5">
                 <span className="stat-icon-glow">{stat.icon}</span>
               </span>
               <div>
-                <p className="stat-value-glow text-xl font-semibold sm:text-2xl md:text-3xl">
+                <p className="stat-value-glow text-base font-semibold sm:text-2xl md:text-3xl">
                   {stat.value}
                 </p>
-                <p className="mt-0.5 text-xs text-white/55 sm:text-sm">
+                <p className="mt-0.5 text-[0.65rem] text-white/55 sm:text-sm">
                   {stat.label}
                 </p>
               </div>
