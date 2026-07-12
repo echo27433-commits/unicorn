@@ -16,19 +16,19 @@ const workLinks = [
 export default function Footer() {
   return (
     <footer id="contact" className="relative w-full bg-black font-sans">
-      <div className="relative mx-auto w-full max-w-[90rem] px-4 pt-10 md:px-8 md:pt-20 lg:px-12 lg:pt-24">
+      <div className="relative mx-auto w-full max-w-[90rem] px-4 pt-16 md:px-8 md:pt-20 lg:px-12 lg:pt-24">
         {/* Top: blurb + link columns */}
-        <div className="flex flex-col gap-8 md:gap-12 lg:flex-row lg:items-start lg:justify-between lg:gap-16">
+        <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between lg:gap-16">
           <p className="max-w-md text-sm leading-relaxed text-white/70 md:text-base lg:max-w-sm">
             unicorn is the AI and technology partner built for ambitious brands
             that want to design, ship, and scale digital products with measurable
             impact.
           </p>
 
-          <div className="flex flex-wrap gap-10 sm:gap-16 md:gap-24">
+          <div className="flex flex-wrap gap-12 sm:gap-16 md:gap-24">
             <div>
               <p className="text-sm font-semibold text-white">unicorn</p>
-              <ul className="mt-3 flex flex-col gap-2 md:mt-4 md:gap-2.5">
+              <ul className="mt-4 flex flex-col gap-2.5">
                 {companyLinks.map((link) => (
                   <li key={link.label}>
                     <Link
@@ -44,7 +44,7 @@ export default function Footer() {
 
             <div>
               <p className="text-sm font-semibold text-white">Company</p>
-              <ul className="mt-3 flex flex-col gap-2 md:mt-4 md:gap-2.5">
+              <ul className="mt-4 flex flex-col gap-2.5">
                 {workLinks.map((link) => (
                   <li key={link.label}>
                     <Link
@@ -61,7 +61,7 @@ export default function Footer() {
         </div>
 
         {/* Middle: social + CTA */}
-        <div className="mt-8 flex flex-col gap-6 md:mt-14 md:gap-8 lg:mt-16 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
+        <div className="mt-14 flex flex-col gap-8 lg:mt-16 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
           <a
             href="https://www.linkedin.com/company/theunicornglobal/?viewAsMember=true"
             target="_blank"
@@ -117,7 +117,7 @@ export default function Footer() {
         </div>
 
         {/* Taglines */}
-        <div className="mt-8 flex flex-col gap-2 sm:mt-20 sm:flex-row sm:items-end sm:justify-between md:mt-16">
+        <div className="mt-16 flex flex-col gap-2 sm:mt-20 sm:flex-row sm:items-end sm:justify-between">
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/55 md:text-xs">
             Intelligence that compounds
           </p>
@@ -128,7 +128,7 @@ export default function Footer() {
       </div>
 
       {/* Oversized brand logo */}
-      <div className="relative mt-4 w-full px-4 pb-6 md:mt-10 md:px-8 md:pb-14 lg:px-12">
+      <div className="relative mt-8 w-full px-4 pb-10 md:mt-10 md:px-8 md:pb-14 lg:px-12">
         <Image
           src="/Unicorn.svg"
           alt="unicorn"

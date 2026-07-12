@@ -12,7 +12,6 @@ gsap.registerPlugin(ScrollTrigger);
 /**
  * Newsletter stays in front and lifts away on scroll.
  * Footer sits behind it and is revealed underneath.
- * Mobile: white panel matches newsletter content only (no viewport stretch).
  */
 export default function NewsletterCover() {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -31,36 +30,23 @@ export default function NewsletterCover() {
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
     if (prefersReduced) return;
 
-    const mobileMq = window.matchMedia("(max-width: 767px)");
     let stackHeight = 0;
-    let panelHeight = 0;
     let syncing = false;
 
     const sync = () => {
+      // Measure natural content height — never clear applied sizes (that
+      // retriggers ResizeObserver and collapses pin-spacing mid-refresh).
       const nh = newsletterContent.scrollHeight;
       const fh = footerSlot.scrollHeight;
-      const isMobile = mobileMq.matches;
+      const next = Math.max(nh, fh, window.innerHeight);
 
-      // Mobile white panel = content only. Wrapper must still fit the footer
-      // so the full reveal works, but that extra area is black (footer), not white.
-      const nextPanel = isMobile ? nh : Math.max(nh, fh, window.innerHeight);
-      const nextStack = isMobile
-        ? Math.max(nh, fh)
-        : Math.max(nh, fh, window.innerHeight);
-
-      if (nextStack === stackHeight && nextPanel === panelHeight) {
-        return stackHeight;
-      }
+      if (next === stackHeight) return stackHeight;
 
       syncing = true;
-      stackHeight = nextStack;
-      panelHeight = nextPanel;
-
+      stackHeight = next;
       wrapper.style.height = `${stackHeight}px`;
-      newsletter.style.minHeight = `${panelHeight}px`;
-      // Lock height on mobile so the white shell can't grow with the wrapper.
-      newsletter.style.height = isMobile ? `${panelHeight}px` : "";
-
+      newsletter.style.minHeight = `${stackHeight}px`;
+      // Allow layout to settle before re-arming observers.
       requestAnimationFrame(() => {
         syncing = false;
       });
@@ -85,10 +71,7 @@ export default function NewsletterCover() {
         newsletter,
         { y: 0 },
         {
-          y: () =>
-            mobileMq.matches
-              ? -(panelHeight || newsletterContent.scrollHeight)
-              : -stackHeight,
+          y: () => -stackHeight,
           ease: "none",
           scrollTrigger: {
             trigger: wrapper,
@@ -107,31 +90,26 @@ export default function NewsletterCover() {
       window.clearTimeout(refreshTimer);
       refreshTimer = window.setTimeout(() => {
         const before = stackHeight;
-        const beforePanel = panelHeight;
         sync();
-        if (stackHeight !== before || panelHeight !== beforePanel) {
+        if (stackHeight !== before) {
           ScrollTrigger.refresh();
         }
       }, 80);
     };
 
-    const onBreakpointChange = () => {
-      stackHeight = 0;
-      panelHeight = 0;
-      newsletter.style.height = "";
-      scheduleRefresh();
-    };
-
     window.addEventListener("load", scheduleRefresh);
-    mobileMq.addEventListener("change", onBreakpointChange);
     const t1 = window.setTimeout(scheduleRefresh, 300);
     const t2 = window.setTimeout(scheduleRefresh, 900);
 
-    const resizeObserver = new ResizeObserver(() => scheduleRefresh());
+    const resizeObserver = new ResizeObserver(() => {
+      scheduleRefresh();
+    });
+    // Observe natural-size sources only — not the stretched newsletter shell.
     resizeObserver.observe(footerSlot);
     resizeObserver.observe(newsletterContent);
 
-    footerSlot.querySelectorAll("img").forEach((img) => {
+    const images = footerSlot.querySelectorAll("img");
+    images.forEach((img) => {
       if (!img.complete) {
         img.addEventListener("load", scheduleRefresh, { once: true });
       }
@@ -139,7 +117,6 @@ export default function NewsletterCover() {
 
     return () => {
       window.removeEventListener("load", scheduleRefresh);
-      mobileMq.removeEventListener("change", onBreakpointChange);
       window.clearTimeout(t1);
       window.clearTimeout(t2);
       window.clearTimeout(refreshTimer);
@@ -147,7 +124,6 @@ export default function NewsletterCover() {
       ctx.revert();
       wrapper.style.height = "";
       newsletter.style.minHeight = "";
-      newsletter.style.height = "";
     };
   }, []);
 
