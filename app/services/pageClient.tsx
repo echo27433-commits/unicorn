@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -163,6 +163,7 @@ function setupCover(
     pinSpacing: false,
     anticipatePin: 1,
     fastScrollEnd: true,
+    invalidateOnRefresh: true,
   });
 
   gsap.fromTo(
@@ -179,6 +180,7 @@ function setupCover(
         end: "top top",
         scrub: 0.5,
         fastScrollEnd: true,
+        invalidateOnRefresh: true,
       },
     }
   );
@@ -199,9 +201,15 @@ function setupCover(
         end: "top top",
         scrub: 0.5,
         fastScrollEnd: true,
+        invalidateOnRefresh: true,
       },
     }
   );
+}
+
+/** Refresh ScrollTrigger once after accordion height transition (click only). */
+function scheduleClickRefresh() {
+  window.setTimeout(() => ScrollTrigger.refresh(), 520);
 }
 
 export default function ServicesPageClient() {
@@ -211,55 +219,25 @@ export default function ServicesPageClient() {
   const productInnerRef = useRef<HTMLDivElement>(null);
   const servicesRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
-  const [activeService, setActiveService] = useState<number | null>(0);
+  const [activeService, setActiveService] = useState<number | null>(null);
 
   useEffect(() => {
+    const root = rootRef.current;
     const header = headerRef.current;
     const product = productRef.current;
     const productInner = productInnerRef.current;
     const services = servicesRef.current;
-    if (!header || !product || !services) return;
+    if (!root || !header || !product || !services) return;
 
-    const prefersReduced =
-      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-    if (prefersReduced) return;
+    if (reducedMotion) return;
 
     const ctx = gsap.context(() => {
       setupCover(header, product);
-      // Pin after product has scrolled through, then Our Services overlays it
       setupCover(product, services, productInner, {
         pinStart: "bottom bottom",
       });
-    });
 
-    const refresh = () => ScrollTrigger.refresh();
-    window.addEventListener("load", refresh);
-    const t1 = window.setTimeout(refresh, 250);
-    const t2 = window.setTimeout(refresh, 700);
-    const t3 = window.setTimeout(refresh, 1400);
-
-    return () => {
-      window.removeEventListener("load", refresh);
-      window.clearTimeout(t1);
-      window.clearTimeout(t2);
-      window.clearTimeout(t3);
-      ctx.revert();
-    };
-  }, []);
-
-  useEffect(() => {
-    // Accordion height changes — give the grid transition time, then refresh once.
-    const t = window.setTimeout(() => ScrollTrigger.refresh(), 520);
-    return () => window.clearTimeout(t);
-  }, [activeService]);
-
-  useLayoutEffect(() => {
-    if (reducedMotion) return;
-    if (!rootRef.current) return;
-
-    const ctx = gsap.context(() => {
       const groups = gsap.utils.toArray<HTMLElement>("[data-reveal]");
-
       groups.forEach((group) => {
         const items = group.querySelectorAll<HTMLElement>("[data-reveal-item]");
         const isCardStagger = group.hasAttribute("data-stagger-cards");
@@ -284,9 +262,17 @@ export default function ServicesPageClient() {
           },
         });
       });
-    }, rootRef);
+    }, root);
 
-    return () => ctx.revert();
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener("load", refresh);
+    const t1 = window.setTimeout(refresh, 300);
+
+    return () => {
+      window.removeEventListener("load", refresh);
+      window.clearTimeout(t1);
+      ctx.revert();
+    };
   }, [reducedMotion]);
 
   return (
@@ -294,12 +280,11 @@ export default function ServicesPageClient() {
       <ServicesHeader ref={headerRef} />
 
       {/* Black — Product Echo */}
-      <div
-        ref={productRef}
-        id="echo"
-        className="relative z-20 bg-black"
-      >
-        <div ref={productInnerRef} className="origin-center">
+      <div ref={productRef} id="echo" className="relative z-20 bg-black">
+        <div
+          ref={productInnerRef}
+          className="origin-center will-change-transform"
+        >
           <section className="relative mx-auto w-full max-w-[90rem] px-5 py-20 pb-28 md:px-8 md:py-28 md:pb-36 lg:px-12 lg:py-32 lg:pb-40">
             <div
               data-reveal
@@ -443,8 +428,7 @@ export default function ServicesPageClient() {
               data-reveal-item
               className="text-4xl font-light uppercase tracking-[0.06em] text-black md:text-5xl lg:text-6xl xl:text-[4rem]"
             >
-              Our{" "}
-              <span className="text-[#ff5f28]">Services</span>
+              Our <span className="text-[#ff5f28]">Services</span>
             </h2>
             <p
               data-reveal-item
@@ -481,9 +465,11 @@ export default function ServicesPageClient() {
                   <button
                     type="button"
                     aria-expanded={open}
-                    onClick={() =>
-                      setActiveService(open ? null : index)
-                    }
+                    onClick={() => {
+                      const next = open ? null : index;
+                      setActiveService(next);
+                      scheduleClickRefresh();
+                    }}
                     className="grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-4 py-7 text-left md:gap-8 md:py-9 lg:gap-12"
                   >
                     <span
@@ -524,15 +510,15 @@ export default function ServicesPageClient() {
                     <div className="overflow-hidden">
                       <div className="grid gap-8 pb-8 pl-0 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-10 md:pb-10 md:pl-12 lg:gap-14 lg:pl-16">
                         <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-black/10 md:aspect-[5/4]">
-                          <Image
-                            src={service.image}
-                            alt={service.title}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 40vw"
-                            className={`object-cover transition-transform duration-700 ${
-                              open ? "scale-100" : "scale-105"
-                            }`}
-                          />
+                          {open ? (
+                            <Image
+                              src={service.image}
+                              alt={service.title}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 40vw"
+                              className="object-cover"
+                            />
+                          ) : null}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                         </div>
 
