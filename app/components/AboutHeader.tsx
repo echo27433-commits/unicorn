@@ -39,11 +39,11 @@ const AboutHeader = forwardRef<HTMLElement>(function AboutHeader(_, ref) {
 
       <header
         ref={ref}
-        className="relative z-0 flex min-h-[70svh] flex-col overflow-hidden bg-black md:min-h-[85vh] md:will-change-transform"
+        className="relative z-0 flex min-h-[70svh] w-full max-w-[100%] flex-col overflow-x-clip overflow-y-hidden bg-black md:min-h-[85vh] md:will-change-transform"
         style={{ transformOrigin: "center center" }}
       >
         <div
-          className="absolute inset-0 z-0"
+          className="absolute inset-0 z-0 overflow-hidden"
           style={{
             maskImage: wavesMask,
             WebkitMaskImage: wavesMask,

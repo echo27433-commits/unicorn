@@ -119,6 +119,7 @@ function setupCover(
   pinnedInner?: HTMLElement | null
 ) {
   const scrubTarget = pinnedInner ?? pinned;
+  const mobile = window.matchMedia("(max-width: 767px)").matches;
 
   ScrollTrigger.create({
     trigger: pinned,
@@ -127,47 +128,51 @@ function setupCover(
     end: "top top",
     pin: true,
     pinSpacing: false,
-    anticipatePin: 1,
+    anticipatePin: mobile ? 0 : 1,
     fastScrollEnd: true,
   });
 
-  gsap.fromTo(
-    scrubTarget,
-    { scale: 1, ...(pinnedInner ? {} : { opacity: 1 }) },
-    {
-      scale: 0.96,
-      ...(pinnedInner ? {} : { opacity: 0.55 }),
-      ease: "none",
-      force3D: true,
-      scrollTrigger: {
-        trigger: cover,
-        start: "top bottom",
-        end: "top top",
-        scrub: 0.5,
-        fastScrollEnd: true,
-      },
-    }
-  );
+  // Skip scale on mobile — scaled full-bleed layers leave black side gaps
+  // (especially noticeable when the nav menu opens).
+  if (!mobile) {
+    gsap.fromTo(
+      scrubTarget,
+      { scale: 1, ...(pinnedInner ? {} : { opacity: 1 }) },
+      {
+        scale: 0.96,
+        ...(pinnedInner ? {} : { opacity: 0.55 }),
+        ease: "none",
+        force3D: true,
+        scrollTrigger: {
+          trigger: cover,
+          start: "top bottom",
+          end: "top top",
+          scrub: 0.5,
+          fastScrollEnd: true,
+        },
+      }
+    );
 
-  gsap.fromTo(
-    cover,
-    {
-      borderRadius: "28px 28px 0px 0px",
-      boxShadow: "0 -8px 24px rgba(0,0,0,0)",
-    },
-    {
-      borderRadius: "0px 0px 0px 0px",
-      boxShadow: "0 -20px 48px rgba(0,0,0,0.35)",
-      ease: "none",
-      scrollTrigger: {
-        trigger: cover,
-        start: "top bottom",
-        end: "top top",
-        scrub: 0.5,
-        fastScrollEnd: true,
+    gsap.fromTo(
+      cover,
+      {
+        borderRadius: "28px 28px 0px 0px",
+        boxShadow: "0 -8px 24px rgba(0,0,0,0)",
       },
-    }
-  );
+      {
+        borderRadius: "0px 0px 0px 0px",
+        boxShadow: "0 -20px 48px rgba(0,0,0,0.35)",
+        ease: "none",
+        scrollTrigger: {
+          trigger: cover,
+          start: "top bottom",
+          end: "top top",
+          scrub: 0.5,
+          fastScrollEnd: true,
+        },
+      }
+    );
+  }
 }
 
 export default function AboutPageClient() {
@@ -405,7 +410,7 @@ export default function AboutPageClient() {
   }, [reducedMotion]);
 
   return (
-    <div ref={rootRef} className="min-h-screen bg-black">
+    <div ref={rootRef} className="min-h-screen overflow-x-clip bg-black">
       <AboutHeader ref={headerRef} />
 
       {/* White — Mission / Vision */}
