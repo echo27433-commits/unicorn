@@ -10,7 +10,7 @@ import Button from "./Button";
 const navLinks = [
   { label: "Home", href: "/#home", match: "/" },
   { label: "About", href: "/about", match: "/about" },
-  { label: "Services", href: "/#services", match: null },
+  { label: "Services", href: "/services", match: "/services" },
   { label: "Work", href: "/#work", match: null },
   { label: "Blog", href: "/blog", match: "/blog" },
   { label: "Contact", href: "/contact", match: "/contact" },

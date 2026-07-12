@@ -14,21 +14,45 @@ gsap.registerPlugin(ScrollTrigger);
 const whyUnicorn = [
   {
     title: "Regional Expertise",
-    description: "Deep understanding of the markets and customer behavior.",
+    description:
+      "Deep understanding of GCC markets and customer behavior — so solutions fit how people actually buy and engage.",
+    icon: (
+      <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} aria-hidden>
+        <circle cx="12" cy="12" r="9" />
+        <path strokeLinecap="round" d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18" />
+      </svg>
+    ),
   },
   {
     title: "Enterprise Focus",
-    description: "Built for medium and large organizations.",
+    description:
+      "Built for medium and large organizations that need security, scale, and clear governance from day one.",
+    icon: (
+      <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} aria-hidden>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6" />
+      </svg>
+    ),
   },
   {
     title: "AI First",
     description:
-      "Every solution is designed with intelligence, automation, and scalability in mind.",
+      "Every solution is designed with intelligence, automation, and scalability built in — not bolted on later.",
+    icon: (
+      <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} aria-hidden>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2M12 19v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M3 12h2M19 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+        <circle cx="12" cy="12" r="4" />
+      </svg>
+    ),
   },
   {
     title: "Outcome Driven",
     description:
-      "Focused on measurable business results, not technology for its own sake.",
+      "Focused on measurable business results — so leadership sees impact, not technology for its own sake.",
+    icon: (
+      <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} aria-hidden>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4 19V5M4 19h16M8 16l3.5-5 3 3.5L18 8" />
+      </svg>
+    ),
   },
 ];
 
@@ -146,7 +170,6 @@ export default function AboutPageClient() {
   const missionRef = useRef<HTMLDivElement>(null);
   const missionInnerRef = useRef<HTMLDivElement>(null);
   const whyRef = useRef<HTMLDivElement>(null);
-  const whyInnerRef = useRef<HTMLDivElement>(null);
   const howRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
   const [openFaq, setOpenFaq] = useState(1);
@@ -156,7 +179,6 @@ export default function AboutPageClient() {
     const mission = missionRef.current;
     const missionInner = missionInnerRef.current;
     const why = whyRef.current;
-    const whyInner = whyInnerRef.current;
     const how = howRef.current;
     if (!header || !mission || !why || !how) return;
 
@@ -167,7 +189,26 @@ export default function AboutPageClient() {
     const ctx = gsap.context(() => {
       setupCover(header, mission);
       setupCover(mission, why, missionInner);
-      setupCover(why, how, whyInner);
+
+      // Don't pin Why under How — tall card grid gets clipped. Keep cover entrance only.
+      gsap.fromTo(
+        how,
+        {
+          borderRadius: "32px 32px 0px 0px",
+          boxShadow: "0 -12px 40px rgba(0,0,0,0)",
+        },
+        {
+          borderRadius: "0px 0px 0px 0px",
+          boxShadow: "0 -32px 90px rgba(0,0,0,0.5)",
+          ease: "none",
+          scrollTrigger: {
+            trigger: how,
+            start: "top bottom",
+            end: "top top",
+            scrub: 0.9,
+          },
+        }
+      );
     });
 
     const refresh = () => ScrollTrigger.refresh();
@@ -216,6 +257,129 @@ export default function AboutPageClient() {
           },
         });
       });
+
+      const timelineCards =
+        gsap.utils.toArray<HTMLElement>("[data-timeline-card]");
+
+      const timelineCardState = timelineCards.map((card) => {
+        const side = card.getAttribute("data-side");
+        const num = card.querySelector<HTMLElement>("[data-timeline-num]");
+        const dot = card.querySelector<HTMLElement>("[data-timeline-dot]");
+        const fromX = side === "right" ? 72 : -72;
+
+        gsap.set(card, { opacity: 0, x: fromX, y: 36 });
+        if (num) {
+          gsap.set(num, {
+            color: "rgba(255,255,255,0.04)",
+            scale: 0.92,
+            transformOrigin: "100% 0%",
+          });
+        }
+        if (dot) {
+          gsap.set(dot, { backgroundColor: "#000000", scale: 0.7 });
+        }
+
+        ScrollTrigger.create({
+          trigger: card,
+          start: "top 82%",
+          once: true,
+          onEnter: () => {
+            gsap.to(card, {
+              opacity: 1,
+              x: 0,
+              y: 0,
+              duration: 0.9,
+              ease: "power3.out",
+            });
+          },
+        });
+
+        return { card, num, dot, lit: false };
+      });
+
+      const timelineTrack = rootRef.current?.querySelector<HTMLElement>(
+        "[data-timeline-track]"
+      );
+      const timelineProgress = timelineTrack?.querySelector<HTMLElement>(
+        "[data-timeline-progress]"
+      );
+      const timelineTip = timelineTrack?.querySelector<HTMLElement>(
+        "[data-timeline-tip]"
+      );
+
+      const syncTimelineGlow = (progress: number) => {
+        if (!timelineTrack) return;
+
+        const trackRect = timelineTrack.getBoundingClientRect();
+        const tipY = trackRect.top + trackRect.height * progress;
+
+        timelineCardState.forEach((state) => {
+          if (!state.dot) return;
+
+          const dotRect = state.dot.getBoundingClientRect();
+          const dotY = dotRect.top + dotRect.height / 2;
+          const shouldLit = tipY >= dotY - 6;
+
+          if (shouldLit === state.lit) return;
+          state.lit = shouldLit;
+
+          if (state.num) {
+            gsap.to(state.num, {
+              color: shouldLit ? "#ff5f28" : "rgba(255,255,255,0.04)",
+              scale: shouldLit ? 1 : 0.92,
+              duration: 0.45,
+              ease: "power2.out",
+              overwrite: "auto",
+            });
+          }
+
+          gsap.to(state.dot, {
+            backgroundColor: shouldLit ? "#ff5f28" : "#000000",
+            scale: shouldLit ? 1 : 0.7,
+            duration: 0.4,
+            ease: shouldLit ? "back.out(2)" : "power2.out",
+            overwrite: "auto",
+          });
+        });
+      };
+
+      if (timelineTrack && timelineProgress) {
+        gsap.set(timelineProgress, {
+          scaleY: 0,
+          transformOrigin: "top center",
+        });
+
+        gsap.to(timelineProgress, {
+          scaleY: 1,
+          ease: "none",
+          scrollTrigger: {
+            trigger: timelineTrack,
+            start: "top 70%",
+            end: "bottom 30%",
+            scrub: 0.4,
+            onUpdate: (self) => syncTimelineGlow(self.progress),
+            onRefresh: (self) => syncTimelineGlow(self.progress),
+          },
+        });
+      }
+
+      if (timelineTrack && timelineTip) {
+        gsap.fromTo(
+          timelineTip,
+          { top: "0%", yPercent: -50 },
+          {
+            top: "100%",
+            yPercent: -50,
+            ease: "none",
+            scrollTrigger: {
+              trigger: timelineTrack,
+              start: "top 70%",
+              end: "bottom 30%",
+              scrub: 0.4,
+            },
+          }
+        );
+      }
     }, rootRef);
 
     return () => ctx.revert();
@@ -317,64 +481,134 @@ export default function AboutPageClient() {
       {/* Black — Why Unicorn */}
       <div
         ref={whyRef}
-        className="relative z-30 overflow-hidden bg-black will-change-transform"
+        className="relative z-30 bg-black will-change-transform"
       >
-        <div ref={whyInnerRef} className="origin-center will-change-transform">
-          <section className="relative mx-auto w-full max-w-7xl px-5 py-20 md:px-8 md:py-28 lg:py-32">
+        <section className="relative mx-auto w-full max-w-[90rem] px-5 py-20 pb-28 md:px-8 md:py-28 md:pb-36 lg:px-12 lg:py-32 lg:pb-40">
+            <div
+              className="pointer-events-none absolute -left-24 top-24 h-80 w-80 rounded-full bg-[#ff5f28]/[0.07] blur-3xl"
+              aria-hidden
+            />
+            <div
+              className="pointer-events-none absolute -right-20 bottom-16 h-72 w-72 rounded-full bg-[#ff5f28]/[0.05] blur-3xl"
+              aria-hidden
+            />
+
             <div
               data-reveal
-              className="grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16 xl:gap-20"
+              className="relative flex flex-col gap-8 border-b border-white/10 pb-12 md:flex-row md:items-end md:justify-between md:gap-16 md:pb-14"
             >
-              <div className="max-w-xl">
-                <p
-                  data-reveal-item
-                  className="text-sm font-medium tracking-wide text-[#ff5f28]"
-                >
-                  / why unicorn /
-                </p>
-                <h2
-                  data-reveal-item
-                  className="mt-4 text-4xl font-light leading-[1.1] tracking-tight text-white md:text-5xl lg:text-6xl"
-                >
-                  Built for teams that need speed, clarity &amp;{" "}
-                  <span className="text-[#ff5f28]">outcomes</span>
-                </h2>
-                <p
-                  data-reveal-item
-                  className="mt-5 text-sm leading-relaxed text-white/55 md:text-base"
-                >
-                  Our approach blends strategic thinking, AI-led execution, and
-                  regional insight — so leadership teams can move faster with
-                  less risk.
-                </p>
-              </div>
+              <h2
+                data-reveal-item
+                className="text-4xl font-light uppercase tracking-[0.06em] text-white md:text-5xl lg:text-6xl xl:text-[4rem]"
+              >
+                Why{" "}
+                <span className="text-[#ff5f28]">Unicorn</span>
+              </h2>
+              <p
+                data-reveal-item
+                className="max-w-lg text-base leading-relaxed text-white/55 md:text-right md:text-lg lg:text-xl"
+              >
+                Our approach blends strategic thinking, AI-led execution, and
+                regional insight — so leadership teams can move faster with less
+                risk.
+              </p>
+            </div>
 
-              <div className="grid gap-4">
-                {whyUnicorn.map((item, index) => (
-                  <div
-                    key={item.title}
-                    data-reveal-item
-                    className="group rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-colors hover:border-[#ff5f28]/40 hover:bg-[#ff5f28]/[0.06] md:p-7"
-                  >
-                    <div className="flex items-start gap-4">
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#ff5f28]/30 bg-[#ff5f28]/10 text-sm font-medium text-[#ff5f28]">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <div>
-                        <p className="text-lg font-medium text-white md:text-xl">
-                          {item.title}
-                        </p>
-                        <p className="mt-2 text-sm leading-relaxed text-white/55 md:text-base">
-                          {item.description}
-                        </p>
-                      </div>
+            <div data-reveal className="relative mt-12 md:mt-14">
+              <h3
+                data-reveal-item
+                className="max-w-4xl text-3xl font-light leading-[1.1] tracking-tight text-white md:text-4xl lg:text-5xl"
+              >
+                Built for teams that need speed, clarity &amp;{" "}
+                <span className="text-[#ff5f28]">outcomes</span>
+              </h3>
+            </div>
+
+            <div data-timeline-track className="relative mt-14 md:mt-20">
+              {/* Base track */}
+              <div
+                className="pointer-events-none absolute left-4 top-0 bottom-0 w-px bg-white/15 md:left-1/2 md:-translate-x-1/2"
+                aria-hidden
+              />
+              {/* Filled glow that stays from 01 → current scroll position */}
+              <div
+                data-timeline-progress
+                className="pointer-events-none absolute left-4 top-0 z-[1] h-full w-[2px] -translate-x-1/2 md:left-1/2"
+                style={{
+                  background:
+                    "linear-gradient(to bottom, #ff5f28 0%, #ff8f5c 50%, #ff5f28 100%)",
+                  boxShadow:
+                    "0 0 12px 1px rgba(255,95,40,0.75), 0 0 28px 4px rgba(255,95,40,0.35)",
+                }}
+                aria-hidden
+              />
+              {/* Bright tip at the leading edge */}
+              <div
+                data-timeline-tip
+                className="pointer-events-none absolute left-4 z-[2] h-24 w-16 -translate-x-1/2 md:left-1/2 md:w-20"
+                style={{
+                  background:
+                    "radial-gradient(ellipse at center, rgba(255,95,40,0.7) 0%, rgba(255,95,40,0.25) 35%, transparent 70%)",
+                  filter: "blur(6px)",
+                }}
+                aria-hidden
+              />
+
+              <div className="flex flex-col gap-10 md:gap-16 lg:gap-20">
+                {whyUnicorn.map((item, index) => {
+                  const step = String(index + 1).padStart(2, "0");
+                  const isLeft = index % 2 === 0;
+
+                  return (
+                    <div
+                      key={item.title}
+                      data-timeline-card
+                      data-side={isLeft ? "left" : "right"}
+                      className={`relative flex pl-12 md:pl-0 ${
+                        isLeft ? "md:justify-start" : "md:justify-end"
+                      }`}
+                    >
+                      <span
+                        data-timeline-dot
+                        className="absolute left-4 top-8 z-[1] h-3 w-3 -translate-x-1/2 rounded-full border-2 border-[#ff5f28] bg-black md:left-1/2 md:top-10"
+                        aria-hidden
+                      />
+
+                      <article
+                        className={`group relative w-full overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.03] p-7 transition-colors duration-300 hover:border-[#ff5f28]/45 hover:bg-white/[0.05] md:w-[calc(50%-2.5rem)] md:p-9 lg:w-[calc(50%-3.5rem)] ${
+                          isLeft ? "md:mr-auto" : "md:ml-auto"
+                        }`}
+                      >
+                        <span
+                          data-timeline-num
+                          className="pointer-events-none absolute right-4 top-4 select-none text-[6rem] font-medium leading-none md:right-6 md:top-5 md:text-[7rem]"
+                          aria-hidden
+                        >
+                          {step}
+                        </span>
+
+                        <div className="relative z-[1] flex h-12 w-12 items-center justify-center rounded-full border border-[#ff5f28]/30 bg-[#ff5f28]/10 text-[#ff5f28]">
+                          {item.icon}
+                        </div>
+
+                        <div className="relative z-[1] mt-8">
+                          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#ff5f28]">
+                            {step}
+                          </p>
+                          <h4 className="mt-2 text-2xl font-light tracking-tight text-white md:text-3xl">
+                            {item.title}
+                          </h4>
+                          <p className="mt-3 max-w-md text-sm leading-relaxed text-white/55 md:text-base">
+                            {item.description}
+                          </p>
+                        </div>
+                      </article>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </section>
-        </div>
       </div>
 
       {/* White — How we work */}

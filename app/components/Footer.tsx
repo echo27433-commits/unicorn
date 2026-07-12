@@ -4,7 +4,7 @@ import Link from "next/link";
 const companyLinks = [
   { label: "Home", href: "/#home" },
   { label: "About", href: "/about" },
-  { label: "Services", href: "/#services" },
+  { label: "Services", href: "/services" },
 ];
 
 const workLinks = [

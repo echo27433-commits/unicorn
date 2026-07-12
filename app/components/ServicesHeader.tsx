@@ -4,7 +4,7 @@ import Button from "./Button";
 import LineWaves from "./LineWaves";
 import Navbar from "./Navbar";
 
-const AboutHeader = forwardRef<HTMLElement>(function AboutHeader(_, ref) {
+const ServicesHeader = forwardRef<HTMLElement>(function ServicesHeader(_, ref) {
   return (
     <>
       <Navbar />
@@ -73,26 +73,26 @@ const AboutHeader = forwardRef<HTMLElement>(function AboutHeader(_, ref) {
                 <div className="relative z-[1]">
                   <p className="mb-5 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#ff5f28] md:mb-6 md:text-sm">
                     <span aria-hidden>✦</span>
-                    About Us
+                    Products &amp; Services
                   </p>
 
                   <h1 className="text-6xl font-light leading-[1.04] tracking-tight text-white md:text-7xl lg:text-8xl xl:text-[6.5rem] xl:leading-[1.01]">
-                    Building the future of{" "}
-                    <span className="text-gradient-future">enterprise growth.</span>
+                    Platforms &amp; expertise that{" "}
+                    <span className="text-gradient-future">drive growth.</span>
                   </h1>
 
                   <p className="mt-6 max-w-[32rem] text-sm leading-relaxed text-white/55 md:mt-7 md:text-[0.95rem]">
-                    Unicorn is a global AI and technology transformation company
-                    helping organizations create meaningful customer experiences,
-                    unlock operational intelligence, and accelerate digital growth.
+                    From Echo — our AI-powered engagement platform — to data
+                    intelligence and digital growth services that turn strategy
+                    into measurable outcomes.
                   </p>
 
                   <div className="mt-10 flex flex-wrap items-center gap-4 md:mt-12 md:gap-5">
                     <Button href="/contact" variant="primary" className="md:text-lg">
                       Book a Call
                     </Button>
-                    <Button href="/services" variant="secondary" className="md:text-lg">
-                      View Our Services
+                    <Button href="#echo" variant="secondary" className="md:text-lg">
+                      Explore Echo
                     </Button>
                   </div>
                 </div>
@@ -105,4 +105,4 @@ const AboutHeader = forwardRef<HTMLElement>(function AboutHeader(_, ref) {
   );
 });
 
-export default AboutHeader;
+export default ServicesHeader;
