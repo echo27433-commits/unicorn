@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import { useLayoutEffect, useMemo, useRef } from "react";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -109,14 +109,12 @@ export default function BlogPageClient() {
   const coverRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const root = rootRef.current;
     const hero = heroRef.current;
     const cover = coverRef.current;
-    if (!hero || !cover) return;
-
-    const prefersReduced =
-      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-    if (prefersReduced) return;
+    if (!root || !hero || !cover) return;
+    if (reducedMotion) return;
 
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
@@ -127,20 +125,23 @@ export default function BlogPageClient() {
         pin: true,
         pinSpacing: false,
         anticipatePin: 1,
+        fastScrollEnd: true,
       });
 
       gsap.fromTo(
         hero,
         { scale: 1, opacity: 1 },
         {
-          scale: 0.94,
-          opacity: 0.5,
+          scale: 0.96,
+          opacity: 0.55,
           ease: "none",
+          force3D: true,
           scrollTrigger: {
             trigger: cover,
             start: "top bottom",
             end: "top top",
-            scrub: 0.9,
+            scrub: 0.5,
+            fastScrollEnd: true,
           },
         }
       );
@@ -148,63 +149,59 @@ export default function BlogPageClient() {
       gsap.fromTo(
         cover,
         {
-          borderRadius: "32px 32px 0px 0px",
-          boxShadow: "0 -12px 40px rgba(0,0,0,0)",
+          borderRadius: "28px 28px 0px 0px",
+          boxShadow: "0 -8px 24px rgba(0,0,0,0)",
         },
         {
           borderRadius: "0px 0px 0px 0px",
-          boxShadow: "0 -32px 90px rgba(0,0,0,0.5)",
+          boxShadow: "0 -20px 48px rgba(0,0,0,0.35)",
           ease: "none",
           scrollTrigger: {
             trigger: cover,
             start: "top bottom",
             end: "top top",
-            scrub: 0.9,
+            scrub: 0.5,
+            fastScrollEnd: true,
           },
         }
       );
-    });
+
+      const groups = gsap.utils.toArray<HTMLElement>("[data-reveal]");
+
+      groups.forEach((group) => {
+        const items = group.querySelectorAll<HTMLElement>("[data-reveal-item]");
+        if (!items.length) return;
+
+        gsap.set(items, { opacity: 0, y: 16, force3D: true });
+
+        ScrollTrigger.create({
+          trigger: group,
+          start: "top 85%",
+          once: true,
+          fastScrollEnd: true,
+          onEnter: () => {
+            gsap.to(items, {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              ease: "power2.out",
+              stagger: 0.06,
+              overwrite: "auto",
+            });
+          },
+        });
+      });
+    }, root);
 
     const refresh = () => ScrollTrigger.refresh();
     window.addEventListener("load", refresh);
-    const timeout = window.setTimeout(refresh, 250);
+    const timeout = window.setTimeout(refresh, 200);
 
     return () => {
       window.removeEventListener("load", refresh);
       window.clearTimeout(timeout);
       ctx.revert();
     };
-  }, []);
-
-  useLayoutEffect(() => {
-    if (reducedMotion) return;
-    if (!rootRef.current) return;
-
-    const ctx = gsap.context(() => {
-      const groups = gsap.utils.toArray<HTMLElement>("[data-reveal]");
-
-      groups.forEach((group) => {
-        const items = group.querySelectorAll<HTMLElement>("[data-reveal-item]");
-        gsap.set(items, { opacity: 0, y: 20 });
-
-        ScrollTrigger.create({
-          trigger: group,
-          start: "top 78%",
-          once: true,
-          onEnter: () => {
-            gsap.to(items, {
-              opacity: 1,
-              y: 0,
-              duration: 0.8,
-              ease: "power3.out",
-              stagger: 0.08,
-            });
-          },
-        });
-      });
-    }, rootRef);
-
-    return () => ctx.revert();
   }, [reducedMotion]);
 
   const featured = posts[0];
@@ -214,14 +211,11 @@ export default function BlogPageClient() {
     <div ref={rootRef} className="min-h-screen bg-black">
       <BlogHeader ref={heroRef} />
 
-      <div
-        ref={coverRef}
-        className="relative z-20 overflow-hidden bg-black will-change-transform"
-      >
+      <div ref={coverRef} className="relative z-20 overflow-hidden bg-black">
         <main className="relative bg-black font-sans">
           <div className="pointer-events-none absolute inset-0 overflow-hidden">
-            <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-[#ff5f28]/[0.1] blur-3xl" />
-            <div className="absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-[#ff5f28]/[0.08] blur-3xl" />
+            <div className="absolute -left-16 top-16 h-56 w-56 rounded-full bg-[#ff5f28]/[0.07]" />
+            <div className="absolute -right-12 bottom-8 h-64 w-64 rounded-full bg-[#ff5f28]/[0.05]" />
           </div>
 
           <section
@@ -271,11 +265,11 @@ export default function BlogPageClient() {
                     fill
                     priority
                     sizes="(max-width: 1024px) 100vw, 55vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                   <div className="absolute inset-0 flex items-end p-8 md:p-10">
-                    <span className="rounded-full border border-[#ff5f28]/40 bg-black/50 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#ff5f28] backdrop-blur-sm">
+                    <span className="rounded-full border border-[#ff5f28]/40 bg-black/60 px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#ff5f28]">
                       Featured
                     </span>
                   </div>
@@ -329,7 +323,7 @@ export default function BlogPageClient() {
                       alt={post.title}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
                   </div>

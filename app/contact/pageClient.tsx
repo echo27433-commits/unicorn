@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { FormEvent, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { FormEvent, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -56,14 +56,12 @@ export default function ContactPageClient() {
   const [mode, setMode] = useState<"overview" | "focused">("overview");
   const [overviewKey, setOverviewKey] = useState(0);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const root = rootRef.current;
     const hero = heroRef.current;
     const cover = coverRef.current;
-    if (!hero || !cover) return;
-
-    const prefersReduced =
-      window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-    if (prefersReduced) return;
+    if (!root || !hero || !cover) return;
+    if (reducedMotion) return;
 
     const ctx = gsap.context(() => {
       ScrollTrigger.create({
@@ -74,20 +72,23 @@ export default function ContactPageClient() {
         pin: true,
         pinSpacing: false,
         anticipatePin: 1,
+        fastScrollEnd: true,
       });
 
       gsap.fromTo(
         hero,
         { scale: 1, opacity: 1 },
         {
-          scale: 0.94,
-          opacity: 0.5,
+          scale: 0.96,
+          opacity: 0.55,
           ease: "none",
+          force3D: true,
           scrollTrigger: {
             trigger: cover,
             start: "top bottom",
             end: "top top",
-            scrub: 0.9,
+            scrub: 0.5,
+            fastScrollEnd: true,
           },
         }
       );
@@ -95,63 +96,59 @@ export default function ContactPageClient() {
       gsap.fromTo(
         cover,
         {
-          borderRadius: "32px 32px 0px 0px",
-          boxShadow: "0 -12px 40px rgba(0,0,0,0)",
+          borderRadius: "28px 28px 0px 0px",
+          boxShadow: "0 -8px 24px rgba(0,0,0,0)",
         },
         {
           borderRadius: "0px 0px 0px 0px",
-          boxShadow: "0 -32px 90px rgba(0,0,0,0.5)",
+          boxShadow: "0 -20px 48px rgba(0,0,0,0.35)",
           ease: "none",
           scrollTrigger: {
             trigger: cover,
             start: "top bottom",
             end: "top top",
-            scrub: 0.9,
+            scrub: 0.5,
+            fastScrollEnd: true,
           },
         }
       );
-    });
+
+      const groups = gsap.utils.toArray<HTMLElement>("[data-reveal]");
+
+      groups.forEach((group) => {
+        const items = group.querySelectorAll<HTMLElement>("[data-reveal-item]");
+        if (!items.length) return;
+
+        gsap.set(items, { opacity: 0, y: 16, force3D: true });
+
+        ScrollTrigger.create({
+          trigger: group,
+          start: "top 85%",
+          once: true,
+          fastScrollEnd: true,
+          onEnter: () => {
+            gsap.to(items, {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              ease: "power2.out",
+              stagger: 0.06,
+              overwrite: "auto",
+            });
+          },
+        });
+      });
+    }, root);
 
     const refresh = () => ScrollTrigger.refresh();
     window.addEventListener("load", refresh);
-    const timeout = window.setTimeout(refresh, 250);
+    const timeout = window.setTimeout(refresh, 200);
 
     return () => {
       window.removeEventListener("load", refresh);
       window.clearTimeout(timeout);
       ctx.revert();
     };
-  }, []);
-
-  useLayoutEffect(() => {
-    if (reducedMotion) return;
-    if (!rootRef.current) return;
-
-    const ctx = gsap.context(() => {
-      const groups = gsap.utils.toArray<HTMLElement>("[data-reveal]");
-
-      groups.forEach((group) => {
-        const items = group.querySelectorAll<HTMLElement>("[data-reveal-item]");
-        gsap.set(items, { opacity: 0, y: 20 });
-
-        ScrollTrigger.create({
-          trigger: group,
-          start: "top 78%",
-          once: true,
-          onEnter: () => {
-            gsap.to(items, {
-              opacity: 1,
-              y: 0,
-              duration: 0.8,
-              ease: "power3.out",
-              stagger: 0.08,
-            });
-          },
-        });
-      });
-    }, rootRef);
-
-    return () => ctx.revert();
   }, [reducedMotion]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -173,14 +170,11 @@ export default function ContactPageClient() {
     <div ref={rootRef} className="min-h-screen bg-black">
       <ContactHeader ref={heroRef} />
 
-      <div
-        ref={coverRef}
-        className="relative z-20 overflow-hidden bg-white will-change-transform"
-      >
+      <div ref={coverRef} className="relative z-20 overflow-hidden bg-white">
         <main className="relative bg-white font-sans">
           <div className="pointer-events-none absolute inset-0 overflow-hidden">
-            <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-[#ff5f28]/[0.08] blur-3xl" />
-            <div className="absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-[#ff5f28]/[0.06] blur-3xl" />
+            <div className="absolute -left-16 top-16 h-56 w-56 rounded-full bg-[#ff5f28]/[0.06]" />
+            <div className="absolute -right-12 bottom-8 h-64 w-64 rounded-full bg-[#ff5f28]/[0.04]" />
           </div>
 
           <section className="relative mx-auto w-full max-w-7xl px-5 py-20 md:px-8 md:py-28 lg:pt-32 lg:pb-20">
