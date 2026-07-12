@@ -35,7 +35,7 @@ const AboutHeader = forwardRef<HTMLElement>(function AboutHeader(_, ref) {
                     About Us
                   </p>
 
-                  <h1 className="text-[3.25rem] font-light leading-[1.08] tracking-tight text-white sm:text-5xl sm:leading-[1.04] md:text-7xl lg:text-8xl xl:text-[6.5rem] xl:leading-[1.01]">
+                  <h1 className="text-[3.75rem] font-light leading-[1.06] tracking-tight text-white sm:text-5xl sm:leading-[1.04] md:text-7xl lg:text-8xl xl:text-[6.5rem] xl:leading-[1.01]">
                     Building the future of{" "}
                     <span className="text-gradient-future">enterprise growth.</span>
                   </h1>
