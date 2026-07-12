@@ -248,7 +248,8 @@ export default function ServicesPageClient() {
   }, []);
 
   useEffect(() => {
-    const t = window.setTimeout(() => ScrollTrigger.refresh(), 100);
+    // Accordion height changes — give the grid transition time, then refresh once.
+    const t = window.setTimeout(() => ScrollTrigger.refresh(), 520);
     return () => window.clearTimeout(t);
   }, [activeService]);
 
@@ -565,9 +566,6 @@ export default function ServicesPageClient() {
           </div>
         </section>
       </div>
-
-      {/* Restores scroll room lost to pinSpacing:false covers above */}
-      <div className="pointer-events-none h-[30vh] w-full bg-white" aria-hidden />
 
       <NewsletterCover />
     </div>

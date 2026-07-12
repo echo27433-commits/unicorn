@@ -52,7 +52,7 @@ export default function Navbar() {
 
   return (
     <div
-      className={`fixed inset-x-0 top-0 z-50 w-full px-4 transition-all duration-300 ease-out md:px-8 lg:px-12 ${
+      className={`fixed inset-x-0 top-0 z-[100] w-full px-4 transition-all duration-300 ease-out md:px-8 lg:px-12 ${
         scrolled ? "pt-2 md:pt-2.5" : "pt-5 md:pt-5"
       }`}
     >

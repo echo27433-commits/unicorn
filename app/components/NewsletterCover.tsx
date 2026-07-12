@@ -16,30 +16,40 @@ gsap.registerPlugin(ScrollTrigger);
 export default function NewsletterCover() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const newsletterRef = useRef<HTMLDivElement>(null);
+  const newsletterContentRef = useRef<HTMLDivElement>(null);
   const footerSlotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
     const newsletter = newsletterRef.current;
+    const newsletterContent = newsletterContentRef.current;
     const footerSlot = footerSlotRef.current;
-    if (!wrapper || !newsletter || !footerSlot) return;
+    if (!wrapper || !newsletter || !newsletterContent || !footerSlot) return;
 
     const prefersReduced =
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
     if (prefersReduced) return;
 
     let stackHeight = 0;
+    let syncing = false;
 
     const sync = () => {
-      newsletter.style.minHeight = "";
-      wrapper.style.height = "";
-
-      const nh = newsletter.scrollHeight;
+      // Measure natural content height — never clear applied sizes (that
+      // retriggers ResizeObserver and collapses pin-spacing mid-refresh).
+      const nh = newsletterContent.scrollHeight;
       const fh = footerSlot.scrollHeight;
-      stackHeight = Math.max(nh, fh, window.innerHeight);
+      const next = Math.max(nh, fh, window.innerHeight);
 
+      if (next === stackHeight) return stackHeight;
+
+      syncing = true;
+      stackHeight = next;
       wrapper.style.height = `${stackHeight}px`;
       newsletter.style.minHeight = `${stackHeight}px`;
+      // Allow layout to settle before re-arming observers.
+      requestAnimationFrame(() => {
+        syncing = false;
+      });
       return stackHeight;
     };
 
@@ -55,14 +65,13 @@ export default function NewsletterCover() {
         anticipatePin: 1,
         invalidateOnRefresh: true,
         onRefreshInit: sync,
-        onRefresh: sync,
       });
 
       gsap.fromTo(
         newsletter,
-        { yPercent: 0 },
+        { y: 0 },
         {
-          yPercent: -100,
+          y: () => -stackHeight,
           ease: "none",
           scrollTrigger: {
             trigger: wrapper,
@@ -75,34 +84,42 @@ export default function NewsletterCover() {
       );
     });
 
-    const refresh = () => {
-      sync();
-      ScrollTrigger.refresh();
+    let refreshTimer = 0;
+    const scheduleRefresh = () => {
+      if (syncing) return;
+      window.clearTimeout(refreshTimer);
+      refreshTimer = window.setTimeout(() => {
+        const before = stackHeight;
+        sync();
+        if (stackHeight !== before) {
+          ScrollTrigger.refresh();
+        }
+      }, 80);
     };
 
-    window.addEventListener("load", refresh);
-    const t1 = window.setTimeout(refresh, 300);
-    const t2 = window.setTimeout(refresh, 900);
-    const t3 = window.setTimeout(refresh, 1600);
+    window.addEventListener("load", scheduleRefresh);
+    const t1 = window.setTimeout(scheduleRefresh, 300);
+    const t2 = window.setTimeout(scheduleRefresh, 900);
 
     const resizeObserver = new ResizeObserver(() => {
-      refresh();
+      scheduleRefresh();
     });
+    // Observe natural-size sources only — not the stretched newsletter shell.
     resizeObserver.observe(footerSlot);
-    resizeObserver.observe(newsletter);
+    resizeObserver.observe(newsletterContent);
 
     const images = footerSlot.querySelectorAll("img");
     images.forEach((img) => {
       if (!img.complete) {
-        img.addEventListener("load", refresh, { once: true });
+        img.addEventListener("load", scheduleRefresh, { once: true });
       }
     });
 
     return () => {
-      window.removeEventListener("load", refresh);
+      window.removeEventListener("load", scheduleRefresh);
       window.clearTimeout(t1);
       window.clearTimeout(t2);
-      window.clearTimeout(t3);
+      window.clearTimeout(refreshTimer);
       resizeObserver.disconnect();
       ctx.revert();
       wrapper.style.height = "";
@@ -126,7 +143,9 @@ export default function NewsletterCover() {
         ref={newsletterRef}
         className="relative z-10 w-full bg-white will-change-transform"
       >
-        <Newsletter />
+        <div ref={newsletterContentRef}>
+          <Newsletter />
+        </div>
       </div>
     </div>
   );
