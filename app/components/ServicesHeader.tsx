@@ -71,23 +71,23 @@ const ServicesHeader = forwardRef<HTMLElement>(function ServicesHeader(_, ref) {
                 />
 
                 <div className="relative z-[1]">
-                  <p className="mb-4 flex items-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-[#ff5f28] sm:text-xs sm:tracking-[0.18em] md:mb-6 md:text-sm">
+                  <p className="mb-5 flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[#ff5f28] sm:mb-4 sm:text-xs sm:tracking-[0.18em] md:mb-6 md:text-sm">
                     <span aria-hidden>✦</span>
                     Products &amp; Services
                   </p>
 
-                  <h1 className="text-[2.75rem] font-light leading-[1.06] tracking-tight text-white sm:text-5xl sm:leading-[1.04] md:text-7xl lg:text-8xl xl:text-[6.5rem] xl:leading-[1.01]">
+                  <h1 className="text-[3.25rem] font-light leading-[1.08] tracking-tight text-white sm:text-5xl sm:leading-[1.04] md:text-7xl lg:text-8xl xl:text-[6.5rem] xl:leading-[1.01]">
                     Platforms &amp; expertise that{" "}
                     <span className="text-gradient-future">drive growth.</span>
                   </h1>
 
-                  <p className="mt-5 max-w-[32rem] text-[0.8125rem] leading-relaxed text-white/55 sm:text-sm md:mt-7 md:text-[0.95rem]">
+                  <p className="mt-6 max-w-[32rem] text-[0.875rem] leading-relaxed text-white/55 sm:mt-5 sm:text-sm md:mt-7 md:text-[0.95rem]">
                     From Echo — our AI-powered engagement platform — to data
                     intelligence and digital growth services that turn strategy
                     into measurable outcomes.
                   </p>
 
-                  <div className="mt-8 flex w-full flex-col gap-2.5 sm:mt-10 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-12 md:gap-5">
+                  <div className="mt-9 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-12 md:gap-5">
                     <Button
                       href="/contact"
                       variant="primary"
