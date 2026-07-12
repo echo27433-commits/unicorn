@@ -1,37 +1,64 @@
-import { forwardRef } from "react";
+"use client";
+
+import { forwardRef, useEffect, useState } from "react";
 
 import Button from "./Button";
 import LineWaves from "./DynamicLineWaves";
 import Navbar from "./Navbar";
 
+const desktopWavesMask =
+  "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.2) 38%, rgba(0,0,0,0.55) 52%, rgba(0,0,0,0.85) 64%, black 76%, black 100%)";
+
+/** Softer mask so waves read across a narrow phone screen */
+const mobileWavesMask =
+  "linear-gradient(to right, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.75) 28%, black 55%, black 100%)";
+
+const desktopDarkOverlay =
+  "linear-gradient(to right, #000000 0%, #000000 40%, rgba(0,0,0,0.97) 48%, rgba(0,0,0,0.88) 54%, rgba(0,0,0,0.72) 60%, rgba(0,0,0,0.52) 66%, rgba(0,0,0,0.32) 72%, rgba(0,0,0,0.16) 78%, rgba(0,0,0,0.06) 84%, transparent 92%)";
+
+/** Keep text readable without burying the animation on mobile */
+const mobileDarkOverlay =
+  "linear-gradient(to bottom, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.55) 100%), linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.25) 60%, transparent 100%)";
+
 const AboutHeader = forwardRef<HTMLElement>(function AboutHeader(_, ref) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const sync = () => setIsMobile(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  const wavesMask = isMobile ? mobileWavesMask : desktopWavesMask;
+
   return (
     <>
       <Navbar />
 
       <header
         ref={ref}
-        className="relative z-0 flex flex-col overflow-hidden bg-black md:min-h-[85vh] md:will-change-transform"
+        className="relative z-0 flex min-h-[70svh] flex-col overflow-hidden bg-black md:min-h-[85vh] md:will-change-transform"
         style={{ transformOrigin: "center center" }}
       >
         <div
-          className="absolute inset-0 z-0 max-md:opacity-90"
+          className="absolute inset-0 z-0"
           style={{
-            maskImage:
-              "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.2) 38%, rgba(0,0,0,0.55) 52%, rgba(0,0,0,0.85) 64%, black 76%, black 100%)",
-            WebkitMaskImage:
-              "linear-gradient(to right, transparent 0%, rgba(0,0,0,0.2) 38%, rgba(0,0,0,0.55) 52%, rgba(0,0,0,0.85) 64%, black 76%, black 100%)",
+            maskImage: wavesMask,
+            WebkitMaskImage: wavesMask,
           }}
         >
           <LineWaves
-            speed={0.14}
-            innerLineCount={40}
-            outerLineCount={48}
-            warpIntensity={1.15}
-            rotation={-38}
-            edgeFadeWidth={0.08}
-            colorCycleSpeed={0.55}
-            brightness={0.62}
+            key={isMobile ? "mobile" : "desktop"}
+            speed={isMobile ? 0.11 : 0.14}
+            innerLineCount={isMobile ? 26 : 40}
+            outerLineCount={isMobile ? 30 : 48}
+            warpIntensity={isMobile ? 0.95 : 1.15}
+            rotation={isMobile ? -24 : -38}
+            edgeFadeWidth={isMobile ? 0.14 : 0.08}
+            colorCycleSpeed={isMobile ? 0.45 : 0.55}
+            brightness={isMobile ? 0.58 : 0.62}
             color1="#ff5f28"
             color2="#ffc49a"
             color3="#ff3a00"
@@ -42,20 +69,26 @@ const AboutHeader = forwardRef<HTMLElement>(function AboutHeader(_, ref) {
         <div
           className="pointer-events-none absolute inset-0 z-[1]"
           style={{
-            background:
-              "linear-gradient(to right, #000000 0%, #000000 40%, rgba(0,0,0,0.97) 48%, rgba(0,0,0,0.88) 54%, rgba(0,0,0,0.72) 60%, rgba(0,0,0,0.52) 66%, rgba(0,0,0,0.32) 72%, rgba(0,0,0,0.16) 78%, rgba(0,0,0,0.06) 84%, transparent 92%)",
+            background: isMobile ? mobileDarkOverlay : desktopDarkOverlay,
           }}
         />
 
         <div
-          className="pointer-events-none absolute inset-0 z-[1] mix-blend-screen opacity-50"
+          className="pointer-events-none absolute inset-0 z-[1] mix-blend-screen opacity-40 md:opacity-50"
           style={{
-            background:
-              "linear-gradient(to right, transparent 0%, transparent 46%, rgba(255,95,40,0.03) 54%, rgba(255,95,40,0.07) 64%, rgba(255,95,40,0.1) 72%, rgba(255,95,40,0.06) 80%, transparent 90%)",
+            background: isMobile
+              ? "radial-gradient(ellipse 90% 70% at 70% 40%, rgba(255,95,40,0.14), transparent 70%)"
+              : "linear-gradient(to right, transparent 0%, transparent 46%, rgba(255,95,40,0.03) 54%, rgba(255,95,40,0.07) 64%, rgba(255,95,40,0.1) 72%, rgba(255,95,40,0.06) 80%, transparent 90%)",
           }}
         />
 
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-[1] w-[50%] bg-[radial-gradient(ellipse_85%_80%_at_90%_50%,rgba(255,95,40,0.2),transparent_75%)]" />
+        <div
+          className={`pointer-events-none absolute z-[1] ${
+            isMobile
+              ? "inset-x-0 bottom-0 h-[55%] bg-[radial-gradient(ellipse_90%_80%_at_70%_100%,rgba(255,95,40,0.22),transparent_70%)]"
+              : "inset-y-0 right-0 w-[50%] bg-[radial-gradient(ellipse_85%_80%_at_90%_50%,rgba(255,95,40,0.2),transparent_75%)]"
+          }`}
+        />
 
         <div className="relative z-10 flex flex-1 flex-col pointer-events-none [&_a]:pointer-events-auto [&_button]:pointer-events-auto">
           <section className="relative flex flex-col px-4 pb-8 pt-32 sm:pb-12 sm:pt-36 md:flex-1 md:px-8 md:pb-20 md:pt-44 lg:px-12 lg:pt-48">
@@ -70,8 +103,8 @@ const AboutHeader = forwardRef<HTMLElement>(function AboutHeader(_, ref) {
                   aria-hidden
                 />
 
-                <div className="relative z-[1]">
-                  <p className="mb-5 flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[#ff5f28] sm:mb-4 sm:text-xs sm:tracking-[0.18em] md:mb-6 md:text-sm">
+                <div className="relative z-[1] text-left">
+                  <p className="mb-5 flex items-center justify-start gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[#ff5f28] sm:mb-4 sm:text-xs sm:tracking-[0.18em] md:mb-6 md:text-sm">
                     <span aria-hidden>✦</span>
                     About Us
                   </p>
@@ -87,7 +120,7 @@ const AboutHeader = forwardRef<HTMLElement>(function AboutHeader(_, ref) {
                     unlock operational intelligence, and accelerate digital growth.
                   </p>
 
-                  <div className="mt-9 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-12 md:gap-5">
+                  <div className="mt-9 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:justify-start sm:gap-4 md:mt-12 md:gap-5">
                     <Button
                       href="/contact"
                       variant="primary"
