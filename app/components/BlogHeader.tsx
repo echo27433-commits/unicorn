@@ -30,12 +30,12 @@ const BlogHeader = forwardRef<HTMLElement>(function BlogHeader(_, ref) {
                 />
 
                 <div className="relative z-[1] text-left">
-                  <p className="mb-5 flex items-center justify-start gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[#ff5f28] sm:mb-4 sm:text-xs sm:tracking-[0.18em] md:mb-6 md:text-sm">
+                  <p className="mb-5 flex items-center justify-start gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-[#ff5f28] sm:mb-4 sm:tracking-[0.18em] md:mb-6 md:text-sm">
                     <span aria-hidden>✦</span>
                     Blog
                   </p>
 
-                  <h1 className="text-[3.25rem] font-light leading-[1.08] tracking-tight text-white sm:text-5xl sm:leading-[1.04] md:text-7xl lg:text-8xl xl:text-[6.5rem] xl:leading-[1.01]">
+                  <h1 className="text-[3.75rem] font-light leading-[1.06] tracking-tight text-white sm:text-5xl sm:leading-[1.04] md:text-7xl lg:text-8xl xl:text-[6.5rem] xl:leading-[1.01]">
                     Insights that
                     <br />
                     build{" "}
