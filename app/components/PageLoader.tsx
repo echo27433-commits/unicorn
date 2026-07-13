@@ -4,13 +4,26 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLenis } from "lenis/react";
 import { useEffect } from "react";
 
-const MIN_MS = 2200;
-const MIN_REDUCED_MS = 600;
-const MAX_MS = 5200;
+const MIN_MS = 2400;
+const MIN_REDUCED_MS = 700;
+const MAX_MS = 7000;
 
 function wait(ms: number) {
   return new Promise<void>((resolve) => {
     window.setTimeout(resolve, ms);
+  });
+}
+
+function waitFrames(count = 2) {
+  return new Promise<void>((resolve) => {
+    const step = (left: number) => {
+      if (left <= 0) {
+        resolve();
+        return;
+      }
+      requestAnimationFrame(() => step(left - 1));
+    };
+    step(count);
   });
 }
 
@@ -29,51 +42,102 @@ function waitForFonts() {
   );
 }
 
-function waitForVisibleImages() {
-  const vh = window.innerHeight;
-  const imgs = Array.from(document.images).filter((img) => {
-    if (img.closest("#boot-loader")) return false;
-    const rect = img.getBoundingClientRect();
-    return rect.top < vh * 1.6 && rect.bottom > -vh * 0.25;
+function decodeImage(img: HTMLImageElement) {
+  if (img.complete && img.naturalWidth > 0) {
+    return img.decode?.().catch(() => undefined) ?? Promise.resolve();
+  }
+  return new Promise<void>((resolve) => {
+    const done = () => resolve();
+    img.addEventListener("load", done, { once: true });
+    img.addEventListener("error", done, { once: true });
+    window.setTimeout(done, 2800);
   });
+}
 
-  return Promise.all(
-    imgs.map((img) => {
-      if (img.complete && img.naturalWidth > 0) {
-        return img.decode?.().catch(() => undefined) ?? Promise.resolve();
+/** All page images except the boot loader itself. */
+function waitForPageImages() {
+  const imgs = Array.from(document.images).filter(
+    (img) => !img.closest("#boot-loader")
+  );
+  return Promise.all(imgs.map(decodeImage)).then(() => undefined);
+}
+
+/**
+ * Prefetch heavy home chunks so Case Study / Location / Newsletter / Waves
+ * parse while the intro is on screen.
+ */
+function prefetchHeavyChunks() {
+  return Promise.allSettled([
+    import("./CaseStudy"),
+    import("./LocationCover"),
+    import("./BrandsTrust"),
+    import("./NewsletterCover"),
+    import("./DynamicLineWaves"),
+    import("./Reviews"),
+    import("./OurLocation"),
+  ]);
+}
+
+/** Wait until hero WebGL canvas mounts (or give up). */
+function waitForHeroWaves(timeoutMs = 3200) {
+  const selector = ".line-waves-container canvas, header canvas";
+  if (document.querySelector(selector)) return Promise.resolve();
+
+  return new Promise<void>((resolve) => {
+    const started = performance.now();
+
+    const tick = () => {
+      if (
+        document.querySelector(selector) ||
+        performance.now() - started > timeoutMs
+      ) {
+        resolve();
+        return;
       }
-      return new Promise<void>((resolve) => {
-        const done = () => resolve();
-        img.addEventListener("load", done, { once: true });
-        img.addEventListener("error", done, { once: true });
-        window.setTimeout(done, 2200);
-      });
-    })
-  ).then(() => undefined);
+      window.setTimeout(tick, 80);
+    };
+
+    tick();
+  });
+}
+
+/** Let React effects + ScrollTrigger pins settle, then refresh. */
+async function settleMotion() {
+  await wait(500);
+  await waitFrames(3);
+  ScrollTrigger.refresh();
+  await waitFrames(2);
 }
 
 async function waitForAppReady(minMs: number) {
   const started = performance.now();
 
+  // Kick chunk downloads immediately (don't block the rest on them alone).
+  const chunks = prefetchHeavyChunks();
+
   await Promise.race([
     Promise.all([
       waitForWindowLoad(),
       waitForFonts(),
-      wait(400),
-      waitForVisibleImages(),
+      waitForPageImages(),
+      waitForHeroWaves(),
+      chunks,
+      wait(600),
     ]),
     wait(MAX_MS),
   ]);
 
-  await waitForVisibleImages();
+  // Second pass — dynamic sections may have injected more <img>s.
+  await waitForPageImages();
+  await settleMotion();
 
   const elapsed = performance.now() - started;
   if (elapsed < minMs) await wait(minMs - elapsed);
 }
 
 /**
- * Dismisses #boot-loader once fonts / first-viewport images / scroll setup are warm.
- * Soft client navigations keep the root layout mounted, so this only runs on full loads.
+ * Keeps the multilingual intro up while images, hero waves, GSAP covers,
+ * and below-fold chunks warm — then fades out so the first scroll feels ready.
  */
 export default function PageLoader() {
   const lenis = useLenis();
@@ -82,6 +146,7 @@ export default function PageLoader() {
     const el = document.getElementById("boot-loader");
     if (!el) return;
 
+    document.documentElement.dataset.booting = "1";
     lenis?.stop();
 
     const reduced =
@@ -95,14 +160,16 @@ export default function PageLoader() {
       if (cancelled) return;
 
       el.classList.add("is-done");
+      delete document.documentElement.dataset.booting;
       lenis?.start();
       ScrollTrigger.refresh();
 
-      window.setTimeout(() => el.remove(), 480);
+      window.setTimeout(() => el.remove(), 500);
     })();
 
     return () => {
       cancelled = true;
+      delete document.documentElement.dataset.booting;
     };
   }, [lenis]);
 

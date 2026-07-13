@@ -51,6 +51,18 @@ export default function PageHeaderBackdrop({
       if (!cancelled) setShowWaves(true);
     };
 
+    // While the boot intro is up, start WebGL immediately so it warms behind it.
+    const booting =
+      !!document.getElementById("boot-loader") ||
+      document.documentElement.dataset.booting === "1";
+
+    if (booting) {
+      enable();
+      return () => {
+        cancelled = true;
+      };
+    }
+
     if (typeof window.requestIdleCallback === "function") {
       idleId = window.requestIdleCallback(enable, { timeout: 1800 });
     } else {
