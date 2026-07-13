@@ -79,7 +79,7 @@ export default function Footer() {
           <div className="flex w-full max-w-xl flex-col items-stretch gap-4 rounded-2xl border border-[#ff5f28]/45 bg-white/[0.02] p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:rounded-full sm:py-3 sm:pl-5 sm:pr-3">
             <div className="flex min-w-0 items-center gap-3 sm:gap-4">
               <Image
-                src="/Logo 1.png"
+                src="/Logo 1.webp"
                 alt="unicorn"
                 width={140}
                 height={40}

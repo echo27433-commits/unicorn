@@ -78,7 +78,7 @@ export default function Navbar() {
         <nav className="flex items-center justify-between gap-6">
           <Link href="/" className="shrink-0">
             <Image
-              src="/Logo 1.png"
+              src="/Logo 1.webp"
               alt="unicorn"
               width={180}
               height={52}

@@ -35,7 +35,7 @@ const serviceGroups = [
   },
 ];
 
-const SERVICE_IMAGE = "/servies/soe.jpg";
+const SERVICE_IMAGE = "/servies/soe.webp";
 
 function useReveal(threshold = 0.12) {
   const ref = useRef<HTMLDivElement>(null);
@@ -240,7 +240,7 @@ export default function CustomerResults() {
 
             <div className="relative z-[1]">
               <Image
-                src="/The_Echo_Logo_v2 (2).png"
+                src="/The_Echo_Logo_v2 (2).webp"
                 alt="ECHO — powered by unicorn"
                 width={640}
                 height={180}
@@ -277,7 +277,7 @@ export default function CustomerResults() {
             />
             <div className="relative overflow-hidden rounded-2xl">
               <Image
-                src="/image_1.png"
+                src="/image_1.webp"
                 alt="ECHO platform preview on laptop"
                 width={1400}
                 height={1050}

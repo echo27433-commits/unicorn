@@ -9,6 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import NewsletterCover from "../components/NewsletterCover";
 import ServicesHeader from "../components/ServicesHeader";
+import { setupCover } from "../lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,8 +31,8 @@ const serviceImages = [
   "/blogs/b4.jpg",
   "/blogs/b5.jpg",
   "/blogs/b6.jpg",
-  "/servies/soe.jpg",
-  "/image_1.png",
+  "/servies/soe.webp",
+  "/image_1.webp",
   "/case.png",
   "/review1.jpg",
 ];
@@ -146,67 +147,6 @@ function useReducedMotion() {
   }, []);
 }
 
-function setupCover(
-  pinned: HTMLElement,
-  cover: HTMLElement,
-  pinnedInner?: HTMLElement | null,
-  options?: { pinStart?: string }
-) {
-  const scrubTarget = pinnedInner ?? pinned;
-
-  ScrollTrigger.create({
-    trigger: pinned,
-    start: options?.pinStart ?? "top top",
-    endTrigger: cover,
-    end: "top top",
-    pin: true,
-    pinSpacing: false,
-    anticipatePin: 1,
-    fastScrollEnd: true,
-    invalidateOnRefresh: true,
-  });
-
-  gsap.fromTo(
-    scrubTarget,
-    { scale: 1, ...(pinnedInner ? {} : { opacity: 1 }) },
-    {
-      scale: 0.96,
-      ...(pinnedInner ? {} : { opacity: 0.55 }),
-      ease: "none",
-      force3D: true,
-      scrollTrigger: {
-        trigger: cover,
-        start: "top bottom",
-        end: "top top",
-        scrub: 0.5,
-        fastScrollEnd: true,
-        invalidateOnRefresh: true,
-      },
-    }
-  );
-
-  gsap.fromTo(
-    cover,
-    {
-      borderRadius: "28px 28px 0px 0px",
-      boxShadow: "0 -8px 24px rgba(0,0,0,0)",
-    },
-    {
-      borderRadius: "0px 0px 0px 0px",
-      boxShadow: "0 -20px 48px rgba(0,0,0,0.35)",
-      ease: "none",
-      scrollTrigger: {
-        trigger: cover,
-        start: "top bottom",
-        end: "top top",
-        scrub: 0.5,
-        fastScrollEnd: true,
-        invalidateOnRefresh: true,
-      },
-    }
-  );
-}
-
 /** Refresh ScrollTrigger once after accordion height transition (click only). */
 function scheduleClickRefresh() {
   window.setTimeout(() => ScrollTrigger.refresh(), 520);
@@ -232,9 +172,10 @@ export default function ServicesPageClient() {
     if (reducedMotion) return;
 
     const ctx = gsap.context(() => {
-      setupCover(header, product);
+      setupCover(header, product, null, { invalidateOnRefresh: true });
       setupCover(product, services, productInner, {
         pinStart: "bottom bottom",
+        invalidateOnRefresh: true,
       });
 
       const groups = gsap.utils.toArray<HTMLElement>("[data-reveal]");
@@ -283,7 +224,7 @@ export default function ServicesPageClient() {
       <div ref={productRef} id="echo" className="relative z-20 bg-black">
         <div
           ref={productInnerRef}
-          className="origin-center will-change-transform"
+          className="origin-center md:will-change-transform"
         >
           <section className="relative mx-auto w-full max-w-[90rem] px-5 py-20 pb-28 md:px-8 md:py-28 md:pb-36 lg:px-12 lg:py-32 lg:pb-40">
             <div
@@ -328,7 +269,7 @@ export default function ServicesPageClient() {
                   </p>
 
                   <Image
-                    src="/The_Echo_Logo_v2 (2).png"
+                    src="/The_Echo_Logo_v2 (2).webp"
                     alt="ECHO — powered by unicorn"
                     width={720}
                     height={200}
@@ -374,7 +315,7 @@ export default function ServicesPageClient() {
 
               <div data-reveal-item className="relative scale-105 lg:scale-110 lg:translate-x-2">
                 <Image
-                  src="/image_1.png"
+                  src="/image_1.webp"
                   alt="ECHO platform preview"
                   width={1600}
                   height={1200}
