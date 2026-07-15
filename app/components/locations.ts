@@ -11,16 +11,6 @@ export type Location = {
 
 export const locations: Location[] = [
   {
-    id: "india",
-    country: "India",
-    city: "Mumbai",
-    timezone: "IST · UTC+5:30",
-    description: "Engineering hub & delivery center for APAC clients.",
-    lat: 19.076,
-    lng: 72.8777,
-    zoom: 6,
-  },
-  {
     id: "dubai",
     country: "Dubai",
     city: "UAE",
@@ -38,6 +28,16 @@ export const locations: Location[] = [
     description: "Americas strategy, sales & client success teams.",
     lat: 40.7128,
     lng: -74.006,
+    zoom: 6,
+  },
+  {
+    id: "india",
+    country: "India",
+    city: "Mumbai",
+    timezone: "IST · UTC+5:30",
+    description: "Engineering hub & delivery center for APAC clients.",
+    lat: 19.076,
+    lng: 72.8777,
     zoom: 6,
   },
 ];

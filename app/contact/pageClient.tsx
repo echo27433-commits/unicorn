@@ -52,7 +52,7 @@ export default function ContactPageClient() {
   const reducedMotion = useReducedMotion();
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [mode, setMode] = useState<"overview" | "focused">("overview");
   const [overviewKey, setOverviewKey] = useState(0);
 
@@ -401,7 +401,7 @@ export default function ContactPageClient() {
                     className="mt-5 max-w-lg text-sm leading-relaxed text-black/55 md:text-base"
                   >
                     Headquartered in Business Bay, Dubai — with teams across
-                    India and the USA. Click a location or pin to explore.
+                    the USA and India. Click a location or pin to explore.
                   </p>
                 </div>
 
