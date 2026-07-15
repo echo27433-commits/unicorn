@@ -12,15 +12,6 @@ import NewsletterCover from "../components/NewsletterCover";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const blogImages = [
-  "/blogs/b1.webp",
-  "/blogs/b2.webp",
-  "/blogs/b3.jpg",
-  "/blogs/b4.jpg",
-  "/blogs/b5.jpg",
-  "/blogs/b6.jpg",
-];
-
 const posts = [
   {
     slug: "future-of-ai-powered-customer-loyalty-gcc",
@@ -29,7 +20,8 @@ const posts = [
     excerpt:
       "How regional brands can turn loyalty from points programs into intelligent, outcome-driven engagement systems.",
     readTime: "6 min",
-    image: blogImages[0],
+    image:
+      "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80",
   },
   {
     slug: "why-enterprise-loyalty-programs-fail",
@@ -38,7 +30,8 @@ const posts = [
     excerpt:
       "The structural reasons large loyalty initiatives stall — and what AI-native platforms change about the playbook.",
     readTime: "5 min",
-    image: blogImages[1],
+    image:
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
   },
   {
     slug: "conversational-ai-beyond-chatbots",
@@ -47,7 +40,8 @@ const posts = [
     excerpt:
       "From scripted bots to enterprise conversation engines that drive loyalty, support, and growth at scale.",
     readTime: "7 min",
-    image: blogImages[2],
+    image:
+      "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=1200&q=80",
   },
   {
     slug: "computer-vision-use-cases-retail",
@@ -56,7 +50,8 @@ const posts = [
     excerpt:
       "Shelf intelligence, shopper analytics, and operational visibility — practical CV deployments that move the needle.",
     readTime: "6 min",
-    image: blogImages[3],
+    image:
+      "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80",
   },
   {
     slug: "gcc-digital-transformation-opportunity",
@@ -65,7 +60,8 @@ const posts = [
     excerpt:
       "Why the region is uniquely positioned for AI-led growth — and how enterprises can capture it with clarity.",
     readTime: "8 min",
-    image: blogImages[4],
+    image:
+      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
   },
   {
     slug: "how-ai-is-changing-customer-engagement",
@@ -74,7 +70,8 @@ const posts = [
     excerpt:
       "Personalization is table stakes. The next wave is predictive, conversational, and measurable engagement.",
     readTime: "5 min",
-    image: blogImages[5],
+    image:
+      "https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&w=1200&q=80",
   },
   {
     slug: "building-omnichannel-customer-experiences",
@@ -83,7 +80,8 @@ const posts = [
     excerpt:
       "Unifying journeys across channels so every touchpoint feels connected, intelligent, and brand-consistent.",
     readTime: "6 min",
-    image: blogImages[0],
+    image:
+      "https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=1200&q=80",
   },
   {
     slug: "ai-powered-marketing-beyond-personalization",
@@ -92,7 +90,8 @@ const posts = [
     excerpt:
       "Moving from segmented campaigns to systems that continuously learn, optimize, and compound performance.",
     readTime: "7 min",
-    image: blogImages[2],
+    image:
+      "https://images.unsplash.com/photo-1533750349088-cd871a92f312?auto=format&fit=crop&w=1200&q=80",
   },
 ];
 
