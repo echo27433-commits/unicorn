@@ -397,11 +397,11 @@ export const workCases: WorkCase[] = [
       "+60.64% organic sessions year over year",
       "+59.83% new users from organic search",
     ],
-    logo: "/brands/dubai_trade_logo_dark.png",
-    logoAlt: "Dubai World Trade Centre",
+    logo: "/brands/Gulfood-logo.png",
+    logoAlt: "Gulfood",
     logoInvert: false,
     logoClassName:
-      "h-14 w-auto max-w-[18rem] object-contain md:h-20 md:max-w-[24rem] lg:h-24 lg:max-w-[28rem]",
+      "h-12 w-auto max-w-[16rem] object-contain md:h-16 md:max-w-[22rem] lg:h-20 lg:max-w-[26rem]",
     image:
       "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=1400&q=80",
     imageAlt: "Food trade show and culinary exhibition atmosphere",
