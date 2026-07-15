@@ -9,7 +9,7 @@ const companyLinks = [
 ];
 
 const workLinks = [
-  { label: "Work", href: "/work" },
+  { label: "Use Cases", href: "/work" },
   { label: "Locations", href: "/#locations" },
   { label: "Contact", href: "/contact" },
 ];
