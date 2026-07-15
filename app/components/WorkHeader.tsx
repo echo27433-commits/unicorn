@@ -4,7 +4,7 @@ import Button from "./Button";
 import Navbar from "./Navbar";
 import PageHeaderBackdrop from "./PageHeaderBackdrop";
 
-const ServicesHeader = forwardRef<HTMLElement>(function ServicesHeader(_, ref) {
+const WorkHeader = forwardRef<HTMLElement>(function WorkHeader(_, ref) {
   return (
     <>
       <Navbar />
@@ -32,17 +32,18 @@ const ServicesHeader = forwardRef<HTMLElement>(function ServicesHeader(_, ref) {
                 <div className="relative z-[1] text-left">
                   <p className="mb-5 flex items-center justify-start gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-[#ff5f28] sm:mb-4 sm:tracking-[0.18em] md:mb-6 md:text-sm">
                     <span aria-hidden>✦</span>
-                    Services
+                    Customer Success Stories
                   </p>
 
                   <h1 className="text-[3.75rem] font-light leading-[1.06] tracking-tight text-white sm:text-5xl sm:leading-[1.04] md:text-7xl lg:text-8xl xl:text-[6.5rem] xl:leading-[1.01]">
-                    Expertise that{" "}
-                    <span className="text-gradient-future">drives growth.</span>
+                    Real Results,{" "}
+                    <span className="text-gradient-future">Real Impact.</span>
                   </h1>
 
-                  <p className="mt-6 max-w-[32rem] text-[0.875rem] leading-relaxed text-white/55 sm:mt-5 sm:text-sm md:mt-7 md:text-[0.95rem]">
-                    AI &amp; data intelligence and digital growth services that
-                    turn strategy into measurable outcomes.
+                  <p className="mt-6 max-w-[34rem] text-[0.875rem] leading-relaxed text-white/55 sm:mt-5 sm:text-sm md:mt-7 md:text-[0.95rem]">
+                    See how leading brands across industries leverage Echo to
+                    transform customer engagement, boost loyalty, and drive
+                    measurable growth.
                   </p>
 
                   <div className="mt-9 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:justify-start sm:gap-4 md:mt-12 md:gap-5">
@@ -54,11 +55,11 @@ const ServicesHeader = forwardRef<HTMLElement>(function ServicesHeader(_, ref) {
                       Book a Call
                     </Button>
                     <Button
-                      href="#services"
+                      href="#cases"
                       variant="secondary"
                       className="w-full justify-center px-4 py-2.5 text-sm sm:w-auto sm:px-[1.85rem] sm:py-[0.95rem] sm:text-base md:text-lg"
                     >
-                      Explore Services
+                      View Case Studies
                     </Button>
                   </div>
                 </div>
@@ -71,4 +72,4 @@ const ServicesHeader = forwardRef<HTMLElement>(function ServicesHeader(_, ref) {
   );
 });
 
-export default ServicesHeader;
+export default WorkHeader;

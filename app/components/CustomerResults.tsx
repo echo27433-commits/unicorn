@@ -214,8 +214,7 @@ export default function CustomerResults() {
           }`}
         >
           <h2 className="text-4xl font-light uppercase tracking-[0.06em] text-black md:text-5xl lg:text-6xl xl:text-[4rem]">
-            Products &amp;{" "}
-            <span className="text-[#ff5f28]">Services</span>
+            Products
           </h2>
           <p className="max-w-lg text-base leading-relaxed text-black/55 md:text-right md:text-lg lg:text-xl">
             We build intelligent platforms that help brands converse, convert,
@@ -287,7 +286,7 @@ export default function CustomerResults() {
             </div>
 
             <Link
-              href="#contact"
+              href="/products"
               className="btn btn--primary group relative z-[1] mt-8 inline-flex items-center gap-3 md:mt-10 md:text-lg"
             >
               Visit Echo

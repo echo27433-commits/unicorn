@@ -1,0 +1,31 @@
+import { notFound } from "next/navigation";
+
+import { getAllServiceSlugs, getServiceBySlug } from "../../lib/services";
+import ServiceDetailClient from "./pageClient";
+
+type PageProps = {
+  params: Promise<{ slug: string }>;
+};
+
+export function generateStaticParams() {
+  return getAllServiceSlugs().map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params;
+  const service = getServiceBySlug(slug);
+  if (!service) return { title: "Service · unicorn" };
+
+  return {
+    title: `${service.title} · unicorn`,
+    description: service.description,
+  };
+}
+
+export default async function ServiceDetailPage({ params }: PageProps) {
+  const { slug } = await params;
+  const service = getServiceBySlug(slug);
+  if (!service) notFound();
+
+  return <ServiceDetailClient service={service} />;
+}

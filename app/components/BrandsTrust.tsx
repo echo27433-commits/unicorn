@@ -11,7 +11,8 @@ gsap.registerPlugin(ScrollTrigger);
 const brands = [
   { name: "Masdar", src: "/brands/masdar_logo_dark.png" },
   { name: "Nesto", src: "/brands/nesto_logo_dark.png" },
-  { name: "Salesforce", src: "/brands/salesforce_logo_dark.png" },
+  { name: "BenQ", src: "/brands/benq_logo_dark.png" },
+  { name: "Publicis Groupe", src: "/brands/publicis_logo_dark.png" },
   { name: "Europcar", src: "/brands/europcar_logo_dark.png" },
   { name: "Dubai Trade", src: "/brands/dubai_trade_logo_dark.png" },
   { name: "Grand", src: "/brands/grand_logo_dark.png" },
@@ -139,7 +140,7 @@ export default function BrandsTrust() {
         </div>
 
         <div
-          className="mt-16 grid grid-cols-2 gap-4 sm:grid-cols-3 md:mt-20 md:gap-5 lg:grid-cols-4 lg:gap-6"
+          className="mt-16 grid grid-cols-3 gap-4 md:mt-20 md:gap-5 lg:gap-6"
         >
           {brands.map((brand) => (
             <div

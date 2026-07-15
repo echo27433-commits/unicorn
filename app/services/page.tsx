@@ -1,9 +1,9 @@
 import ServicesPageClient from "./pageClient";
 
 export const metadata = {
-  title: "Products & Services · unicorn",
+  title: "Services · unicorn",
   description:
-    "Explore Echo — Unicorn’s AI-powered customer engagement platform — plus AI & data intelligence and digital growth services.",
+    "AI & data intelligence and digital growth services that turn strategy into measurable outcomes.",
 };
 
 export default function ServicesPage() {

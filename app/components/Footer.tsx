@@ -4,11 +4,12 @@ import Link from "next/link";
 const companyLinks = [
   { label: "Home", href: "/#home" },
   { label: "About", href: "/about" },
+  { label: "Products", href: "/products" },
   { label: "Services", href: "/services" },
 ];
 
 const workLinks = [
-  { label: "Work", href: "/#work" },
+  { label: "Work", href: "/work" },
   { label: "Locations", href: "/#locations" },
   { label: "Contact", href: "/contact" },
 ];

@@ -117,9 +117,12 @@ export default function ScrollHeroCover() {
       <Header ref={heroRef} />
       <div
         ref={coverRef}
+        data-products-section
         className="relative z-20 overflow-hidden md:will-change-transform"
       >
-        <CustomerResults />
+        <div data-products-inner className="origin-center md:will-change-transform">
+          <CustomerResults />
+        </div>
       </div>
     </>
   );

@@ -9,136 +9,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import NewsletterCover from "../components/NewsletterCover";
 import ServicesHeader from "../components/ServicesHeader";
+import { services } from "../lib/services";
 import { setupCover } from "../lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const echoFeatures = [
-  "Loyalty Management",
-  "Customer Rewards",
-  "Omnichannel Communication",
-  "WhatsApp Business Integration",
-  "Conversational AI",
-  "Marketing Automation",
-  "Customer Segmentation",
-  "Campaign Analytics",
-];
-
-const serviceImages = [
-  "/blogs/b1.webp",
-  "/blogs/b2.webp",
-  "/blogs/b3.jpg",
-  "/blogs/b4.jpg",
-  "/blogs/b5.jpg",
-  "/blogs/b6.jpg",
-  "/servies/soe.webp",
-  "/image_1.webp",
-  "/case.png",
-  "/review1.jpg",
-];
-
-const services = [
-  {
-    category: "AI & Data Intelligence",
-    title: "Computer Vision",
-    accent: "Vision",
-    description:
-      "See what matters in real time — shelf intelligence, shopper analytics, and operational visibility powered by visual AI.",
-    stat: "01",
-    statLabel: "/capability",
-    image: serviceImages[0],
-  },
-  {
-    category: "AI & Data Intelligence",
-    title: "AI Analytics",
-    accent: "Analytics",
-    description:
-      "Turn raw signals into clear decisions with models that surface patterns, anomalies, and opportunities leadership can act on.",
-    stat: "02",
-    statLabel: "/capability",
-    image: serviceImages[1],
-  },
-  {
-    category: "AI & Data Intelligence",
-    title: "Predictive Insights",
-    accent: "Insights",
-    description:
-      "Anticipate demand, churn, and performance before they happen — so teams plan with confidence, not hindsight.",
-    stat: "03",
-    statLabel: "/capability",
-    image: serviceImages[2],
-  },
-  {
-    category: "AI & Data Intelligence",
-    title: "Dashboarding",
-    accent: "Dashboarding",
-    description:
-      "Executive-ready views that put the right metrics in front of the right people — live, clear, and decision-ready.",
-    stat: "04",
-    statLabel: "/capability",
-    image: serviceImages[3],
-  },
-  {
-    category: "AI & Data Intelligence",
-    title: "Business Intelligence",
-    accent: "Intelligence",
-    description:
-      "Connect data across systems into a single source of truth that drives strategy, reporting, and measurable outcomes.",
-    stat: "05",
-    statLabel: "/capability",
-    image: serviceImages[4],
-  },
-  {
-    category: "Digital Growth",
-    title: "SEO",
-    accent: "SEO",
-    description:
-      "Technical foundations, content strategy, and authority building that compound organic visibility over time.",
-    stat: "01",
-    statLabel: "/capability",
-    image: serviceImages[5],
-  },
-  {
-    category: "Digital Growth",
-    title: "Performance Marketing",
-    accent: "Marketing",
-    description:
-      "Paid channels engineered for efficiency — creative tests, bidding systems, and attribution that prove ROI.",
-    stat: "02",
-    statLabel: "/capability",
-    image: serviceImages[6],
-  },
-  {
-    category: "Digital Growth",
-    title: "Social Media Strategy",
-    accent: "Strategy",
-    description:
-      "Platform-native narratives and community systems that turn attention into trust, pipeline, and brand equity.",
-    stat: "03",
-    statLabel: "/capability",
-    image: serviceImages[7],
-  },
-  {
-    category: "Digital Growth",
-    title: "AI Content Creation",
-    accent: "Creation",
-    description:
-      "Human-led, AI-accelerated content engines that scale quality output without losing brand voice.",
-    stat: "04",
-    statLabel: "/capability",
-    image: serviceImages[8],
-  },
-  {
-    category: "Digital Growth",
-    title: "Conversion Optimization",
-    accent: "Optimization",
-    description:
-      "Test, learn, and lift — UX, messaging, and funnel experiments that turn more visitors into customers.",
-    stat: "05",
-    statLabel: "/capability",
-    image: serviceImages[9],
-  },
-];
 
 function useReducedMotion() {
   return useMemo(() => {
@@ -147,7 +21,6 @@ function useReducedMotion() {
   }, []);
 }
 
-/** Refresh ScrollTrigger once after accordion height transition (click only). */
 function scheduleClickRefresh() {
   window.setTimeout(() => ScrollTrigger.refresh(), 520);
 }
@@ -155,8 +28,6 @@ function scheduleClickRefresh() {
 export default function ServicesPageClient() {
   const rootRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
-  const productRef = useRef<HTMLDivElement>(null);
-  const productInnerRef = useRef<HTMLDivElement>(null);
   const servicesRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
   const [activeService, setActiveService] = useState<number | null>(null);
@@ -164,19 +35,13 @@ export default function ServicesPageClient() {
   useEffect(() => {
     const root = rootRef.current;
     const header = headerRef.current;
-    const product = productRef.current;
-    const productInner = productInnerRef.current;
-    const services = servicesRef.current;
-    if (!root || !header || !product || !services) return;
+    const servicesEl = servicesRef.current;
+    if (!root || !header || !servicesEl) return;
 
     if (reducedMotion) return;
 
     const ctx = gsap.context(() => {
-      setupCover(header, product, null, { invalidateOnRefresh: true });
-      setupCover(product, services, productInner, {
-        pinStart: "bottom bottom",
-        invalidateOnRefresh: true,
-      });
+      setupCover(header, servicesEl, null, { invalidateOnRefresh: true });
 
       const groups = gsap.utils.toArray<HTMLElement>("[data-reveal]");
       groups.forEach((group) => {
@@ -220,144 +85,9 @@ export default function ServicesPageClient() {
     <div ref={rootRef} className="min-h-screen bg-black">
       <ServicesHeader ref={headerRef} />
 
-      {/* Black — Product Echo */}
-      <div ref={productRef} id="echo" className="relative z-20 bg-black">
-        <div
-          ref={productInnerRef}
-          className="origin-center md:will-change-transform"
-        >
-          <section className="relative mx-auto w-full max-w-[90rem] px-5 py-20 pb-28 md:px-8 md:py-28 md:pb-36 lg:px-12 lg:py-32 lg:pb-40">
-            <div
-              data-reveal
-              className="flex flex-col gap-8 border-b border-white/10 pb-12 md:flex-row md:items-end md:justify-between md:gap-16 md:pb-14"
-            >
-              <h2
-                data-reveal-item
-                className="text-4xl font-light uppercase tracking-[0.06em] text-white md:text-5xl lg:text-6xl xl:text-[4rem]"
-              >
-                Products &amp;{" "}
-                <span className="text-[#ff5f28]">Services</span>
-              </h2>
-              <p
-                data-reveal-item
-                className="max-w-lg text-base leading-relaxed text-white/55 md:text-right md:text-lg lg:text-xl"
-              >
-                We build intelligent platforms that help brands converse,
-                convert, and grow — from AI assistants to enterprise engagement
-                systems.
-              </p>
-            </div>
-
-            <div
-              data-reveal
-              className="mt-16 grid items-start gap-14 lg:mt-20 lg:grid-cols-2 lg:gap-12 xl:gap-20"
-            >
-              <div data-reveal-item className="relative max-w-2xl">
-                <div
-                  className="pointer-events-none absolute -inset-x-8 -inset-y-10 z-0 md:-inset-x-12 md:-inset-y-14"
-                  style={{
-                    background:
-                      "radial-gradient(ellipse 70% 65% at 30% 40%, rgba(255,95,40,0.1) 0%, rgba(255,95,40,0.04) 45%, transparent 75%)",
-                  }}
-                  aria-hidden
-                />
-
-                <div className="relative z-[1]">
-                  <p className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#ff5f28] md:text-sm">
-                    <span aria-hidden>✦</span>
-                    Product
-                  </p>
-
-                  <Image
-                    src="/The_Echo_Logo_v2 (2).webp"
-                    alt="ECHO — powered by unicorn"
-                    width={720}
-                    height={200}
-                    sizes="(max-width: 768px) 80vw, 420px"
-                    className="h-28 w-auto object-contain object-left md:h-36 lg:h-44"
-                  />
-
-                  <h3 className="mt-8 text-4xl font-light leading-[1.08] tracking-tight text-white md:mt-10 md:text-5xl lg:text-6xl xl:text-[3.75rem] xl:leading-[1.06]">
-                    AI Powered Customer{" "}
-                    <span className="text-[#ff5f28]">Engagement</span> Platform
-                  </h3>
-
-                  <p className="mt-5 max-w-lg text-base leading-relaxed text-white/55 md:mt-6 md:text-lg lg:text-xl">
-                    Echo is our AI-powered platform for enterprise conversations,
-                    loyalty, and growth — helping teams automate engagement and
-                    deliver measurable outcomes at scale.
-                  </p>
-
-                  <Link
-                    href="/contact"
-                    className="btn btn--primary group mt-8 inline-flex items-center gap-3 md:mt-10 md:text-lg"
-                  >
-                    Talk about Echo
-                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#ff5f28] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                      <svg
-                        className="h-3.5 w-3.5"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={2.5}
-                        aria-hidden
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M7 17L17 7M17 7H9M17 7V15"
-                        />
-                      </svg>
-                    </span>
-                  </Link>
-                </div>
-              </div>
-
-              <div data-reveal-item className="relative scale-105 lg:scale-110 lg:translate-x-2">
-                <Image
-                  src="/image_1.webp"
-                  alt="ECHO platform preview"
-                  width={1600}
-                  height={1200}
-                  className="h-auto w-full min-h-[300px] object-contain md:min-h-[440px] lg:min-h-[540px]"
-                  sizes="(max-width: 1024px) 100vw, 55vw"
-                  priority
-                />
-              </div>
-            </div>
-
-            <div data-reveal data-stagger-cards className="mt-16 md:mt-20">
-              <p
-                data-reveal-item
-                className="mb-6 text-xs font-semibold uppercase tracking-[0.18em] text-[#ff5f28] md:mb-8 md:text-sm"
-              >
-                Features
-              </p>
-              <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-                {echoFeatures.map((feature) => (
-                  <li
-                    key={feature}
-                    data-reveal-item
-                    className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4"
-                  >
-                    <span
-                      className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#ff5f28]"
-                      aria-hidden
-                    />
-                    <span className="text-base font-light tracking-tight text-white md:text-lg">
-                      {feature}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-        </div>
-      </div>
-
-      {/* White — Services */}
       <div
         ref={servicesRef}
+        id="services"
         className="relative z-30 overflow-hidden bg-white"
       >
         <section className="relative mx-auto w-full max-w-[90rem] px-5 py-20 pb-28 md:px-8 md:py-28 md:pb-36 lg:px-12 lg:py-32 lg:pb-40">
@@ -398,50 +128,50 @@ export default function ServicesPageClient() {
 
               return (
                 <article
-                  key={`${service.category}-${service.title}`}
+                  key={service.slug}
                   data-reveal-item
                   className="border-b border-black/10 bg-transparent"
                   onMouseEnter={() => setActiveService(index)}
                 >
-                  <button
-                    type="button"
-                    aria-expanded={open}
-                    onClick={() => {
-                      const next = open ? null : index;
-                      setActiveService(next);
-                      scheduleClickRefresh();
-                    }}
-                    className="grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-4 py-7 text-left md:gap-8 md:py-9 lg:gap-12"
-                  >
-                    <span
-                      className={`pt-1 text-sm font-medium tabular-nums transition-colors md:text-base ${
+                  <div className="grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-4 py-7 md:gap-8 md:py-9 lg:gap-12">
+                    <button
+                      type="button"
+                      aria-expanded={open}
+                      aria-label={`Preview ${service.title}`}
+                      onClick={() => {
+                        const next = open ? null : index;
+                        setActiveService(next);
+                        scheduleClickRefresh();
+                      }}
+                      className={`pt-1 text-left text-sm font-medium tabular-nums transition-colors md:text-base ${
                         open ? "text-[#ff5f28]" : "text-black/35"
                       }`}
                     >
                       {step}
-                    </span>
+                    </button>
 
-                    <div className="min-w-0">
+                    <Link href={`/services/${service.slug}`} className="min-w-0 text-left">
                       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-black/40 md:text-sm">
                         {service.category}
                       </p>
-                      <h3 className="mt-2 text-2xl font-light tracking-tight text-black md:text-3xl lg:text-4xl">
+                      <h3 className="mt-2 text-2xl font-light tracking-tight text-black transition-colors hover:text-[#ff5f28] md:text-3xl lg:text-4xl">
                         {titleBefore}
                         <span className="text-[#ff5f28]">{service.accent}</span>
                         {titleAfter}
                       </h3>
-                    </div>
+                    </Link>
 
-                    <span
+                    <Link
+                      href={`/services/${service.slug}`}
                       className={`mt-1 inline-flex shrink-0 items-center rounded-full px-4 py-2 text-xs font-medium transition-colors duration-300 md:mt-0 md:px-5 md:py-2.5 md:text-sm ${
                         open
                           ? "bg-[#ff5f28] text-white"
-                          : "bg-[#efefef] text-black/80"
+                          : "bg-[#efefef] text-black/80 hover:bg-[#ff5f28] hover:text-white"
                       }`}
                     >
                       View Service
-                    </span>
-                  </button>
+                    </Link>
+                  </div>
 
                   <div
                     className={`grid transition-[grid-template-rows] duration-500 ease-out ${
@@ -478,10 +208,10 @@ export default function ServicesPageClient() {
                           </p>
 
                           <Link
-                            href="/contact"
+                            href={`/services/${service.slug}`}
                             className="mt-8 inline-flex w-fit items-center rounded-full bg-[#ff5f28] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#ff7342] md:mt-10"
                           >
-                            Talk about this service
+                            Open service page
                           </Link>
                         </div>
                       </div>

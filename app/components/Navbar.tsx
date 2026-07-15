@@ -10,8 +10,9 @@ import Button from "./Button";
 const navLinks = [
   { label: "Home", href: "/#home", match: "/" },
   { label: "About", href: "/about", match: "/about" },
+  { label: "Products", href: "/products", match: "/products" },
   { label: "Services", href: "/services", match: "/services" },
-  { label: "Work", href: "/#work", match: null },
+  { label: "Work", href: "/work", match: "/work" },
   { label: "Blog", href: "/blog", match: "/blog" },
   { label: "Contact", href: "/contact", match: "/contact" },
 ];
@@ -75,7 +76,7 @@ export default function Navbar() {
             : "px-5 py-3.5 md:px-8 md:py-5"
         }`}
       >
-        <nav className="flex items-center justify-between gap-6">
+        <nav className="flex items-center justify-between gap-3 xl:gap-6">
           <Link href="/" className="shrink-0">
             <Image
               src="/Logo 1.webp"
@@ -91,8 +92,10 @@ export default function Navbar() {
           </Link>
 
           <ul
-            className={`absolute left-1/2 hidden -translate-x-1/2 items-center font-medium text-white/75 transition-all duration-300 ease-out lg:flex ${
-              scrolled ? "gap-6 text-xs xl:text-sm" : "gap-8 text-sm xl:text-base"
+            className={`mx-auto hidden min-w-0 flex-1 items-center justify-center font-medium text-white/75 transition-all duration-300 ease-out lg:flex ${
+              scrolled
+                ? "gap-4 text-xs xl:gap-6 xl:text-sm"
+                : "gap-4 text-xs xl:gap-7 xl:text-sm 2xl:text-base"
             }`}
           >
             {navLinks.map((link) => {
@@ -103,10 +106,10 @@ export default function Navbar() {
                   : pathname.startsWith(link.match));
 
               return (
-                <li key={link.label}>
+                <li key={link.label} className="shrink-0">
                   <Link
                     href={link.href}
-                    className={`relative transition-colors hover:text-white ${
+                    className={`relative whitespace-nowrap transition-colors hover:text-white ${
                       active ? "text-white" : ""
                     }`}
                   >
@@ -120,12 +123,10 @@ export default function Navbar() {
             })}
           </ul>
 
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="hidden shrink-0 items-center gap-2 lg:flex xl:gap-3">
             <Link
               href="/contact"
-              className={`btn btn--secondary transition-all duration-300 ease-out ${
-                scrolled ? "!px-4 !py-2 !text-sm" : ""
-              }`}
+              className="btn btn--secondary !px-3 !py-2 !text-xs transition-all duration-300 ease-out xl:!px-4 xl:!text-sm"
             >
               <ChatIcon className={scrolled ? "h-3.5 w-3.5" : "h-4 w-4"} />
               Let&apos;s Talk
@@ -133,9 +134,7 @@ export default function Navbar() {
             <Button
               href="/contact"
               variant="primary"
-              className={`transition-all duration-300 ease-out ${
-                scrolled ? "!px-4 !py-2 !text-sm" : ""
-              }`}
+              className="!px-3 !py-2 !text-xs transition-all duration-300 ease-out xl:!px-4 xl:!text-sm"
             >
               Book a Call
             </Button>
