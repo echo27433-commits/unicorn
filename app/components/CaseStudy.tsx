@@ -38,15 +38,15 @@ const caseStudies = [
     logoAlt: "Masdar",
   },
   {
-    slug: "retail-promotions",
-    category: "Retail",
+    slug: "mark-and-save",
+    category: "Retail · AI Vision",
     title: "Mark and Save",
     accent: "Save",
     description:
-      "35% increase in campaign conversions — automated promotions and faster responses across retail campaigns.",
+      "AI Vision for shelf intelligence, shopper analytics, and store operations — turning cameras into real-time retail visibility.",
     image:
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=1000&q=80",
-    imageAlt: "Retail checkout with contactless payment",
+      "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1000&q=75",
+    imageAlt: "Hypermarket aisle with product shelves monitored for stock visibility",
     logo: "/brands/mark_save_logo_dark.png",
     logoAlt: "Mark & Save",
   },

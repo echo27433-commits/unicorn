@@ -147,15 +147,15 @@ export default function OurLocation() {
             data-location-header
             className="text-4xl font-light leading-[1.08] tracking-tight text-white md:text-5xl lg:text-6xl xl:text-[4rem]"
           >
-            Global presence,{" "}
-            <span className="text-[#ff5f28]">local expertise</span>
+            Our offices{" "}
+            <span className="text-[#ff5f28]">worldwide</span>
           </h2>
           <p
             data-location-header
-            className="mt-5 max-w-[30.5rem] text-sm leading-relaxed text-white/55 md:mt-6 md:text-[0.95rem]"
+            className="mt-5 max-w-[34rem] text-sm leading-relaxed text-white/55 md:mt-6 md:text-[0.95rem]"
           >
-            Explore our offices on the map — click a location or pin to fly there
-            interactively.
+            Headquartered in UAE, with teams across Saudi / Qatar / Bahrain and
+            India.
           </p>
         </div>
 

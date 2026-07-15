@@ -6,31 +6,30 @@ import { useEffect, useRef, useState } from "react";
 
 const serviceGroups = [
   {
-    title: "Digital Growth",
-    accent: "Growth",
-    from: "left" as const,
-    description:
-      "Channels, content, and conversion systems that turn attention into pipeline.",
-    items: [
-      "SEO",
-      "Performance Marketing",
-      "Social Media Strategy",
-      "AI Content Creation",
-      "Conversion Optimization",
-    ],
-  },
-  {
     title: "AI & Data Intelligence",
     accent: "Intelligence",
-    from: "right" as const,
+    from: "left" as const,
     description:
       "Models, vision, and analytics that turn raw data into decisions you can act on.",
     items: [
-      "Computer Vision",
+      "AI Vision",
       "AI Analytics",
       "Predictive Insights",
-      "Dashboarding",
       "Business Intelligence",
+    ],
+  },
+  {
+    title: "Digital Growth",
+    accent: "Growth",
+    from: "right" as const,
+    description:
+      "Channels, content, and conversion systems that turn attention into pipeline.",
+    items: [
+      "AI Search & Answer Visibility",
+      "AI Driven Acquisition",
+      "Conversational Brand Presence",
+      "Generative Content Systems",
+      "Predictive Conversion Intelligence",
     ],
   },
 ];

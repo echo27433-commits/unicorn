@@ -120,13 +120,16 @@ export default function WorkPageClient() {
                       className="object-cover transition duration-700 group-hover:scale-[1.03]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                    <div className="absolute bottom-5 left-5 inline-flex items-center rounded-xl border border-white/20 bg-black/70 px-4 py-3 backdrop-blur-md md:bottom-7 md:left-7 md:px-5 md:py-4">
+                    <div className="absolute bottom-5 left-5 inline-flex max-w-[calc(100%-2.5rem)] items-center rounded-xl border border-white/20 bg-black/70 px-4 py-3 backdrop-blur-md md:bottom-7 md:left-7 md:px-6 md:py-5">
                       <Image
                         src={study.logo}
                         alt={study.logoAlt}
-                        width={240}
-                        height={80}
-                        className="h-8 w-auto max-w-[10rem] object-contain md:h-10 md:max-w-[12rem]"
+                        width={420}
+                        height={140}
+                        className={
+                          study.logoClassName ??
+                          "h-8 w-auto max-w-[10rem] object-contain md:h-10 md:max-w-[12rem]"
+                        }
                       />
                     </div>
                   </div>

@@ -12,7 +12,12 @@ const brands = [
   { name: "Masdar", src: "/brands/masdar_logo_dark.png" },
   { name: "Nesto", src: "/brands/nesto_logo_dark.png" },
   { name: "BenQ", src: "/brands/benq_logo_dark.png" },
-  { name: "Publicis Groupe", src: "/brands/publicis_logo_dark.png" },
+  {
+    name: "Publicis Groupe",
+    src: "/brands/Picture1-Photoroom (1).png",
+    className:
+      "h-[4.25rem] w-auto max-w-full object-contain opacity-80 transition-opacity duration-300 group-hover:opacity-100 md:h-24 lg:h-[7rem]",
+  },
   { name: "Europcar", src: "/brands/europcar_logo_dark.png" },
   { name: "Dubai Trade", src: "/brands/dubai_trade_logo_dark.png" },
   { name: "Grand", src: "/brands/grand_logo_dark.png" },
@@ -154,7 +159,10 @@ export default function BrandsTrust() {
                 width={280}
                 height={90}
                 sizes="(max-width: 768px) 40vw, 180px"
-                className="h-12 w-auto max-w-full object-contain opacity-80 transition-opacity duration-300 group-hover:opacity-100 md:h-16 lg:h-[4.5rem]"
+                className={
+                  brand.className ??
+                  "h-12 w-auto max-w-full object-contain opacity-80 transition-opacity duration-300 group-hover:opacity-100 md:h-16 lg:h-[4.5rem]"
+                }
               />
             </div>
           ))}

@@ -73,14 +73,14 @@ export default function Hero() {
           <div className="relative z-[1]">
             <p className="mb-4 flex max-w-[18rem] items-center gap-2 text-sm font-semibold uppercase leading-snug tracking-[0.14em] text-[#ff5f28] sm:max-w-none sm:tracking-[0.18em] md:mb-6 md:text-sm">
               <span aria-hidden>✦</span>
-              Digital Solutions That Drive Impact
+              unicorn
             </p>
 
             <h1 className="text-[3.75rem] font-light leading-[1.06] tracking-tight text-white sm:text-6xl sm:leading-[1.04] md:text-8xl lg:text-9xl xl:text-[7rem] xl:leading-[1.01]">
-              Build. Scale.
-              <br />
-              Lead the{" "}
-              <span className="text-gradient-future">Future.</span>
+              <span className="block">Digital solutions</span>
+              <span className="block">
+                that drive <span className="text-gradient-future">impact.</span>
+              </span>
             </h1>
 
             <p className="mt-5 max-w-[30.5rem] text-[0.8125rem] leading-relaxed text-white/55 sm:text-sm md:mt-7 md:text-[0.95rem]">

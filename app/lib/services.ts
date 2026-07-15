@@ -35,14 +35,14 @@ const imgs = [
 
 export const services: Service[] = [
   {
-    slug: "computer-vision",
+    slug: "ai-vision",
     category: "AI & Data Intelligence",
-    title: "Computer Vision",
+    title: "AI Vision",
     accent: "Vision",
     description:
       "See what matters in real time — shelf intelligence, shopper analytics, and operational visibility powered by visual AI.",
     overview:
-      "We design and deploy computer vision systems that turn cameras into operational intelligence — detecting product gaps, measuring shopper behavior, and surfacing exceptions before they cost revenue.",
+      "We design and deploy AI vision systems that turn cameras into operational intelligence — detecting product gaps, measuring shopper behavior, and surfacing exceptions before they cost revenue.",
     detail:
       "Our vision stack is built for noisy real-world environments: variable lighting, partial occlusions, and multi-camera retail floors. Models are trained on your assortment and layout, then deployed with monitoring so accuracy stays production-grade as products and planograms change.",
     stat: "01",
@@ -258,78 +258,6 @@ export const services: Service[] = [
     ],
   },
   {
-    slug: "dashboarding",
-    category: "AI & Data Intelligence",
-    title: "Dashboarding",
-    accent: "Dashboarding",
-    description:
-      "Executive-ready views that put the right metrics in front of the right people — live, clear, and decision-ready.",
-    overview:
-      "Purpose-built dashboards for operators and executives — not vanity charts. Clear hierarchy, trusted numbers, and refresh cadences that match how you work.",
-    detail:
-      "Every dashboard starts from a decision map: who needs what, how often, and what action follows. We design for glanceability on the floor and depth for analysts — with ownership so metrics stay trusted after launch.",
-    stat: "04",
-    statLabel: "/capability",
-    image: imgs[3],
-    gallery: [imgs[6], imgs[1]],
-    industries: ["Retail ops", "Enterprise leadership", "Franchise networks"],
-    whoFor: [
-      "Executives who want a trusted weekly view",
-      "Store ops needing live floor KPIs",
-      "Teams tired of spreadsheet assembly",
-    ],
-    capabilities: [
-      "Role-based dashboard design",
-      "Live / near-real-time refresh",
-      "Drill-downs and filter systems",
-      "Mobile-ready ops views",
-      "Subscriptions and alerts",
-      "Metric definitions documented",
-    ],
-    outcomes: [
-      "One source of truth for KPIs",
-      "Less time assembling reports",
-      "Faster cross-team alignment",
-      "Clear ownership of every metric",
-    ],
-    deliverables: [
-      "Role-based dashboard suite",
-      "Live data connections",
-      "Alerting & subscriptions",
-      "Documentation & enablement",
-      "Handover to internal owners",
-    ],
-    useCases: [
-      {
-        title: "CEO weekly scorecard",
-        detail: "A single view of growth, margin, and operational health with exception callouts.",
-      },
-      {
-        title: "Store manager board",
-        detail: "Today’s sales, traffic, labour, and exceptions — designed for the floor, not the boardroom.",
-      },
-      {
-        title: "Campaign war room",
-        detail: "Live media, conversion, and inventory views during major promotional moments.",
-      },
-    ],
-    process: [
-      { step: "01", title: "Map", detail: "Interview stakeholders and rank the decisions each dashboard must unlock." },
-      { step: "02", title: "Design", detail: "Structure layouts, metrics, and drill-downs for clarity at a glance." },
-      { step: "03", title: "Launch", detail: "Ship live dashboards with ownership, refresh SLAs, and training." },
-    ],
-    faqs: [
-      {
-        q: "Which BI tools do you support?",
-        a: "We work across common stacks (Power BI, Looker, Tableau, custom) and choose based on your ecosystem.",
-      },
-      {
-        q: "How do you keep numbers trusted?",
-        a: "Metric definitions, data freshness SLAs, and a named owner for each dashboard.",
-      },
-    ],
-  },
-  {
     slug: "business-intelligence",
     category: "AI & Data Intelligence",
     title: "Business Intelligence",
@@ -340,7 +268,7 @@ export const services: Service[] = [
       "We modernize BI foundations — warehouse modeling, semantic layers, and governance — so reporting scales without becoming a bottleneck.",
     detail:
       "Fragmented spreadsheets and conflicting reports slow decisions. We build the warehouse models, semantic metrics, and access patterns that let teams self-serve without breaking trust — with quality monitors that catch issues before leadership does.",
-    stat: "05",
+    stat: "04",
     statLabel: "/capability",
     image: imgs[4],
     gallery: [imgs[2], imgs[7]],
@@ -402,16 +330,16 @@ export const services: Service[] = [
     ],
   },
   {
-    slug: "seo",
+    slug: "ai-search-answer-visibility",
     category: "Digital Growth",
-    title: "SEO",
-    accent: "SEO",
+    title: "AI Search & Answer Visibility",
+    accent: "Visibility",
     description:
-      "Technical foundations, content strategy, and authority building that compound organic visibility over time.",
+      "Technical foundations, content systems, and answer-engine visibility that compound organic demand over time.",
     overview:
-      "SEO programs engineered for durable growth — technical health, content systems, and authority that compound instead of chasing short-term rank spikes.",
+      "Search and answer visibility engineered for durable growth — technical health, content systems, and authority that compound instead of chasing short-term rank spikes.",
     detail:
-      "We treat SEO as a product system: crawl health, information architecture, content that matches demand, and measurement that ties organic sessions to revenue — not vanity rankings alone.",
+      "We treat visibility as a product system: crawl health, information architecture, content that matches demand, and measurement that ties organic sessions to revenue — not vanity rankings alone.",
     stat: "01",
     statLabel: "/capability",
     image: imgs[5],
@@ -474,16 +402,16 @@ export const services: Service[] = [
     ],
   },
   {
-    slug: "performance-marketing",
+    slug: "ai-driven-acquisition",
     category: "Digital Growth",
-    title: "Performance Marketing",
-    accent: "Marketing",
+    title: "AI Driven Acquisition",
+    accent: "Acquisition",
     description:
-      "Paid channels engineered for efficiency — creative tests, bidding systems, and attribution that prove ROI.",
+      "Paid and owned acquisition engineered for efficiency — creative tests, bidding systems, and attribution that prove ROI.",
     overview:
-      "Full-funnel paid media with creative testing rigor and measurement that leadership trusts — efficiency first, scale second.",
+      "Full-funnel acquisition with creative testing rigor and measurement that leadership trusts — efficiency first, scale second.",
     detail:
-      "We rebuild paid systems around incrementality and creative learning. Structure, tracking, and tests come before budget scale — so every dollar pushed has a clear hypothesis and a readout leadership can trust.",
+      "We rebuild acquisition systems around incrementality and creative learning. Structure, tracking, and tests come before budget scale — so every dollar pushed has a clear hypothesis and a readout leadership can trust.",
     stat: "02",
     statLabel: "/capability",
     image: imgs[6],
@@ -546,16 +474,16 @@ export const services: Service[] = [
     ],
   },
   {
-    slug: "social-media-strategy",
+    slug: "conversational-brand-presence",
     category: "Digital Growth",
-    title: "Social Media Strategy",
-    accent: "Strategy",
+    title: "Conversational Brand Presence",
+    accent: "Presence",
     description:
       "Platform-native narratives and community systems that turn attention into trust, pipeline, and brand equity.",
     overview:
-      "Social is not a posting calendar — we build narratives, formats, and community loops that earn attention and convert it into brand equity and pipeline.",
+      "Brand presence is not a posting calendar — we build narratives, formats, and community loops that earn attention and convert it into brand equity and pipeline.",
     detail:
-      "Each platform gets a role: awareness, community, or conversion. We design pillars, formats, and response systems so social feels native to the channel — and measurable against brand and commercial goals.",
+      "Each channel gets a role: awareness, community, or conversion. We design pillars, formats, and response systems so presence feels native to the channel — and measurable against brand and commercial goals.",
     stat: "03",
     statLabel: "/capability",
     image: imgs[7],
@@ -618,16 +546,16 @@ export const services: Service[] = [
     ],
   },
   {
-    slug: "ai-content-creation",
+    slug: "generative-content-systems",
     category: "Digital Growth",
-    title: "AI Content Creation",
-    accent: "Creation",
+    title: "Generative Content Systems",
+    accent: "Systems",
     description:
       "Human-led, AI-accelerated content engines that scale quality output without losing brand voice.",
     overview:
-      "We combine editorial judgment with AI acceleration — producing on-brand content systems that ship more without sounding generic.",
+      "We combine editorial judgment with generative acceleration — producing on-brand content systems that ship more without sounding generic.",
     detail:
-      "Speed without standards creates brand risk. We codify voice, claims, and QA into systems so AI accelerates draft and variant work while humans own judgment, taste, and final approval.",
+      "Speed without standards creates brand risk. We codify voice, claims, and QA into systems so generative tools accelerate draft and variant work while humans own judgment, taste, and final approval.",
     stat: "04",
     statLabel: "/capability",
     image: imgs[8],
@@ -690,10 +618,10 @@ export const services: Service[] = [
     ],
   },
   {
-    slug: "conversion-optimization",
+    slug: "predictive-conversion-intelligence",
     category: "Digital Growth",
-    title: "Conversion Optimization",
-    accent: "Optimization",
+    title: "Predictive Conversion Intelligence",
+    accent: "Intelligence",
     description:
       "Test, learn, and lift — UX, messaging, and funnel experiments that turn more visitors into customers.",
     overview:

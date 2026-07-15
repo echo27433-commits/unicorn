@@ -9,46 +9,42 @@ gsap.registerPlugin(ScrollTrigger);
 
 const featured = {
   quote:
-    "Unicorn transformed how we engage customers. Their team delivered clarity, speed, and results that moved the needle for our business.",
-  name: "Samantha Lee",
-  role: "Head of Digital, Retail",
-  image: "/review1.jpg",
-  avatar:
-    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=96&h=96&q=80",
+    "Unicorn transformed how we engage attendees and stakeholders. Clarity, speed, and results that moved the needle across our events and digital programs.",
+  name: "Masdar",
+  role: "Energy & Sustainability",
+  image:
+    "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1200&q=80",
+  logo: "/brands/masdar_logo_dark.png",
 };
 
 const reviews = [
   {
     quote:
-      "From strategy to execution, the partnership felt seamless. We shipped faster and saw measurable lift within the first quarter.",
-    name: "Ali Raza",
-    role: "Entrepreneur",
-    avatar:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=96&h=96&q=80",
+      "From strategy to execution, the partnership felt seamless. We shipped faster and saw measurable lift in engagement and loyalty within the first quarter.",
+    name: "Nesto",
+    role: "Enterprise Retail",
+    logo: "/brands/nesto_logo_dark.png",
   },
   {
     quote:
-      "Their AI and data work gave us insights we could actually act on. Clear communication and exceptional delivery throughout.",
-    name: "Priya Mehta",
-    role: "Product Director",
-    avatar:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=96&h=96&q=80",
+      "A rare mix of creative thinking and technical depth. Digital platforms and intelligent systems that scale with how we serve customers every day.",
+    name: "Europcar",
+    role: "Mobility",
+    logo: "/brands/europcar_logo_dark.png",
   },
   {
     quote:
-      "A rare mix of creative thinking and technical depth. The Echo platform rollout exceeded every expectation we set.",
-    name: "James Carter",
-    role: "Operations Lead",
-    avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=96&h=96&q=80",
+      "AI Vision gave us real-time shelf and floor visibility we could act on. Professional, proactive, and built for hypermarket operations at scale.",
+    name: "Mark & Save",
+    role: "Value Retail · AI Vision",
+    logo: "/brands/mark_save_logo_dark.png",
   },
   {
     quote:
-      "Professional, proactive, and outcome-focused. They understood our market and built solutions that scale with us.",
-    name: "Nora Al-Hassan",
-    role: "Marketing Manager",
-    avatar:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=96&h=96&q=80",
+      "Sharp creative and digital execution that matched how we show up for customers. A partner that understands brand, product, and pace.",
+    name: "BenQ",
+    role: "Consumer Electronics",
+    logo: "/brands/benq_logo_dark.png",
   },
 ];
 
@@ -72,6 +68,50 @@ function Stars() {
   );
 }
 
+function CompanyLogo({
+  src,
+  name,
+  fullWidth = false,
+}: {
+  src: string;
+  name: string;
+  light?: boolean;
+  fullWidth?: boolean;
+}) {
+  const isMarkAndSave = name === "Mark & Save";
+  const isBenQ = name === "BenQ";
+  const skipInvert = isBenQ;
+
+  return (
+    <div
+      className={`flex items-center justify-center rounded-2xl border border-white/15 bg-black ${
+        fullWidth
+          ? "h-14 w-full px-3 py-2 sm:h-16 sm:px-4 sm:py-2.5"
+          : "h-16 shrink-0 px-4 py-2.5 sm:h-20 sm:px-5 sm:py-3"
+      }`}
+    >
+      <Image
+        src={src}
+        alt={name}
+        width={280}
+        height={80}
+        sizes={fullWidth ? "(max-width: 768px) 80vw, 240px" : "220px"}
+        className={`w-auto object-contain ${
+          skipInvert ? "" : "brightness-0 invert"
+        } ${
+          fullWidth
+            ? isMarkAndSave
+              ? "h-12 max-w-[95%] sm:h-14 sm:max-w-[18rem]"
+              : isBenQ
+                ? "h-12 max-w-[95%] sm:h-14 sm:max-w-[18rem]"
+                : "h-7 max-w-[70%] sm:h-8 sm:max-w-[12rem]"
+            : "h-10 max-w-[11rem] sm:h-12 sm:max-w-[14rem]"
+        }`}
+      />
+    </div>
+  );
+}
+
 function ReviewCard({
   review,
   className = "",
@@ -90,19 +130,8 @@ function ReviewCard({
           {review.quote}
         </p>
       </div>
-      <div className="mt-8 flex items-center gap-3 sm:mt-12 md:mt-14">
-        <Image
-          src={review.avatar}
-          alt={review.name}
-          width={44}
-          height={44}
-          sizes="44px"
-          className="h-10 w-10 shrink-0 rounded-full object-cover sm:h-11 sm:w-11"
-        />
-        <div className="min-w-0">
-          <p className="text-sm font-medium text-black">{review.name}</p>
-          <p className="text-xs text-black/45">{review.role}</p>
-        </div>
+      <div className="mt-8 w-full sm:mt-12 md:mt-14">
+        <CompanyLogo src={review.logo} name={review.name} fullWidth />
       </div>
     </article>
   );
@@ -217,7 +246,6 @@ export default function Reviews() {
       const cards = section.querySelectorAll("[data-review-card]");
       const isMobile = window.matchMedia("(max-width: 767px)").matches;
 
-      // Avoid scale/y on mobile — parents use overflow:hidden and clip the cards.
       gsap.set(header, {
         autoAlpha: 0,
         y: isMobile ? 24 : 48,
@@ -294,7 +322,7 @@ export default function Reviews() {
             className="mb-4 flex items-center justify-center gap-2 text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#ff5f28] sm:mb-5 sm:text-xs sm:tracking-[0.18em] md:mb-6 md:text-sm"
           >
             <span aria-hidden>✦</span>
-            Testimonials
+            Client Testimonials
           </p>
           <h2
             data-review-header
@@ -313,7 +341,7 @@ export default function Reviews() {
               src={featured.image}
               alt={featured.name}
               fill
-              className="object-cover object-top sm:object-[center_20%]"
+              className="object-cover object-center"
               sizes="(max-width: 1024px) 100vw, 42vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
@@ -322,19 +350,8 @@ export default function Reviews() {
               <p className="max-w-md text-[0.95rem] font-light leading-relaxed text-white sm:text-lg md:text-xl">
                 &ldquo;{featured.quote}&rdquo;
               </p>
-              <div className="mt-5 flex items-center gap-3 sm:mt-6">
-                <Image
-                  src={featured.avatar}
-                  alt={featured.name}
-                  width={44}
-                  height={44}
-                  sizes="44px"
-                  className="h-10 w-10 shrink-0 rounded-full object-cover ring-2 ring-white/40 sm:h-11 sm:w-11"
-                />
-                <div className="min-w-0">
-                  <p className="text-sm font-medium text-white">{featured.name}</p>
-                  <p className="text-xs text-white/60">{featured.role}</p>
-                </div>
+              <div className="mt-5 sm:mt-6">
+                <CompanyLogo src={featured.logo} name={featured.name} />
               </div>
             </div>
 
@@ -346,13 +363,11 @@ export default function Reviews() {
             </span>
           </article>
 
-          {/* Mobile: autoplay carousel */}
           <MobileReviewCarousel />
 
-          {/* Tablet / desktop: grid */}
-          <div className="hidden min-w-0 gap-5 md:grid md:grid-cols-2 lg:col-span-7 lg:gap-6">
+          <div className="hidden min-w-0 gap-5 md:grid md:grid-cols-2 md:grid-rows-2 lg:col-span-7 lg:gap-6">
             {reviews.map((review) => (
-              <ReviewCard key={review.name} review={review} className="h-full" />
+              <ReviewCard key={review.name} review={review} className="h-full min-h-0" />
             ))}
           </div>
         </div>

@@ -193,9 +193,17 @@ export default function WorkDetailClient({ study }: { study: WorkCase }) {
                     <Image
                       src={study.logo}
                       alt={study.logoAlt}
-                      width={200}
-                      height={64}
-                      className="h-8 w-auto max-w-[10rem] object-contain brightness-0 invert md:h-10"
+                      width={320}
+                      height={96}
+                      className={
+                        study.logoClassName
+                          ? `${study.logoClassName}${
+                              study.logoInvert === false ? "" : " brightness-0 invert"
+                            }`
+                          : `h-8 w-auto max-w-[10rem] object-contain md:h-10${
+                              study.logoInvert === false ? "" : " brightness-0 invert"
+                            }`
+                      }
                     />
                   </div>
 
@@ -274,13 +282,13 @@ export default function WorkDetailClient({ study }: { study: WorkCase }) {
               data-reveal-item
               className="mt-4 max-w-2xl text-base leading-relaxed text-white/50 md:text-lg"
             >
-              How Echo transformed engagement for {study.name}.
+              How we delivered measurable impact for {study.name}.
             </p>
 
             <div className="mt-12 grid gap-8 md:mt-14 md:grid-cols-3 md:gap-10">
               {[
                 { step: "01", label: "Challenge", title: "What needed to change", body: study.challenge },
-                { step: "02", label: "Solution", title: "How Echo helped", body: study.solution },
+                { step: "02", label: "Strategy", title: "How we approached it", body: study.solution },
                 {
                   step: "03",
                   label: "Results",
@@ -321,6 +329,46 @@ export default function WorkDetailClient({ study }: { study: WorkCase }) {
                 </div>
               ))}
             </div>
+
+            {study.strategy?.length ? (
+              <div data-reveal-item className="mt-12 rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:mt-14 md:p-10">
+                <h3 className="text-xl font-light tracking-tight text-white md:text-2xl">
+                  Strategy in detail
+                </h3>
+                <ul className="mt-6 grid gap-3 md:grid-cols-2 md:gap-4">
+                  {study.strategy.map((item) => (
+                    <li key={item} className="flex items-start gap-3">
+                      <span
+                        className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#ff5f28]"
+                        aria-hidden
+                      />
+                      <span className="text-base leading-relaxed text-white/65">
+                        {item}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+
+            {study.outcomeStats?.length ? (
+              <div className="mt-10 grid gap-4 sm:grid-cols-3 md:mt-12 md:gap-6">
+                {study.outcomeStats.map((stat) => (
+                  <div
+                    key={stat.label}
+                    data-reveal-item
+                    className="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-7 text-center"
+                  >
+                    <p className="text-4xl font-light tracking-tight text-[#ff5f28] md:text-5xl">
+                      {stat.value}
+                    </p>
+                    <p className="mt-3 text-sm leading-relaxed text-white/55 md:text-base">
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            ) : null}
           </div>
 
           {/* Performance metrics */}
@@ -341,13 +389,39 @@ export default function WorkDetailClient({ study }: { study: WorkCase }) {
               data-reveal-item
               className="mt-4 max-w-2xl text-base leading-relaxed text-white/50 md:text-lg"
             >
-              Real results from the Echo platform implementation at {study.name}.
+              Real results from the campaign for {study.name}.
             </p>
+
+            {study.campaignMetrics?.length ? (
+              <div
+                data-reveal-item
+                className="mt-12 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] md:mt-14"
+              >
+                <div className="border-b border-white/10 px-6 py-5 md:px-10">
+                  <h3 className="text-xl font-light tracking-tight text-white md:text-2xl">
+                    Campaign results
+                  </h3>
+                </div>
+                <div className="divide-y divide-white/10">
+                  {study.campaignMetrics.map((row) => (
+                    <div
+                      key={row.metric}
+                      className="flex flex-col gap-1 px-6 py-4 sm:flex-row sm:items-center sm:justify-between md:px-10"
+                    >
+                      <p className="text-sm text-white/50 md:text-base">{row.metric}</p>
+                      <p className="text-lg font-light tracking-tight text-white md:text-xl">
+                        {row.result}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : null}
 
             {/* Before / After chart */}
             <div
               data-reveal-item
-              className="mt-12 rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:mt-14 md:p-10"
+              className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-6 md:mt-10 md:p-10"
             >
               <h3 className="text-xl font-light tracking-tight text-white md:text-2xl">
                 {study.metrics.title}
@@ -539,9 +613,17 @@ export default function WorkDetailClient({ study }: { study: WorkCase }) {
                         <Image
                           src={item.logo}
                           alt={item.logoAlt}
-                          width={160}
-                          height={48}
-                          className="h-6 w-auto max-w-[8rem] object-contain brightness-0 invert"
+                          width={240}
+                          height={80}
+                          className={
+                            item.logoClassName
+                              ? `${item.logoClassName}${
+                                  item.logoInvert === false ? "" : " brightness-0 invert"
+                                }`
+                              : `h-6 w-auto max-w-[8rem] object-contain${
+                                  item.logoInvert === false ? "" : " brightness-0 invert"
+                                }`
+                          }
                         />
                       </div>
                     </div>
