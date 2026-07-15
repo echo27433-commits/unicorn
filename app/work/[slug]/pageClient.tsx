@@ -222,7 +222,7 @@ export default function WorkDetailClient({ study }: { study: WorkCase }) {
                       Book a Call
                     </Button>
                     <Button
-                      href="/products"
+                      href="https://www.theecho.global/"
                       variant="secondary"
                       className="w-full justify-center px-4 py-2.5 text-sm sm:w-auto sm:px-[1.85rem] sm:py-[0.95rem] sm:text-base md:text-lg"
                     >

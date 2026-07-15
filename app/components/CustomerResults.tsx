@@ -286,7 +286,9 @@ export default function CustomerResults() {
             </div>
 
             <Link
-              href="/products"
+              href="https://www.theecho.global/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn btn--primary group relative z-[1] mt-8 inline-flex items-center gap-3 md:mt-10 md:text-lg"
             >
               Visit Echo

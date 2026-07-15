@@ -90,14 +90,14 @@ export default function Hero() {
 
             <div className="mt-8 flex w-full flex-col gap-2.5 sm:mt-10 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-12 md:gap-5">
               <Button
-                href="#contact"
+                href="/contact"
                 variant="primary"
                 className="w-full justify-center px-4 py-2.5 text-sm sm:w-auto sm:px-[1.85rem] sm:py-[0.95rem] sm:text-base md:text-lg"
               >
                 Book a Call
               </Button>
               <Button
-                href="#services"
+                href="/services"
                 variant="secondary"
                 className="w-full justify-center px-4 py-2.5 text-sm sm:w-auto sm:px-[1.85rem] sm:py-[0.95rem] sm:text-base md:text-lg"
               >

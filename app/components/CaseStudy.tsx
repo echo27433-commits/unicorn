@@ -74,8 +74,8 @@ export default function CaseStudy() {
     const reduced = prefersReducedMotion();
 
     // Always lock non-active slides — prevents stacked text before/without animation.
-    gsap.set(slides, { autoAlpha: 0, y: 0, zIndex: 0 });
-    gsap.set(slides[0], { autoAlpha: 1, zIndex: 2 });
+    gsap.set(slides, { autoAlpha: 0, y: 0, zIndex: 0, pointerEvents: "none" });
+    gsap.set(slides[0], { autoAlpha: 1, zIndex: 2, pointerEvents: "auto" });
     gsap.set(images, { autoAlpha: 0, zIndex: 0 });
     gsap.set(images[0], { autoAlpha: 1, zIndex: 2 });
     gsap.set(progressItems, { opacity: 0.28, scaleX: 0.7 });
@@ -139,10 +139,10 @@ export default function CaseStudy() {
             duration: move * 0.55,
             force3D: true,
           })
-          .set(currentSlide, { zIndex: 0 })
+          .set(currentSlide, { zIndex: 0, pointerEvents: "none" })
           .set(currentImage, { autoAlpha: 0, zIndex: 0 })
           .set(nextImage, { autoAlpha: 1, zIndex: 2 })
-          .set(nextSlide, { zIndex: 2 })
+          .set(nextSlide, { zIndex: 2, pointerEvents: "auto" })
           .fromTo(
             nextSlide,
             { autoAlpha: 0, y: enterY },
@@ -218,7 +218,7 @@ export default function CaseStudy() {
                   data-case-slide
                   className={`absolute inset-0 flex flex-col justify-center ${
                     index === 0
-                      ? "z-[2] opacity-100"
+                      ? "pointer-events-auto z-[2] opacity-100"
                       : "pointer-events-none invisible z-0 opacity-0"
                   }`}
                   aria-hidden={index !== 0}
@@ -238,7 +238,7 @@ export default function CaseStudy() {
                     {study.description}
                   </p>
 
-                  <div className="mt-6 sm:mt-8 md:mt-12">
+                  <div className="relative z-10 mt-6 pointer-events-auto sm:mt-8 md:mt-12">
                     <Button
                       href={`/work/${study.slug}`}
                       variant="primary"

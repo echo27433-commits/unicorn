@@ -46,6 +46,10 @@ function getButtonClass(variant: ButtonVariant = "primary") {
 
 const buttonClass = getButtonClass("primary");
 
+function isExternalHref(href: string) {
+  return /^https?:\/\//i.test(href);
+}
+
 export default function Button({
   href,
   children,
@@ -59,10 +63,28 @@ export default function Button({
   className?: string;
   showIcon?: boolean;
 }) {
+  const classes = `${getButtonClass(variant)} ${className}`;
+  const icon =
+    showIcon ? (variant === "primary" ? <ArrowUpRightIcon /> : <ArrowRightIcon />) : null;
+
+  if (isExternalHref(href)) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={classes}
+      >
+        {children}
+        {icon}
+      </a>
+    );
+  }
+
   return (
-    <Link href={href} className={`${getButtonClass(variant)} ${className}`}>
+    <Link href={href} className={classes}>
       {children}
-      {showIcon ? (variant === "primary" ? <ArrowUpRightIcon /> : <ArrowRightIcon />) : null}
+      {icon}
     </Link>
   );
 }

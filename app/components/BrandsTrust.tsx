@@ -116,7 +116,7 @@ export default function BrandsTrust() {
 
           <Link
             data-brands-header
-            href="#contact"
+            href="/contact"
             className="btn btn--primary group mt-10 inline-flex items-center gap-3 md:mt-12 md:text-lg"
           >
             Work with us
