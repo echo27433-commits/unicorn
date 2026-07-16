@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
 
-import { isMobileMotion, prefersReducedMotion, scrubValue } from "../lib/motion";
+import { isMobileMotion, prefersReducedMotion, scheduleScrollRefresh, scrubValue } from "../lib/motion";
 import Reviews from "./Reviews";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -72,13 +72,10 @@ export default function ReviewsCover() {
       );
     });
 
-    const refresh = () => ScrollTrigger.refresh();
-    window.addEventListener("load", refresh);
-    const timeout = window.setTimeout(refresh, 450);
+    const cancelRefresh = scheduleScrollRefresh(250);
 
     return () => {
-      window.removeEventListener("load", refresh);
-      window.clearTimeout(timeout);
+      cancelRefresh();
       ctx.revert();
     };
   }, []);

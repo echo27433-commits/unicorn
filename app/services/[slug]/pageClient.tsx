@@ -2,27 +2,23 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import Button from "../../components/Button";
-import Navbar from "../../components/Navbar";
-import NewsletterCover from "../../components/NewsletterCover";
-import PageHeaderBackdrop from "../../components/PageHeaderBackdrop";
+import PageHeroHeader from "../../components/PageHeroHeader";
 import type { Service } from "../../lib/services";
 import { services } from "../../lib/services";
-import { setupCover } from "../../lib/motion";
+import {
+  scheduleScrollRefresh,
+  setupCover,
+  setupReveal,
+} from "../../lib/motion";
+import { useReducedMotion } from "../../lib/useReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
-
-function useReducedMotion() {
-  return useMemo(() => {
-    if (typeof window === "undefined") return true;
-    return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-  }, []);
-}
 
 export default function ServiceDetailClient({ service }: { service: Service }) {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -50,101 +46,42 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
 
     const ctx = gsap.context(() => {
       setupCover(header, detail, null, { invalidateOnRefresh: true });
-
-      const groups = gsap.utils.toArray<HTMLElement>("[data-reveal]");
-      groups.forEach((group) => {
-        const items = group.querySelectorAll<HTMLElement>("[data-reveal-item]");
-        gsap.set(items, { opacity: 0, y: 24 });
-        ScrollTrigger.create({
-          trigger: group,
-          start: "top 80%",
-          once: true,
-          onEnter: () => {
-            gsap.to(items, {
-              opacity: 1,
-              y: 0,
-              duration: 0.75,
-              ease: "power3.out",
-              stagger: 0.07,
-            });
-          },
-        });
+      setupReveal({
+        scope: root,
+        start: "top 80%",
+        y: 24,
+        duration: 0.75,
+        stagger: 0.07,
+        ease: "power3.out",
       });
     }, root);
 
-    const refresh = () => ScrollTrigger.refresh();
-    window.addEventListener("load", refresh);
-    const t1 = window.setTimeout(refresh, 250);
+    const cancelRefresh = scheduleScrollRefresh(250);
 
     return () => {
-      window.removeEventListener("load", refresh);
-      window.clearTimeout(t1);
+      cancelRefresh();
       ctx.revert();
     };
   }, [reducedMotion, service.slug]);
 
   return (
     <div ref={rootRef} className="min-h-screen bg-black">
-      <Navbar />
-
-      <header
+      <PageHeroHeader
         ref={headerRef}
-        className="relative z-0 flex min-h-[70svh] w-full max-w-[100%] flex-col overflow-x-clip overflow-y-hidden bg-black md:min-h-[85vh] md:will-change-transform"
-        style={{ transformOrigin: "center center" }}
-      >
-        <PageHeaderBackdrop />
-
-        <div className="relative z-10 flex flex-1 flex-col pointer-events-none [&_a]:pointer-events-auto [&_button]:pointer-events-auto">
-          <section className="relative flex flex-col px-4 pb-8 pt-32 sm:pb-12 sm:pt-36 md:flex-1 md:px-8 md:pb-20 md:pt-44 lg:px-12 lg:pt-48">
-            <div className="relative mx-auto flex w-full max-w-7xl flex-col justify-start md:flex-1 md:justify-center">
-              <div className="relative max-w-4xl lg:max-w-5xl">
-                <div
-                  className="pointer-events-none absolute -inset-x-4 -inset-y-6 z-0 sm:-inset-x-8 sm:-inset-y-10 md:-inset-x-12 md:-inset-y-14"
-                  style={{
-                    background:
-                      "radial-gradient(ellipse 70% 65% at 30% 40%, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.4) 45%, transparent 75%)",
-                  }}
-                  aria-hidden
-                />
-
-                <div className="relative z-[1] text-left">
-                  <p className="mb-5 flex items-center justify-start gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-[#ff5f28] sm:mb-4 sm:tracking-[0.18em] md:mb-6 md:text-sm">
-                    <span aria-hidden>✦</span>
-                    Service · {service.category}
-                  </p>
-
-                  <h1 className="text-[3.25rem] font-light leading-[1.06] tracking-tight text-white sm:text-5xl sm:leading-[1.04] md:text-7xl lg:text-8xl xl:text-[6rem] xl:leading-[1.01]">
-                    {titleBefore}
-                    <span className="text-gradient-future">{service.accent}</span>
-                    {titleAfter}
-                  </h1>
-
-                  <p className="mt-6 max-w-[34rem] text-[0.875rem] leading-relaxed text-white/55 sm:mt-5 sm:text-sm md:mt-7 md:text-[0.95rem]">
-                    {service.description}
-                  </p>
-
-                  <div className="mt-9 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:justify-start sm:gap-4 md:mt-12 md:gap-5">
-                    <Button
-                      href="/contact"
-                      variant="primary"
-                      className="w-full justify-center px-4 py-2.5 text-sm sm:w-auto sm:px-[1.85rem] sm:py-[0.95rem] sm:text-base md:text-lg"
-                    >
-                      Talk about this service
-                    </Button>
-                    <Button
-                      href="/services"
-                      variant="secondary"
-                      className="w-full justify-center px-4 py-2.5 text-sm sm:w-auto sm:px-[1.85rem] sm:py-[0.95rem] sm:text-base md:text-lg"
-                    >
-                      All Services
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-      </header>
+        eyebrow={`Service · ${service.category}`}
+        title={
+          <>
+            {titleBefore}
+            <span className="text-gradient-future">{service.accent}</span>
+            {titleAfter}
+          </>
+        }
+        description={service.description}
+        descriptionClassName="mt-6 max-w-[34rem] text-[0.875rem] leading-relaxed text-white/55 sm:mt-5 sm:text-sm md:mt-7 md:text-[0.95rem]"
+        titleClassName="text-[3.25rem] font-light leading-[1.06] tracking-tight text-white sm:text-5xl sm:leading-[1.04] md:text-7xl lg:text-8xl xl:text-[6rem] xl:leading-[1.01]"
+        primaryCta={{ href: "/contact", label: "Talk about this service" }}
+        secondaryCta={{ href: "/services", label: "All Services" }}
+      />
 
       <div ref={detailRef} className="relative z-30 overflow-hidden bg-white">
         <section className="relative mx-auto w-full max-w-[90rem] px-5 py-20 pb-16 md:px-8 md:py-28 md:pb-20 lg:px-12 lg:py-32">
@@ -445,8 +382,6 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
           </div>
         </section>
       </div>
-
-      <NewsletterCover />
     </div>
   );
 }

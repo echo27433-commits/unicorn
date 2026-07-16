@@ -6,7 +6,11 @@ import { useEffect, useRef } from "react";
 
 import Footer from "./Footer";
 import Newsletter from "./Newsletter";
-import { prefersReducedMotion, scrubValue } from "../lib/motion";
+import {
+  prefersReducedMotion,
+  scheduleScrollRefresh,
+  scrubValue,
+} from "../lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -84,26 +88,23 @@ export default function NewsletterCover() {
       );
     });
 
-    let refreshTimer = 0;
-    const scheduleRefresh = () => {
+    let localTimer = 0;
+    const onLayoutChange = () => {
       if (syncing) return;
-      window.clearTimeout(refreshTimer);
-      refreshTimer = window.setTimeout(() => {
+      window.clearTimeout(localTimer);
+      localTimer = window.setTimeout(() => {
         const before = stackHeight;
         sync();
         if (stackHeight !== before) {
-          ScrollTrigger.refresh();
+          scheduleScrollRefresh(80);
         }
       }, 80);
     };
 
-    window.addEventListener("load", scheduleRefresh);
-    const t1 = window.setTimeout(scheduleRefresh, 300);
-    const t2 = window.setTimeout(scheduleRefresh, 900);
+    // One shared refresh after mount — no load + 300/900ms storm.
+    const cancelRefresh = scheduleScrollRefresh(250);
 
-    const resizeObserver = new ResizeObserver(() => {
-      scheduleRefresh();
-    });
+    const resizeObserver = new ResizeObserver(onLayoutChange);
     // Observe natural-size sources only — not the stretched newsletter shell.
     resizeObserver.observe(footerSlot);
     resizeObserver.observe(newsletterContent);
@@ -111,15 +112,13 @@ export default function NewsletterCover() {
     const images = footerSlot.querySelectorAll("img");
     images.forEach((img) => {
       if (!img.complete) {
-        img.addEventListener("load", scheduleRefresh, { once: true });
+        img.addEventListener("load", onLayoutChange, { once: true });
       }
     });
 
     return () => {
-      window.removeEventListener("load", scheduleRefresh);
-      window.clearTimeout(t1);
-      window.clearTimeout(t2);
-      window.clearTimeout(refreshTimer);
+      cancelRefresh();
+      window.clearTimeout(localTimer);
       resizeObserver.disconnect();
       ctx.revert();
       wrapper.style.height = "";

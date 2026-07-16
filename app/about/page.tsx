@@ -1,3 +1,5 @@
+import AboutHeader from "../components/AboutHeader";
+import DeferredNewsletterCover from "../components/DeferredNewsletterCover";
 import AboutPageClient from "./pageClient";
 
 export const metadata = {
@@ -7,6 +9,11 @@ export const metadata = {
 };
 
 export default function AboutPage() {
-  return <AboutPageClient />;
+  return (
+    <div className="min-h-screen overflow-x-clip bg-black">
+      <AboutHeader />
+      <AboutPageClient />
+      <DeferredNewsletterCover />
+    </div>
+  );
 }
-

@@ -1,14 +1,26 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useRef } from "react";
 
-import { isMobileMotion, prefersReducedMotion, scrubValue } from "../lib/motion";
-import CustomerResults from "./CustomerResults";
+import {
+  isMobileMotion,
+  prefersReducedMotion,
+  scheduleScrollRefresh,
+  scrubValue,
+} from "../lib/motion";
 import Header from "./Header";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const CustomerResults = dynamic(() => import("./CustomerResults"), {
+  ssr: false,
+  loading: () => (
+    <div className="min-h-[100svh] w-full bg-white" aria-hidden />
+  ),
+});
 
 export default function ScrollHeroCover() {
   const heroRef = useRef<HTMLElement>(null);
@@ -33,6 +45,7 @@ export default function ScrollHeroCover() {
         pin: true,
         pinSpacing: false,
         anticipatePin: mobile ? 0 : 1,
+        fastScrollEnd: true,
       });
 
       // Pause WebGL waves once the next section covers the hero (pinned hero
@@ -58,6 +71,7 @@ export default function ScrollHeroCover() {
               start: "top bottom",
               end: "top top",
               scrub,
+              fastScrollEnd: true,
             },
           }
         );
@@ -75,6 +89,7 @@ export default function ScrollHeroCover() {
               start: "top bottom",
               end: "top top",
               scrub,
+              fastScrollEnd: true,
             },
           }
         );
@@ -94,19 +109,17 @@ export default function ScrollHeroCover() {
               start: "top bottom",
               end: "top top",
               scrub,
+              fastScrollEnd: true,
             },
           }
         );
       }
     });
 
-    const refresh = () => ScrollTrigger.refresh();
-    window.addEventListener("load", refresh);
-    const timeout = window.setTimeout(refresh, 250);
+    const cancelRefresh = scheduleScrollRefresh(250);
 
     return () => {
-      window.removeEventListener("load", refresh);
-      window.clearTimeout(timeout);
+      cancelRefresh();
       hero.removeAttribute("data-waves-paused");
       ctx.revert();
     };

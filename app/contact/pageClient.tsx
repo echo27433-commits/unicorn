@@ -1,14 +1,18 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { FormEvent, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { FormEvent, useLayoutEffect, useRef, useState } from "react";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import ContactHeader from "../components/ContactHeader";
-import NewsletterCover from "../components/NewsletterCover";
 import { locations } from "../components/locations";
+import {
+  scheduleScrollRefresh,
+  setupCover,
+  setupReveal,
+} from "../lib/motion";
+import { useReducedMotion } from "../lib/useReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,13 +34,6 @@ const LINKEDIN_URL =
 const fieldClass =
   "w-full border-0 border-b border-black/15 bg-transparent px-0 py-3 text-base text-black outline-none transition placeholder:text-black/35 focus:border-[#ff5f28] focus:ring-0";
 
-function useReducedMotion() {
-  return useMemo(() => {
-    if (typeof window === "undefined") return true;
-    return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-  }, []);
-}
-
 function LinkedInIcon({ className = "h-4 w-4" }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -47,7 +44,6 @@ function LinkedInIcon({ className = "h-4 w-4" }: { className?: string }) {
 
 export default function ContactPageClient() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLElement>(null);
   const coverRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
   const [submitted, setSubmitted] = useState(false);
@@ -58,95 +54,20 @@ export default function ContactPageClient() {
 
   useLayoutEffect(() => {
     const root = rootRef.current;
-    const hero = heroRef.current;
+    const hero = document.querySelector<HTMLElement>("[data-motion-pin]");
     const cover = coverRef.current;
     if (!root || !hero || !cover) return;
     if (reducedMotion) return;
 
     const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: hero,
-        start: "top top",
-        endTrigger: cover,
-        end: "top top",
-        pin: true,
-        pinSpacing: false,
-        anticipatePin: 1,
-        fastScrollEnd: true,
-      });
-
-      gsap.fromTo(
-        hero,
-        { scale: 1, opacity: 1 },
-        {
-          scale: 0.96,
-          opacity: 0.55,
-          ease: "none",
-          force3D: true,
-          scrollTrigger: {
-            trigger: cover,
-            start: "top bottom",
-            end: "top top",
-            scrub: 0.5,
-            fastScrollEnd: true,
-          },
-        }
-      );
-
-      gsap.fromTo(
-        cover,
-        {
-          borderRadius: "28px 28px 0px 0px",
-          boxShadow: "0 -8px 24px rgba(0,0,0,0)",
-        },
-        {
-          borderRadius: "0px 0px 0px 0px",
-          boxShadow: "0 -20px 48px rgba(0,0,0,0.35)",
-          ease: "none",
-          scrollTrigger: {
-            trigger: cover,
-            start: "top bottom",
-            end: "top top",
-            scrub: 0.5,
-            fastScrollEnd: true,
-          },
-        }
-      );
-
-      const groups = gsap.utils.toArray<HTMLElement>("[data-reveal]");
-
-      groups.forEach((group) => {
-        const items = group.querySelectorAll<HTMLElement>("[data-reveal-item]");
-        if (!items.length) return;
-
-        gsap.set(items, { opacity: 0, y: 16, force3D: true });
-
-        ScrollTrigger.create({
-          trigger: group,
-          start: "top 85%",
-          once: true,
-          fastScrollEnd: true,
-          onEnter: () => {
-            gsap.to(items, {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              ease: "power2.out",
-              stagger: 0.06,
-              overwrite: "auto",
-            });
-          },
-        });
-      });
+      setupCover(hero, cover);
+      setupReveal({ scope: root });
     }, root);
 
-    const refresh = () => ScrollTrigger.refresh();
-    window.addEventListener("load", refresh);
-    const timeout = window.setTimeout(refresh, 200);
+    const cancelRefresh = scheduleScrollRefresh(200);
 
     return () => {
-      window.removeEventListener("load", refresh);
-      window.clearTimeout(timeout);
+      cancelRefresh();
       ctx.revert();
     };
   }, [reducedMotion]);
@@ -167,9 +88,7 @@ export default function ContactPageClient() {
   };
 
   return (
-    <div ref={rootRef} className="min-h-screen bg-black">
-      <ContactHeader ref={heroRef} />
-
+    <div ref={rootRef}>
       <div ref={coverRef} className="relative z-20 overflow-hidden bg-white">
         <main className="relative bg-white font-sans">
           <div className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -462,8 +381,6 @@ export default function ContactPageClient() {
           </section>
         </main>
       </div>
-
-      <NewsletterCover />
     </div>
   );
 }

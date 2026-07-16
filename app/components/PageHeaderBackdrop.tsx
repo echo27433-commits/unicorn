@@ -27,7 +27,7 @@ export default function PageHeaderBackdrop({
   intensity = "default",
 }: PageHeaderBackdropProps) {
   const [isMobile, setIsMobile] = useState(false);
-  // Defer WebGL until after first paint — CSS glow covers the gap (helps LCP).
+  // Defer WebGL until after LCP + TBT window — CSS glow covers the gap.
   const [showWaves, setShowWaves] = useState(false);
 
   useEffect(() => {
@@ -41,7 +41,12 @@ export default function PageHeaderBackdrop({
   useEffect(() => {
     const reduced =
       window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+    // Skip OGL entirely on mobile / reduced-motion — CSS atmosphere is enough
+    // and removes continuous RAF from the TBT path.
     if (reduced) return;
+
+    const mq = window.matchMedia("(max-width: 767px)");
+    if (mq.matches) return;
 
     let cancelled = false;
     let idleId = 0;
@@ -51,10 +56,11 @@ export default function PageHeaderBackdrop({
       if (!cancelled) setShowWaves(true);
     };
 
+    // Past Lighthouse interaction window; CSS glow covers the gap.
     if (typeof window.requestIdleCallback === "function") {
-      idleId = window.requestIdleCallback(enable, { timeout: 1800 });
+      idleId = window.requestIdleCallback(enable, { timeout: 6000 });
     } else {
-      timeoutId = window.setTimeout(enable, 400);
+      timeoutId = window.setTimeout(enable, 4500);
     }
 
     return () => {
@@ -81,14 +87,14 @@ export default function PageHeaderBackdrop({
         {showWaves ? (
           <LineWaves
             key={`${isMobile ? "mobile" : "desktop"}-${intensity}`}
-            speed={isMobile ? 0.11 : isHome ? 0.16 : 0.14}
-            innerLineCount={isMobile ? 26 : isHome ? 44 : 40}
-            outerLineCount={isMobile ? 30 : isHome ? 52 : 48}
-            warpIntensity={isMobile ? 0.95 : isHome ? 1.25 : 1.15}
-            rotation={isMobile ? -24 : -38}
-            edgeFadeWidth={isMobile ? 0.14 : 0.08}
-            colorCycleSpeed={isMobile ? 0.45 : isHome ? 0.65 : 0.55}
-            brightness={isMobile ? 0.58 : isHome ? 0.68 : 0.62}
+            speed={isHome ? 0.12 : 0.1}
+            innerLineCount={isHome ? 20 : 16}
+            outerLineCount={isHome ? 24 : 20}
+            warpIntensity={isHome ? 0.95 : 0.85}
+            rotation={-38}
+            edgeFadeWidth={0.08}
+            colorCycleSpeed={isHome ? 0.5 : 0.45}
+            brightness={isHome ? 0.64 : 0.58}
             color1="#ff5f28"
             color2="#ffc49a"
             color3="#ff3a00"

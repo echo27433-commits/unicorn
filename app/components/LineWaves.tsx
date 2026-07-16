@@ -170,7 +170,7 @@ export default function LineWaves({
     if (!containerRef.current) return;
     const container = containerRef.current;
     const mobile = window.matchMedia("(max-width: 767px)").matches;
-    const dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1 : 1.5);
+    const dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1 : 1.25);
     const renderer = new Renderer({
       alpha: true,
       premultipliedAlpha: false,
@@ -187,6 +187,7 @@ export default function LineWaves({
     let isPageVisible = document.visibilityState !== "hidden";
     let isScrollPaused = false;
     let isRunning = false;
+    let lastRenderFrame = -1;
 
     // Lower shader cost on phones.
     const effectiveInner = mobile ? Math.min(innerLineCount, 22) : innerLineCount;
@@ -260,6 +261,12 @@ export default function LineWaves({
     function update(time: number) {
       if (!isRunning) return;
       animationFrameId = requestAnimationFrame(update);
+
+      // Cap shader updates ~30fps — enough for ambient waves, half the GPU/CPU cost.
+      const frame = Math.floor(time / 33);
+      if (frame === lastRenderFrame) return;
+      lastRenderFrame = frame;
+
       program.uniforms.uTime.value = time * 0.001;
 
       if (enableMouseInteraction) {

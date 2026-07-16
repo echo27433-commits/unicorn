@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 
+import DeferredNewsletterCover from "../../components/DeferredNewsletterCover";
 import { getAllWorkSlugs, getWorkCaseBySlug } from "../../lib/work";
 import WorkDetailClient from "./pageClient";
 
@@ -27,5 +28,10 @@ export default async function WorkDetailPage({ params }: PageProps) {
   const study = getWorkCaseBySlug(slug);
   if (!study) notFound();
 
-  return <WorkDetailClient study={study} />;
+  return (
+    <>
+      <WorkDetailClient study={study} />
+      <DeferredNewsletterCover />
+    </>
+  );
 }

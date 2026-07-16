@@ -1,3 +1,5 @@
+import DeferredNewsletterCover from "../components/DeferredNewsletterCover";
+import ProductsHeader from "../components/ProductsHeader";
 import ProductsPageClient from "./pageClient";
 
 export const metadata = {
@@ -7,5 +9,11 @@ export const metadata = {
 };
 
 export default function ProductsPage() {
-  return <ProductsPageClient />;
+  return (
+    <div className="min-h-screen bg-black">
+      <ProductsHeader />
+      <ProductsPageClient />
+      <DeferredNewsletterCover />
+    </div>
+  );
 }

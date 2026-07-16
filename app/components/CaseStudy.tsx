@@ -5,7 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 
-import { isMobileMotion, prefersReducedMotion, scrubValue } from "../lib/motion";
+import { isMobileMotion, prefersReducedMotion, scheduleScrollRefresh, scrubValue } from "../lib/motion";
 import Button from "./Button";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -170,13 +170,10 @@ export default function CaseStudy() {
       tl.to({}, { duration: cover ? (mobile ? 1.2 : 2.2) : 1.0 });
     }, section);
 
-    const refresh = () => ScrollTrigger.refresh();
-    window.addEventListener("load", refresh);
-    const timeout = window.setTimeout(refresh, 400);
+    const cancelRefresh = scheduleScrollRefresh(250);
 
     return () => {
-      window.removeEventListener("load", refresh);
-      window.clearTimeout(timeout);
+      cancelRefresh();
       ctx.revert();
       gsap.set(slides, { autoAlpha: 0, clearProps: "transform" });
       gsap.set(slides[0], { autoAlpha: 1 });

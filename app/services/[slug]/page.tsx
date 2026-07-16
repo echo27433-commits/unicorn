@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 
+import DeferredNewsletterCover from "../../components/DeferredNewsletterCover";
 import { getAllServiceSlugs, getServiceBySlug } from "../../lib/services";
 import ServiceDetailClient from "./pageClient";
 
@@ -27,5 +28,10 @@ export default async function ServiceDetailPage({ params }: PageProps) {
   const service = getServiceBySlug(slug);
   if (!service) notFound();
 
-  return <ServiceDetailClient service={service} />;
+  return (
+    <>
+      <ServiceDetailClient service={service} />
+      <DeferredNewsletterCover />
+    </>
+  );
 }

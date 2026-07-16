@@ -1,3 +1,6 @@
+import BlogHeader from "../components/BlogHeader";
+import DeferredNewsletterCover from "../components/DeferredNewsletterCover";
+import PageMotionRoot from "../components/PageMotionRoot";
 import BlogPageClient from "./pageClient";
 
 export const metadata = {
@@ -7,5 +10,13 @@ export const metadata = {
 };
 
 export default function BlogPage() {
-  return <BlogPageClient />;
+  return (
+    <div className="min-h-screen bg-black">
+      <BlogHeader />
+      <PageMotionRoot refreshDelayMs={200}>
+        <BlogPageClient />
+      </PageMotionRoot>
+      <DeferredNewsletterCover />
+    </div>
+  );
 }

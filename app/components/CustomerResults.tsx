@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
+import { EchoLogo, EchoPlatformImage } from "./EchoProductVisual";
+
 const serviceGroups = [
   {
     title: "AI & Data Intelligence",
@@ -237,14 +239,7 @@ export default function CustomerResults() {
             />
 
             <div className="relative z-[1]">
-              <Image
-                src="/The_Echo_Logo_v2 (2).webp"
-                alt="ECHO powered by unicorn"
-                width={640}
-                height={180}
-                sizes="(max-width: 768px) 70vw, 320px"
-                className="h-24 w-auto object-contain object-left md:h-32 lg:h-40"
-              />
+              <EchoLogo />
 
               <h3 className="mt-10 text-4xl font-light leading-[1.08] tracking-tight text-black md:mt-12 md:text-5xl lg:text-6xl xl:text-[3.75rem] xl:leading-[1.06]">
                 The AI Engine for{" "}
@@ -274,14 +269,7 @@ export default function CustomerResults() {
               aria-hidden
             />
             <div className="relative overflow-hidden rounded-2xl">
-              <Image
-                src="/image_1.webp"
-                alt="ECHO platform preview on laptop"
-                width={1400}
-                height={1050}
-                className="relative z-[1] h-auto w-full min-h-[280px] object-contain md:min-h-[420px] lg:min-h-[520px]"
-                sizes="(max-width: 1024px) 100vw, 55vw"
-              />
+              <EchoPlatformImage />
             </div>
 
             <Link

@@ -18,26 +18,22 @@ import {
 } from "recharts";
 
 import Button from "../../components/Button";
-import Navbar from "../../components/Navbar";
-import NewsletterCover from "../../components/NewsletterCover";
-import PageHeaderBackdrop from "../../components/PageHeaderBackdrop";
+import PageHeroHeader from "../../components/PageHeroHeader";
 import WorkGrowthChart from "../../components/WorkGrowthChart";
 import type { WorkCase } from "../../lib/work";
 import { workCases } from "../../lib/work";
-import { setupCover } from "../../lib/motion";
+import {
+  scheduleScrollRefresh,
+  setupCover,
+  setupReveal,
+} from "../../lib/motion";
+import { useReducedMotion } from "../../lib/useReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const ACCENT = "#ff5f28";
 const GRID = "rgba(255,255,255,0.08)";
 const TICK = "rgba(255,255,255,0.45)";
-
-function useReducedMotion() {
-  return useMemo(() => {
-    if (typeof window === "undefined") return true;
-    return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-  }, []);
-}
 
 function parseMetricNumber(value: string) {
   return parseFloat(value.replace(/[^\d.]/g, "")) || 0;
@@ -119,130 +115,77 @@ export default function WorkDetailClient({ study }: { study: WorkCase }) {
 
     const ctx = gsap.context(() => {
       setupCover(header, detail, null, { invalidateOnRefresh: true });
-
-      const groups = gsap.utils.toArray<HTMLElement>("[data-reveal]");
-      groups.forEach((group) => {
-        const items = group.querySelectorAll<HTMLElement>("[data-reveal-item]");
-        gsap.set(items, { opacity: 0, y: 24 });
-        ScrollTrigger.create({
-          trigger: group,
-          start: "top 80%",
-          once: true,
-          onEnter: () => {
-            gsap.to(items, {
-              opacity: 1,
-              y: 0,
-              duration: 0.75,
-              ease: "power3.out",
-              stagger: 0.07,
-            });
-          },
-        });
+      setupReveal({
+        scope: root,
+        start: "top 80%",
+        y: 24,
+        duration: 0.75,
+        stagger: 0.07,
+        ease: "power3.out",
       });
     }, root);
 
-    const refresh = () => ScrollTrigger.refresh();
-    window.addEventListener("load", refresh);
-    const t1 = window.setTimeout(refresh, 250);
+    const cancelRefresh = scheduleScrollRefresh(250);
 
     return () => {
-      window.removeEventListener("load", refresh);
-      window.clearTimeout(t1);
+      cancelRefresh();
       ctx.revert();
     };
   }, [reducedMotion, study.slug]);
 
   return (
     <div ref={rootRef} className="min-h-screen bg-black">
-      <Navbar />
-
-      <header
+      <PageHeroHeader
         ref={headerRef}
-        className="relative z-0 flex min-h-[70svh] w-full max-w-[100%] flex-col overflow-x-clip overflow-y-hidden bg-black md:min-h-[85vh] md:will-change-transform"
-        style={{ transformOrigin: "center center" }}
-      >
-        <PageHeaderBackdrop />
-
-        <div className="relative z-10 flex flex-1 flex-col pointer-events-none [&_a]:pointer-events-auto [&_button]:pointer-events-auto">
-          <section className="relative flex flex-col px-4 pb-8 pt-32 sm:pb-12 sm:pt-36 md:flex-1 md:px-8 md:pb-20 md:pt-44 lg:px-12 lg:pt-48">
-            <div className="relative mx-auto flex w-full max-w-7xl flex-col justify-start md:flex-1 md:justify-center">
-              <div className="relative max-w-4xl lg:max-w-5xl">
-                <div
-                  className="pointer-events-none absolute -inset-x-4 -inset-y-6 z-0 sm:-inset-x-8 sm:-inset-y-10 md:-inset-x-12 md:-inset-y-14"
-                  style={{
-                    background:
-                      "radial-gradient(ellipse 70% 65% at 30% 40%, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.4) 45%, transparent 75%)",
-                  }}
-                  aria-hidden
-                />
-
-                <div className="relative z-[1] text-left">
-                  <Link
-                    href="/work"
-                    className="mb-6 inline-flex items-center gap-2 text-sm text-white/50 transition-colors hover:text-white"
-                  >
-                    <span aria-hidden>←</span> Back to Use Cases
-                  </Link>
-
-                  <p className="mb-5 flex items-center justify-start gap-2 text-sm font-semibold uppercase tracking-[0.14em] text-[#ff5f28] sm:mb-4 sm:tracking-[0.18em] md:mb-6 md:text-sm">
-                    <span aria-hidden>✦</span>
-                    Case Study · {study.industry}
-                  </p>
-
-                  <div className="mb-6 inline-flex items-center rounded-xl border border-white/15 bg-white/5 px-4 py-3 backdrop-blur-sm">
-                    <Image
-                      src={study.logo}
-                      alt={study.logoAlt}
-                      width={320}
-                      height={96}
-                      className={
-                        study.logoClassName
-                          ? `${study.logoClassName}${
-                              study.logoInvert === false ? "" : " brightness-0 invert"
-                            }`
-                          : `h-8 w-auto max-w-[10rem] object-contain md:h-10${
-                              study.logoInvert === false ? "" : " brightness-0 invert"
-                            }`
-                      }
-                    />
-                  </div>
-
-                  <h1 className="text-[2.75rem] font-light leading-[1.08] tracking-tight text-white sm:text-5xl sm:leading-[1.04] md:text-6xl lg:text-7xl xl:text-[4.75rem] xl:leading-[1.02]">
-                    {titleBefore}
-                    <span className="text-gradient-future">{study.accent}</span>
-                    {titleAfter}
-                  </h1>
-
-                  <p className="mt-6 max-w-[36rem] text-2xl font-light leading-snug text-white md:mt-8 md:text-3xl lg:text-4xl">
-                    {study.headline}
-                  </p>
-
-                  <p className="mt-5 max-w-[34rem] text-[0.875rem] leading-relaxed text-white/55 sm:text-sm md:text-[0.95rem]">
-                    {study.summary}
-                  </p>
-
-                  <div className="mt-9 flex w-full flex-col gap-3 sm:mt-10 sm:w-auto sm:flex-row sm:gap-4 md:mt-12">
-                    <Button
-                      href="/contact"
-                      variant="primary"
-                      className="w-full justify-center px-4 py-2.5 text-sm sm:w-auto sm:px-[1.85rem] sm:py-[0.95rem] sm:text-base md:text-lg"
-                    >
-                      Book a Call
-                    </Button>
-                    <Button
-                      href="https://www.theecho.global/"
-                      variant="secondary"
-                      className="w-full justify-center px-4 py-2.5 text-sm sm:w-auto sm:px-[1.85rem] sm:py-[0.95rem] sm:text-base md:text-lg"
-                    >
-                      Explore Echo
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-      </header>
+        eyebrow={`Case Study · ${study.industry}`}
+        beforeTitle={
+          <Link
+            href="/work"
+            className="mb-6 inline-flex items-center gap-2 text-sm text-white/50 transition-colors hover:text-white"
+          >
+            <span aria-hidden>←</span> Back to Use Cases
+          </Link>
+        }
+        afterEyebrow={
+          <div className="mb-6 inline-flex items-center rounded-xl border border-white/15 bg-white/5 px-4 py-3 backdrop-blur-sm">
+            <Image
+              src={study.logo}
+              alt={study.logoAlt}
+              width={320}
+              height={96}
+              className={
+                study.logoClassName
+                  ? `${study.logoClassName}${
+                      study.logoInvert === false ? "" : " brightness-0 invert"
+                    }`
+                  : `h-8 w-auto max-w-[10rem] object-contain md:h-10${
+                      study.logoInvert === false ? "" : " brightness-0 invert"
+                    }`
+              }
+            />
+          </div>
+        }
+        title={
+          <>
+            {titleBefore}
+            <span className="text-gradient-future">{study.accent}</span>
+            {titleAfter}
+          </>
+        }
+        titleClassName="text-[2.75rem] font-light leading-[1.08] tracking-tight text-white sm:text-5xl sm:leading-[1.04] md:text-6xl lg:text-7xl xl:text-[4.75rem] xl:leading-[1.02]"
+        afterDescription={
+          <p className="mt-6 max-w-[36rem] text-2xl font-light leading-snug text-white md:mt-8 md:text-3xl lg:text-4xl">
+            {study.headline}
+          </p>
+        }
+        description={study.summary}
+        descriptionClassName="mt-5 max-w-[34rem] text-[0.875rem] leading-relaxed text-white/55 sm:text-sm md:text-[0.95rem]"
+        primaryCta={{ href: "/contact", label: "Book a Call" }}
+        secondaryCta={{
+          href: "https://www.theecho.global/",
+          label: "Explore Echo",
+        }}
+      />
 
       <div ref={detailRef} className="relative z-30 overflow-hidden bg-black">
         <section className="relative mx-auto w-full max-w-[90rem] px-5 py-20 md:px-8 md:py-28 lg:px-12 lg:py-32">
@@ -666,8 +609,6 @@ export default function WorkDetailClient({ study }: { study: WorkCase }) {
           </div>
         </section>
       </div>
-
-      <NewsletterCover />
     </div>
   );
 }

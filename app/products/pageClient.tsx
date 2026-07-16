@@ -1,15 +1,18 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import NewsletterCover from "../components/NewsletterCover";
-import ProductsHeader from "../components/ProductsHeader";
-import { setupCover } from "../lib/motion";
+import { EchoLogo, EchoPlatformImage } from "../components/EchoProductVisual";
+import {
+  scheduleScrollRefresh,
+  setupCover,
+  setupReveal,
+} from "../lib/motion";
+import { useReducedMotion } from "../lib/useReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -74,23 +77,15 @@ const modules = [
   },
 ];
 
-function useReducedMotion() {
-  return useMemo(() => {
-    if (typeof window === "undefined") return true;
-    return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-  }, []);
-}
-
 export default function ProductsPageClient() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLElement>(null);
   const overviewRef = useRef<HTMLDivElement>(null);
   const modulesRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const root = rootRef.current;
-    const header = headerRef.current;
+    const header = document.querySelector<HTMLElement>("[data-motion-pin]");
     const overview = overviewRef.current;
     const modulesEl = modulesRef.current;
     if (!root || !header || !overview || !modulesEl) return;
@@ -104,48 +99,29 @@ export default function ProductsPageClient() {
         invalidateOnRefresh: true,
       });
 
-      const groups = gsap.utils.toArray<HTMLElement>("[data-reveal]");
-      groups.forEach((group) => {
-        const items = group.querySelectorAll<HTMLElement>("[data-reveal-item]");
-        const isCardStagger = group.hasAttribute("data-stagger-cards");
-
-        gsap.set(items, {
-          opacity: 0,
-          y: isCardStagger ? 40 : 20,
-        });
-
-        ScrollTrigger.create({
-          trigger: group,
-          start: "top 80%",
-          once: true,
-          onEnter: () => {
-            gsap.to(items, {
-              opacity: 1,
-              y: 0,
-              duration: 0.8,
-              ease: "power3.out",
-              stagger: isCardStagger ? 0.06 : 0.08,
-            });
-          },
-        });
+      setupReveal({
+        scope: root,
+        start: "top 80%",
+        y: 20,
+        cardY: 40,
+        duration: 0.8,
+        cardDuration: 0.8,
+        stagger: 0.08,
+        cardStagger: 0.06,
+        ease: "power3.out",
       });
     }, root);
 
-    const refresh = () => ScrollTrigger.refresh();
-    window.addEventListener("load", refresh);
-    const t1 = window.setTimeout(refresh, 300);
+    const cancelRefresh = scheduleScrollRefresh(300);
 
     return () => {
-      window.removeEventListener("load", refresh);
-      window.clearTimeout(t1);
+      cancelRefresh();
       ctx.revert();
     };
   }, [reducedMotion]);
 
   return (
-    <div ref={rootRef} className="min-h-screen bg-black">
-      <ProductsHeader ref={headerRef} />
-
+    <div ref={rootRef}>
       {/* Black overview */}
       <div ref={overviewRef} className="relative z-20 bg-black">
         <section className="relative mx-auto w-full max-w-[90rem] px-5 py-20 pb-28 md:px-8 md:py-28 md:pb-36 lg:px-12 lg:py-32 lg:pb-40">
@@ -187,14 +163,7 @@ export default function ProductsPageClient() {
                   <span aria-hidden>✦</span>
                   Product
                 </p>
-                <Image
-                  src="/The_Echo_Logo_v2 (2).webp"
-                  alt="ECHO, powered by unicorn"
-                  width={720}
-                  height={200}
-                  sizes="(max-width: 768px) 80vw, 420px"
-                  className="h-28 w-auto object-contain object-left md:h-36 lg:h-44"
-                />
+                <EchoLogo className="h-28 w-auto object-contain object-left md:h-36 lg:h-44" />
                 <h3 className="mt-8 text-4xl font-light leading-[1.08] tracking-tight text-white md:mt-10 md:text-5xl lg:text-6xl xl:text-[3.75rem] xl:leading-[1.06]">
                   AI conversations. Stronger loyalty.{" "}
                   <span className="text-[#ff5f28]">Real impact.</span>
@@ -230,13 +199,9 @@ export default function ProductsPageClient() {
             </div>
 
             <div data-reveal-item className="relative scale-105 lg:scale-110 lg:translate-x-2">
-              <Image
-                src="/image_1.webp"
+              <EchoPlatformImage
                 alt="ECHO platform preview"
-                width={1600}
-                height={1200}
                 className="h-auto w-full min-h-[300px] object-contain md:min-h-[440px] lg:min-h-[540px]"
-                sizes="(max-width: 1024px) 100vw, 55vw"
                 priority
               />
             </div>
@@ -393,8 +358,6 @@ export default function ProductsPageClient() {
 
         </section>
       </div>
-
-      <NewsletterCover />
     </div>
   );
 }

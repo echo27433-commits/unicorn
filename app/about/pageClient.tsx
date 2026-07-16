@@ -1,13 +1,18 @@
 "use client";
 
 import Link from "next/link";
-import { useLayoutEffect, useMemo, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import AboutHeader from "../components/AboutHeader";
-import NewsletterCover from "../components/NewsletterCover";
+import {
+  scheduleScrollRefresh,
+  setupCover,
+  setupCoverSheet,
+  setupReveal,
+} from "../lib/motion";
+import { useReducedMotion } from "../lib/useReducedMotion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -106,78 +111,8 @@ const faqs = [
   },
 ];
 
-function useReducedMotion() {
-  return useMemo(() => {
-    if (typeof window === "undefined") return true;
-    return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-  }, []);
-}
-
-function setupCover(
-  pinned: HTMLElement,
-  cover: HTMLElement,
-  pinnedInner?: HTMLElement | null
-) {
-  const scrubTarget = pinnedInner ?? pinned;
-  const mobile = window.matchMedia("(max-width: 767px)").matches;
-
-  ScrollTrigger.create({
-    trigger: pinned,
-    start: "top top",
-    endTrigger: cover,
-    end: "top top",
-    pin: true,
-    pinSpacing: false,
-    anticipatePin: mobile ? 0 : 1,
-    fastScrollEnd: true,
-  });
-
-  // Skip scale on mobile, scaled full-bleed layers leave black side gaps
-  // (especially noticeable when the nav menu opens).
-  if (!mobile) {
-    gsap.fromTo(
-      scrubTarget,
-      { scale: 1, ...(pinnedInner ? {} : { opacity: 1 }) },
-      {
-        scale: 0.96,
-        ...(pinnedInner ? {} : { opacity: 0.55 }),
-        ease: "none",
-        force3D: true,
-        scrollTrigger: {
-          trigger: cover,
-          start: "top bottom",
-          end: "top top",
-          scrub: 0.5,
-          fastScrollEnd: true,
-        },
-      }
-    );
-
-    gsap.fromTo(
-      cover,
-      {
-        borderRadius: "28px 28px 0px 0px",
-        boxShadow: "0 -8px 24px rgba(0,0,0,0)",
-      },
-      {
-        borderRadius: "0px 0px 0px 0px",
-        boxShadow: "0 -20px 48px rgba(0,0,0,0.35)",
-        ease: "none",
-        scrollTrigger: {
-          trigger: cover,
-          start: "top bottom",
-          end: "top top",
-          scrub: 0.5,
-          fastScrollEnd: true,
-        },
-      }
-    );
-  }
-}
-
 export default function AboutPageClient() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLElement>(null);
   const missionRef = useRef<HTMLDivElement>(null);
   const missionInnerRef = useRef<HTMLDivElement>(null);
   const whyRef = useRef<HTMLDivElement>(null);
@@ -187,7 +122,7 @@ export default function AboutPageClient() {
 
   useLayoutEffect(() => {
     const root = rootRef.current;
-    const header = headerRef.current;
+    const header = document.querySelector<HTMLElement>("[data-motion-pin]");
     const mission = missionRef.current;
     const missionInner = missionInnerRef.current;
     const why = whyRef.current;
@@ -199,59 +134,9 @@ export default function AboutPageClient() {
     const ctx = gsap.context(() => {
       setupCover(header, mission);
       setupCover(mission, why, missionInner);
+      setupCoverSheet(how);
 
-      gsap.fromTo(
-        how,
-        {
-          borderRadius: "28px 28px 0px 0px",
-          boxShadow: "0 -8px 24px rgba(0,0,0,0)",
-        },
-        {
-          borderRadius: "0px 0px 0px 0px",
-          boxShadow: "0 -20px 48px rgba(0,0,0,0.35)",
-          ease: "none",
-          scrollTrigger: {
-            trigger: how,
-            start: "top bottom",
-            end: "top top",
-            scrub: 0.5,
-            fastScrollEnd: true,
-          },
-        }
-      );
-
-      /* Section reveals (transform + opacity only) */
-      const groups = gsap.utils.toArray<HTMLElement>("[data-reveal]");
-
-      groups.forEach((group) => {
-        const items = group.querySelectorAll<HTMLElement>("[data-reveal-item]");
-        if (!items.length) return;
-
-        const isCardStagger = group.hasAttribute("data-stagger-cards");
-
-        gsap.set(items, {
-          opacity: 0,
-          y: isCardStagger ? 32 : 16,
-          force3D: true,
-        });
-
-        ScrollTrigger.create({
-          trigger: group,
-          start: "top 85%",
-          once: true,
-          fastScrollEnd: true,
-          onEnter: () => {
-            gsap.to(items, {
-              opacity: 1,
-              y: 0,
-              duration: isCardStagger ? 0.55 : 0.6,
-              ease: "power2.out",
-              stagger: isCardStagger ? 0.1 : 0.06,
-              overwrite: "auto",
-            });
-          },
-        });
-      });
+      setupReveal({ scope: root });
 
       /* Why Unicorn timeline */
       const timelineTrack = root.querySelector<HTMLElement>(
@@ -398,21 +283,16 @@ export default function AboutPageClient() {
       }
     }, root);
 
-    const refresh = () => ScrollTrigger.refresh();
-    window.addEventListener("load", refresh);
-    const t1 = window.setTimeout(refresh, 200);
+    const cancelRefresh = scheduleScrollRefresh(200);
 
     return () => {
-      window.removeEventListener("load", refresh);
-      window.clearTimeout(t1);
+      cancelRefresh();
       ctx.revert();
     };
   }, [reducedMotion]);
 
   return (
-    <div ref={rootRef} className="min-h-screen overflow-x-clip bg-black">
-      <AboutHeader ref={headerRef} />
-
+    <div ref={rootRef}>
       {/* White Mission / Vision */}
       <div
         ref={missionRef}
@@ -837,7 +717,6 @@ export default function AboutPageClient() {
           </div>
         </section>
       </div>
-      <NewsletterCover />
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import ContactHeader from "../components/ContactHeader";
+import DeferredNewsletterCover from "../components/DeferredNewsletterCover";
 import ContactPageClient from "./pageClient";
 
 export const metadata = {
@@ -7,5 +9,11 @@ export const metadata = {
 };
 
 export default function ContactPage() {
-  return <ContactPageClient />;
+  return (
+    <div className="min-h-screen bg-black">
+      <ContactHeader />
+      <ContactPageClient />
+      <DeferredNewsletterCover />
+    </div>
+  );
 }
