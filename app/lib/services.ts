@@ -40,11 +40,11 @@ export const services: Service[] = [
     title: "AI Vision",
     accent: "Vision",
     description:
-      "See what matters in real time — shelf intelligence, shopper analytics, and operational visibility powered by visual AI.",
+      "See what matters in real time, shelf intelligence, shopper analytics, and operational visibility powered by visual AI.",
     overview:
-      "We design and deploy AI vision systems that turn cameras into operational intelligence — detecting product gaps, measuring shopper behavior, and surfacing exceptions before they cost revenue.",
+      "We design and deploy AI vision systems that turn cameras into operational intelligence, detecting product gaps, measuring shopper behavior, and surfacing exceptions before they cost revenue.",
     detail:
-      "Our vision stack is built for noisy real-world environments: variable lighting, partial occlusions, and multi-camera retail floors. Models are trained on your assortment and layout, then deployed with monitoring so accuracy stays production-grade as products and planograms change.",
+      "Our vision stack is built for noisy real world environments: variable lighting, partial occlusions, and multi camera retail floors. Models are trained on your assortment and layout, then deployed with monitoring so accuracy stays production grade as products and planograms change.",
     stat: "01",
     statLabel: "/capability",
     image: imgs[0],
@@ -64,10 +64,10 @@ export const services: Service[] = [
       "API hooks into POS and inventory",
     ],
     outcomes: [
-      "Real-time shelf and inventory visibility",
+      "Real time shelf and inventory visibility",
       "Shopper journey and dwell analytics",
-      "Lower out-of-stock and shrink impact",
-      "Faster store-level exception handling",
+      "Lower out of stock and shrink impact",
+      "Faster store level exception handling",
     ],
     deliverables: [
       "Vision model training & deployment",
@@ -80,7 +80,7 @@ export const services: Service[] = [
       {
         title: "Shelf intelligence",
         detail:
-          "Detect voids, facings, and incorrect placement so replenishment happens before shoppers leave empty-handed.",
+          "Detect voids, facings, and incorrect placement so replenishment happens before shoppers leave empty handed.",
       },
       {
         title: "Shopper analytics",
@@ -105,11 +105,11 @@ export const services: Service[] = [
       },
       {
         q: "How is privacy handled?",
-        a: "We design for policy compliance — anonymization, retention limits, and role-based access to visual evidence.",
+        a: "We design for policy compliance, anonymization, retention limits, and role based access to visual evidence.",
       },
       {
         q: "How long to first value?",
-        a: "A focused pilot can surface shelf and traffic signals in weeks; multi-site rollout follows after accuracy thresholds are met.",
+        a: "A focused pilot can surface shelf and traffic signals in weeks; multi site rollout follows after accuracy thresholds are met.",
       },
     ],
   },
@@ -121,9 +121,9 @@ export const services: Service[] = [
     description:
       "Turn raw signals into clear decisions with models that surface patterns, anomalies, and opportunities leadership can act on.",
     overview:
-      "From fragmented data sources to executive-ready insight — we build analytics layers that explain what happened, why it happened, and what to do next.",
+      "From fragmented data sources to executive ready insight, we build analytics layers that explain what happened, why it happened, and what to do next.",
     detail:
-      "We connect transactional, digital, and operational data into models that highlight drivers, not just dashboards. Insights are packaged for the forums where decisions happen — weekly reviews, alerts, and product workflows — so analytics become habitual, not optional.",
+      "We connect transactional, digital, and operational data into models that highlight drivers, not just dashboards. Insights are packaged for the forums where decisions happen, weekly reviews, alerts, and product workflows, so analytics become habitual, not optional.",
     stat: "02",
     statLabel: "/capability",
     image: imgs[1],
@@ -131,11 +131,11 @@ export const services: Service[] = [
     industries: ["Retail", "Consumer brands", "Hospitality", "Telco"],
     whoFor: [
       "Leadership teams drowning in reports",
-      "Data squads needing decision-grade models",
+      "Data squads needing decision grade models",
       "Operators who need anomaly alerts that matter",
     ],
     capabilities: [
-      "Cross-source metric unification",
+      "Cross source metric unification",
       "Driver and contribution analysis",
       "Anomaly & outlier detection",
       "Cohort and funnel modeling",
@@ -165,7 +165,7 @@ export const services: Service[] = [
         detail: "Flag unusual sales, traffic, or conversion patterns with context for ops to act same day.",
       },
       {
-        title: "Campaign post-mortems",
+        title: "Campaign post mortems",
         detail: "Attribute lift and diagnose underperformance across creative, audience, and offer.",
       },
     ],
@@ -181,7 +181,7 @@ export const services: Service[] = [
       },
       {
         q: "Will this replace our BI tool?",
-        a: "No — we often sit on top of existing BI, adding explanatory models and decision workflows.",
+        a: "No, we often sit on top of existing BI, adding explanatory models and decision workflows.",
       },
     ],
   },
@@ -191,16 +191,16 @@ export const services: Service[] = [
     title: "Predictive Insights",
     accent: "Insights",
     description:
-      "Anticipate demand, churn, and performance before they happen — so teams plan with confidence, not hindsight.",
+      "Anticipate demand, churn, and performance before they happen, so teams plan with confidence, not hindsight.",
     overview:
-      "Predictive systems that forecast demand, identify at-risk customers, and prioritize interventions with measurable ROI.",
+      "Predictive systems that forecast demand, identify at risk customers, and prioritize interventions with measurable ROI.",
     detail:
-      "Predictions only matter when they change action. We design scores, thresholds, and playbooks so marketing, loyalty, and ops teams know exactly who to contact, what to offer, and when — then close the loop by measuring lift.",
+      "Predictions only matter when they change action. We design scores, thresholds, and playbooks so marketing, loyalty, and ops teams know exactly who to contact, what to offer, and when, then close the loop by measuring lift.",
     stat: "03",
     statLabel: "/capability",
     image: imgs[2],
     gallery: [imgs[0], imgs[5]],
-    industries: ["Retail", "Loyalty-led brands", "E-commerce", "Financial services"],
+    industries: ["Retail", "Loyalty led brands", "Ecommerce", "Financial services"],
     whoFor: [
       "CRM and loyalty teams fighting churn",
       "Merchandisers planning demand",
@@ -209,7 +209,7 @@ export const services: Service[] = [
     capabilities: [
       "Demand & inventory forecasting",
       "Churn and propensity scoring",
-      "Next-best-action recommendations",
+      "Next best action recommendations",
       "Seasonality & promotion models",
       "Score freshness monitoring",
       "CRM / CDP activation",
@@ -218,7 +218,7 @@ export const services: Service[] = [
       "Earlier churn and demand signals",
       "Smarter inventory and campaign timing",
       "Intervention playbooks tied to score",
-      "Measurable lift from model-driven actions",
+      "Measurable lift from model driven actions",
     ],
     deliverables: [
       "Forecasting & propensity models",
@@ -230,7 +230,7 @@ export const services: Service[] = [
     useCases: [
       {
         title: "Churn saves",
-        detail: "Identify at-risk members early and trigger retention journeys with the right incentive.",
+        detail: "Identify at risk members early and trigger retention journeys with the right incentive.",
       },
       {
         title: "Demand planning",
@@ -238,7 +238,7 @@ export const services: Service[] = [
       },
       {
         title: "Offer propensity",
-        detail: "Rank who is most likely to respond so budgets concentrate on high-probability outcomes.",
+        detail: "Rank who is most likely to respond so budgets concentrate on high probability outcomes.",
       },
     ],
     process: [
@@ -249,7 +249,7 @@ export const services: Service[] = [
     faqs: [
       {
         q: "How accurate do models need to be?",
-        a: "We set accuracy thresholds against business ROI — a model that is “good enough” to beat current baselines ships, then improves.",
+        a: "We set accuracy thresholds against business ROI, a model that is “good enough” to beat current baselines ships, then improves.",
       },
       {
         q: "Can this connect to Echo?",
@@ -265,14 +265,14 @@ export const services: Service[] = [
     description:
       "Connect data across systems into a single source of truth that drives strategy, reporting, and measurable outcomes.",
     overview:
-      "We modernize BI foundations — warehouse modeling, semantic layers, and governance — so reporting scales without becoming a bottleneck.",
+      "We modernize BI foundations, warehouse modeling, semantic layers, and governance, so reporting scales without becoming a bottleneck.",
     detail:
-      "Fragmented spreadsheets and conflicting reports slow decisions. We build the warehouse models, semantic metrics, and access patterns that let teams self-serve without breaking trust — with quality monitors that catch issues before leadership does.",
+      "Fragmented spreadsheets and conflicting reports slow decisions. We build the warehouse models, semantic metrics, and access patterns that let teams self serve without breaking trust, with quality monitors that catch issues before leadership does.",
     stat: "04",
     statLabel: "/capability",
     image: imgs[4],
     gallery: [imgs[2], imgs[7]],
-    industries: ["Enterprise retail", "Holding groups", "Multi-brand operators"],
+    industries: ["Enterprise retail", "Holding groups", "Multi brand operators"],
     whoFor: [
       "Teams with conflicting KPI definitions",
       "Leaders scaling reporting across brands",
@@ -282,14 +282,14 @@ export const services: Service[] = [
       "Warehouse / lakehouse modeling",
       "Semantic metric layers",
       "Lineage and documentation",
-      "Access & row-level security",
+      "Access & row level security",
       "Data quality monitors",
-      "Self-serve enablement",
+      "Self serve enablement",
     ],
     outcomes: [
       "Trusted enterprise reporting",
       "Reduced manual reconciliation",
-      "Scalable self-serve analytics",
+      "Scalable self serve analytics",
       "Faster onboarding of new data sources",
     ],
     deliverables: [
@@ -305,7 +305,7 @@ export const services: Service[] = [
         detail: "One definition of sales, margin, and traffic across regions, banners, and channels.",
       },
       {
-        title: "Self-serve for marketers",
+        title: "Self serve for marketers",
         detail: "Governed datasets that let campaign teams explore without waiting on analysts.",
       },
       {
@@ -321,11 +321,11 @@ export const services: Service[] = [
     faqs: [
       {
         q: "Do you migrate legacy warehouses?",
-        a: "Yes — we modernize in place or migrate to lakehouse patterns depending on scale and cost.",
+        a: "Yes, we modernize in place or migrate to lakehouse patterns depending on scale and cost.",
       },
       {
         q: "How long is a typical foundation phase?",
-        a: "Core models and a pilot semantic layer often land in 8–12 weeks; enterprise rollout continues iteratively.",
+        a: "Core models and a pilot semantic layer often land in 8 to 12 weeks; enterprise rollout continues iteratively.",
       },
     ],
   },
@@ -335,18 +335,18 @@ export const services: Service[] = [
     title: "AI Search & Answer Visibility",
     accent: "Visibility",
     description:
-      "Technical foundations, content systems, and answer-engine visibility that compound organic demand over time.",
+      "Technical foundations, content systems, and answer engine visibility that compound organic demand over time.",
     overview:
-      "Search and answer visibility engineered for durable growth — technical health, content systems, and authority that compound instead of chasing short-term rank spikes.",
+      "Search and answer visibility engineered for durable growth, technical health, content systems, and authority that compound instead of chasing short term rank spikes.",
     detail:
-      "We treat visibility as a product system: crawl health, information architecture, content that matches demand, and measurement that ties organic sessions to revenue — not vanity rankings alone.",
+      "We treat visibility as a product system: crawl health, information architecture, content that matches demand, and measurement that ties organic sessions to revenue, not vanity rankings alone.",
     stat: "01",
     statLabel: "/capability",
     image: imgs[5],
     gallery: [imgs[8], imgs[3]],
-    industries: ["Retail", "E-commerce", "Publishing", "Local multi-site"],
+    industries: ["Retail", "Ecommerce", "Publishing", "Local multi site"],
     whoFor: [
-      "Brands over-reliant on paid acquisition",
+      "Brands over reliant on paid acquisition",
       "Content teams without a demand map",
       "Sites with technical SEO debt",
     ],
@@ -354,7 +354,7 @@ export const services: Service[] = [
       "Technical SEO audits & remediation",
       "IA and internal linking systems",
       "Keyword & content architecture",
-      "Schema and on-page systems",
+      "Schema and on page systems",
       "Authority building programs",
       "Organic → revenue reporting",
     ],
@@ -367,7 +367,7 @@ export const services: Service[] = [
     deliverables: [
       "Technical SEO audits & fixes",
       "Keyword & content architecture",
-      "On-page and schema systems",
+      "On page and schema systems",
       "Authority & performance reporting",
       "Editorial playbooks",
     ],
@@ -381,7 +381,7 @@ export const services: Service[] = [
         detail: "Fix crawl, indexation, and Core Web Vitals issues blocking organic growth.",
       },
       {
-        title: "Local / multi-store SEO",
+        title: "Local / multi store SEO",
         detail: "Scale location pages and entity signals without thin duplicate content.",
       },
     ],
@@ -393,11 +393,11 @@ export const services: Service[] = [
     faqs: [
       {
         q: "How soon will we see results?",
-        a: "Technical wins can appear in weeks; content and authority compounds over months. We set stage-gated KPIs.",
+        a: "Technical wins can appear in weeks; content and authority compounds over months. We set stage gated KPIs.",
       },
       {
         q: "Do you write content?",
-        a: "Yes — either directly or with your team using our briefs, voice systems, and AI-assisted workflows.",
+        a: "Yes, either directly or with your team using our briefs, voice systems, and AI assisted workflows.",
       },
     ],
   },
@@ -407,11 +407,11 @@ export const services: Service[] = [
     title: "AI Driven Acquisition",
     accent: "Acquisition",
     description:
-      "Paid and owned acquisition engineered for efficiency — creative tests, bidding systems, and attribution that prove ROI.",
+      "Paid and owned acquisition engineered for efficiency, creative tests, bidding systems, and attribution that prove ROI.",
     overview:
-      "Full-funnel acquisition with creative testing rigor and measurement that leadership trusts — efficiency first, scale second.",
+      "Full funnel acquisition with creative testing rigor and measurement that leadership trusts, efficiency first, scale second.",
     detail:
-      "We rebuild acquisition systems around incrementality and creative learning. Structure, tracking, and tests come before budget scale — so every dollar pushed has a clear hypothesis and a readout leadership can trust.",
+      "We rebuild acquisition systems around incrementality and creative learning. Structure, tracking, and tests come before budget scale, so every dollar pushed has a clear hypothesis and a readout leadership can trust.",
     stat: "02",
     statLabel: "/capability",
     image: imgs[6],
@@ -427,7 +427,7 @@ export const services: Service[] = [
       "Creative testing frameworks",
       "Bidding & budget systems",
       "Landing & offer alignment",
-      "Attribution & MMM-ready tracking",
+      "Attribution & MMM ready tracking",
       "Weekly efficiency reviews",
     ],
     outcomes: [
@@ -454,7 +454,7 @@ export const services: Service[] = [
       },
       {
         title: "Promo event scale",
-        detail: "War-room paid support for major retail moments with live budget and creative pivots.",
+        detail: "War room paid support for major retail moments with live budget and creative pivots.",
       },
     ],
     process: [
@@ -469,7 +469,7 @@ export const services: Service[] = [
       },
       {
         q: "How do you measure success?",
-        a: "Primary KPIs agree with finance — CAC, MER, incremental revenue — not vanity platform metrics alone.",
+        a: "Primary KPIs agree with finance, CAC, MER, incremental revenue, not vanity platform metrics alone.",
       },
     ],
   },
@@ -479,11 +479,11 @@ export const services: Service[] = [
     title: "Conversational Brand Presence",
     accent: "Presence",
     description:
-      "Platform-native narratives and community systems that turn attention into trust, pipeline, and brand equity.",
+      "Platform native narratives and community systems that turn attention into trust, pipeline, and brand equity.",
     overview:
-      "Brand presence is not a posting calendar — we build narratives, formats, and community loops that earn attention and convert it into brand equity and pipeline.",
+      "Brand presence is not a posting calendar, we build narratives, formats, and community loops that earn attention and convert it into brand equity and pipeline.",
     detail:
-      "Each channel gets a role: awareness, community, or conversion. We design pillars, formats, and response systems so presence feels native to the channel — and measurable against brand and commercial goals.",
+      "Each channel gets a role: awareness, community, or conversion. We design pillars, formats, and response systems so presence feels native to the channel, and measurable against brand and commercial goals.",
     stat: "03",
     statLabel: "/capability",
     image: imgs[7],
@@ -491,7 +491,7 @@ export const services: Service[] = [
     industries: ["Consumer brands", "Retail", "Hospitality", "Lifestyle"],
     whoFor: [
       "Brands posting without a narrative system",
-      "Teams needing social-to-pipeline clarity",
+      "Teams needing social to pipeline clarity",
       "Community managers scaling engagement",
     ],
     capabilities: [
@@ -517,7 +517,7 @@ export const services: Service[] = [
     ],
     useCases: [
       {
-        title: "Always-on brand system",
+        title: "Always on brand system",
         detail: "Pillars and formats that keep feeds distinctive without burnout.",
       },
       {
@@ -525,7 +525,7 @@ export const services: Service[] = [
         detail: "Narrative arcs and assets that carry a product or campaign across platforms.",
       },
       {
-        title: "Community-to-CRM",
+        title: "Community to CRM",
         detail: "Routes attention into loyalty, Echo, or owned channels with clear CTAs.",
       },
     ],
@@ -537,11 +537,11 @@ export const services: Service[] = [
     faqs: [
       {
         q: "Do you manage daily posting?",
-        a: "We can operate or enable — strategy and systems first, then managed execution if you want it.",
+        a: "We can operate or enable, strategy and systems first, then managed execution if you want it.",
       },
       {
         q: "Which platforms?",
-        a: "We prioritize where your audience already is — typically Instagram, TikTok, LinkedIn, and YouTube Shorts for growth brands.",
+        a: "We prioritize where your audience already is, typically Instagram, TikTok, LinkedIn, and YouTube Shorts for growth brands.",
       },
     ],
   },
@@ -551,9 +551,9 @@ export const services: Service[] = [
     title: "Generative Content Systems",
     accent: "Systems",
     description:
-      "Human-led, AI-accelerated content engines that scale quality output without losing brand voice.",
+      "Human led, AI accelerated content engines that scale quality output without losing brand voice.",
     overview:
-      "We combine editorial judgment with generative acceleration — producing on-brand content systems that ship more without sounding generic.",
+      "We combine editorial judgment with generative acceleration, producing on brand content systems that ship more without sounding generic.",
     detail:
       "Speed without standards creates brand risk. We codify voice, claims, and QA into systems so generative tools accelerate draft and variant work while humans own judgment, taste, and final approval.",
     stat: "04",
@@ -590,20 +590,20 @@ export const services: Service[] = [
     useCases: [
       {
         title: "Campaign variant engines",
-        detail: "Generate on-brand ad and landing variants for testing without rewriting from scratch.",
+        detail: "Generate on brand ad and landing variants for testing without rewriting from scratch.",
       },
       {
         title: "SEO content systems",
-        detail: "Brief-to-publish pipelines that keep articles structured, accurate, and brand-safe.",
+        detail: "Brief to publish pipelines that keep articles structured, accurate, and brand safe.",
       },
       {
         title: "Internal enablement",
-        detail: "Train teams to use AI tools inside your voice system — not as a free-for-all.",
+        detail: "Train teams to use AI tools inside your voice system, not as a free for all.",
       },
     ],
     process: [
       { step: "01", title: "Codify", detail: "Capture voice, claims, and approval rules in reusable systems." },
-      { step: "02", title: "Accelerate", detail: "Deploy AI-assisted production with human editorial control." },
+      { step: "02", title: "Accelerate", detail: "Deploy AI assisted production with human editorial control." },
       { step: "03", title: "Improve", detail: "Measure quality and performance, then tune the engine." },
     ],
     faqs: [
@@ -613,7 +613,7 @@ export const services: Service[] = [
       },
       {
         q: "What tools do you use?",
-        a: "We meet you in your stack and add prompt libraries, review gates, and measurement — tool-agnostic by design.",
+        a: "We meet you in your stack and add prompt libraries, review gates, and measurement, tool agnostic by design.",
       },
     ],
   },
@@ -623,16 +623,16 @@ export const services: Service[] = [
     title: "Predictive Conversion Intelligence",
     accent: "Intelligence",
     description:
-      "Test, learn, and lift — UX, messaging, and funnel experiments that turn more visitors into customers.",
+      "Test, learn, and lift, UX, messaging, and funnel experiments that turn more visitors into customers.",
     overview:
-      "Experimentation programs that raise conversion with disciplined testing — hypothesis, design, measure, and ship what wins.",
+      "Experimentation programs that raise conversion with disciplined testing, hypothesis, design, measure, and ship what wins.",
     detail:
       "We diagnose friction with analytics and qualitative evidence, then run a prioritized test roadmap. Winners ship; losers teach. Over time you get a living playbook of what converts for your brand.",
     stat: "05",
     statLabel: "/capability",
     image: imgs[9],
     gallery: [imgs[6], imgs[2]],
-    industries: ["E-commerce", "Lead gen", "Loyalty sign-up", "App onboarding"],
+    industries: ["Ecommerce", "Lead gen", "Loyalty sign up", "App onboarding"],
     whoFor: [
       "Teams with traffic but soft conversion",
       "Marketing orgs without a test culture",
@@ -662,14 +662,14 @@ export const services: Service[] = [
     useCases: [
       {
         title: "Checkout lift",
-        detail: "Reduce drop-off with focused experiments on trust, form friction, and payment UX.",
+        detail: "Reduce drop off with focused experiments on trust, form friction, and payment UX.",
       },
       {
         title: "Landing page systems",
         detail: "Match message to intent and test hero, proof, and CTA patterns.",
       },
       {
-        title: "Sign-up / loyalty funnels",
+        title: "Sign up / loyalty funnels",
         detail: "Optimize membership and app enroll flows for completion and activation.",
       },
     ],
@@ -681,11 +681,11 @@ export const services: Service[] = [
     faqs: [
       {
         q: "How much traffic do we need?",
-        a: "Enough to reach significance in a reasonable window. Low-traffic sites use qualitative + sequential testing approaches.",
+        a: "Enough to reach significance in a reasonable window. Low traffic sites use qualitative + sequential testing approaches.",
       },
       {
         q: "Do you implement winners?",
-        a: "Yes — we partner with your eng or ship via your CMS / experiment tool so lift doesn’t stay in a deck.",
+        a: "Yes, we partner with your eng or ship via your CMS / experiment tool so lift doesn’t stay in a deck.",
       },
     ],
   },

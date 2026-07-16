@@ -58,7 +58,7 @@ export default function Newsletter() {
             </h2>
 
             <p className="mt-6 max-w-2xl text-sm leading-relaxed text-black/55 md:mt-8 md:text-lg">
-              Get product updates, case studies, and digital growth ideas — no
+              Get product updates, case studies, and digital growth ideas. No
               noise, just signal.
             </p>
 

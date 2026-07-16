@@ -202,7 +202,7 @@ export default function ContactPageClient() {
                   data-reveal-item
                   className="mt-6 max-w-md text-sm leading-relaxed text-black/55 md:text-base"
                 >
-                  Reach out with your project goals or questions — our team across
+                  Reach out with your project goals or questions. Our team across
                   the UAE, Saudi Arabia, Bahrain, Qatar, and India will get back
                   to you with clear next steps.
                 </p>
@@ -283,7 +283,7 @@ export default function ContactPageClient() {
                 {submitted ? (
                   <div className="mt-10 rounded-2xl border border-[#ff5f28]/30 bg-[#ff5f28]/10 px-6 py-8 text-center">
                     <p className="text-lg font-medium text-black">
-                      Thanks — we&apos;ve received your message.
+                      Thanks. We&apos;ve received your message.
                     </p>
                     <p className="mt-2 text-sm text-black/55">
                       Our team will reply at the earliest opportunity.
@@ -400,7 +400,7 @@ export default function ContactPageClient() {
                     data-reveal-item
                     className="mt-5 max-w-lg text-sm leading-relaxed text-black/55 md:text-base"
                   >
-                    Headquartered in Business Bay, Dubai — with teams across
+                    Headquartered in Business Bay, Dubai, with teams across
                     the USA and India. Click a location or pin to explore.
                   </p>
                 </div>

@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: PageProps) {
 
   return {
     title: `${study.name} · Work · unicorn`,
-    description: `${study.headline} — ${study.summary}`,
+    description: `${study.headline}, ${study.summary}`,
   };
 }
 

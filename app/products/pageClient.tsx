@@ -164,8 +164,8 @@ export default function ProductsPageClient() {
               className="max-w-lg text-base leading-relaxed text-white/55 md:text-right md:text-lg lg:text-xl"
             >
               Enable organizations to create seamless customer journeys through
-              automation, personalization, and real-time communication — turning
-              every interaction into long-term value.
+              automation, personalization, and real time communication, turning
+              every interaction into lasting value.
             </p>
           </div>
 
@@ -189,7 +189,7 @@ export default function ProductsPageClient() {
                 </p>
                 <Image
                   src="/The_Echo_Logo_v2 (2).webp"
-                  alt="ECHO — powered by unicorn"
+                  alt="ECHO, powered by unicorn"
                   width={720}
                   height={200}
                   sizes="(max-width: 768px) 80vw, 420px"
@@ -200,8 +200,8 @@ export default function ProductsPageClient() {
                   <span className="text-[#ff5f28]">Real impact.</span>
                 </h3>
                 <p className="mt-5 max-w-lg text-base leading-relaxed text-white/55 md:mt-6 md:text-lg lg:text-xl">
-                  Three connected pillars — loyalty, omnichannel messaging, and
-                  agentic AI — in one ecosystem built for enterprise customer
+                  Three connected pillars for loyalty, omnichannel messaging, and
+                  agentic AI in one ecosystem built for enterprise customer
                   engagement.
                 </p>
                 <Link
@@ -314,7 +314,7 @@ export default function ProductsPageClient() {
               data-reveal-item
               className="max-w-lg text-base leading-relaxed text-black/55 md:text-right md:text-lg lg:text-xl"
             >
-              Loyalty, omnichannel messaging, and conversational AI — connected
+              Loyalty, omnichannel messaging, and conversational AI connected
               so every customer interaction compounds.
             </p>
           </div>

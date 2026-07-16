@@ -34,7 +34,7 @@ const reviews = [
   },
   {
     quote:
-      "AI Vision gave us real-time shelf and floor visibility we could act on. Professional, proactive, and built for hypermarket operations at scale.",
+      "AI Vision gave us real time shelf and floor visibility we could act on. Professional, proactive, and built for hypermarket operations at scale.",
     name: "Mark & Save",
     role: "Value Retail · AI Vision",
     logo: "/brands/mark_save_logo_dark.png",

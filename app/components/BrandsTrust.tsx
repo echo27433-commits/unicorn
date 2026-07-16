@@ -114,7 +114,7 @@ export default function BrandsTrust() {
             data-brands-header
             className="mt-6 max-w-xl text-sm leading-relaxed text-white/55 md:mt-7 md:text-base"
           >
-            From energy and retail to mobility and enterprise platforms — we
+            From energy and retail to mobility and enterprise platforms, we
             help organizations design, ship, and scale digital products that
             deliver measurable impact.
           </p>

@@ -15,7 +15,7 @@ const whyUnicorn = [
   {
     title: "Regional Expertise",
     description:
-      "Deep understanding of GCC markets and customer behavior — so solutions fit how people actually buy and engage.",
+      "Deep understanding of GCC markets and customer behavior, so solutions fit how people actually buy and engage.",
     icon: (
       <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} aria-hidden>
         <circle cx="12" cy="12" r="9" />
@@ -36,7 +36,7 @@ const whyUnicorn = [
   {
     title: "AI First",
     description:
-      "Every solution is designed with intelligence, automation, and scalability built in — not bolted on later.",
+      "Every solution is designed with intelligence, automation, and scalability built in, not bolted on later.",
     icon: (
       <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} aria-hidden>
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2M12 19v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M3 12h2M19 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
@@ -47,7 +47,7 @@ const whyUnicorn = [
   {
     title: "Outcome Driven",
     description:
-      "Focused on measurable business results — so leadership sees impact, not technology for its own sake.",
+      "Focused on measurable business results, so leadership sees impact, not technology for its own sake.",
     icon: (
       <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} aria-hidden>
         <path strokeLinecap="round" strokeLinejoin="round" d="M4 19V5M4 19h16M8 16l3.5-5 3 3.5L18 8" />
@@ -69,7 +69,7 @@ const principles = [
   {
     title: "Measure outcomes",
     description:
-      "Instrumentation so leadership sees impact — not just output.",
+      "Instrumentation so leadership sees impact, not just output.",
   },
 ];
 
@@ -77,17 +77,17 @@ const faqs = [
   {
     question: "What services do you offer?",
     answer:
-      "We deliver AI-powered platforms and digital growth solutions — including conversational AI, loyalty systems, computer vision, performance marketing, and enterprise transformation across the GCC and beyond.",
+      "We deliver AI powered platforms and digital growth solutions, including conversational AI, loyalty systems, computer vision, performance marketing, and enterprise transformation across the GCC and beyond.",
   },
   {
     question: "What industries do you specialize in?",
     answer:
-      "We work with ambitious brands across retail, energy, mobility, and enterprise platforms — helping teams design, ship, and scale intelligent products with measurable outcomes.",
+      "We work with ambitious brands across retail, energy, mobility, and enterprise platforms, helping teams design, ship, and scale intelligent products with measurable outcomes.",
   },
   {
     question: "How do you approach AI projects?",
     answer:
-      "We start by aligning stakeholders and success metrics, then ship in clear phases. Every delivery includes instrumentation so leadership can see impact — not just output.",
+      "We start by aligning stakeholders and success metrics, then ship in clear phases. Every delivery includes instrumentation so leadership can see impact, not just output.",
   },
   {
     question: "How are engagements typically structured?",
@@ -102,7 +102,7 @@ const faqs = [
   {
     question: "Is there a minimum engagement period?",
     answer:
-      "It depends on the scope. Some projects are short discovery or pilot sprints; larger transformations run in multi-phase partnerships. We’ll recommend the right fit after an initial conversation.",
+      "It depends on the scope. Some projects are short discovery or pilot sprints; larger transformations run in multi phase partnerships. We’ll recommend the right fit after an initial conversation.",
   },
 ];
 
@@ -132,7 +132,7 @@ function setupCover(
     fastScrollEnd: true,
   });
 
-  // Skip scale on mobile — scaled full-bleed layers leave black side gaps
+  // Skip scale on mobile, scaled full-bleed layers leave black side gaps
   // (especially noticeable when the nav menu opens).
   if (!mobile) {
     gsap.fromTo(
@@ -220,7 +220,7 @@ export default function AboutPageClient() {
         }
       );
 
-      /* —— Section reveals (transform + opacity only) —— */
+      /* Section reveals (transform + opacity only) */
       const groups = gsap.utils.toArray<HTMLElement>("[data-reveal]");
 
       groups.forEach((group) => {
@@ -253,7 +253,7 @@ export default function AboutPageClient() {
         });
       });
 
-      /* —— Why Unicorn timeline —— */
+      /* Why Unicorn timeline */
       const timelineTrack = root.querySelector<HTMLElement>(
         "[data-timeline-track]"
       );
@@ -413,7 +413,7 @@ export default function AboutPageClient() {
     <div ref={rootRef} className="min-h-screen overflow-x-clip bg-black">
       <AboutHeader ref={headerRef} />
 
-      {/* White — Mission / Vision */}
+      {/* White Mission / Vision */}
       <div
         ref={missionRef}
         className="relative z-20 overflow-hidden bg-white"
@@ -435,7 +435,7 @@ export default function AboutPageClient() {
                 data-reveal-item
                 className="max-w-lg text-base leading-relaxed text-black/55 md:text-right md:text-lg lg:text-xl"
               >
-                We combine world-class technology partnerships, AI innovation,
+                We combine world class technology partnerships, AI innovation,
                 and deep regional expertise to deliver measurable business
                 outcomes.
               </p>
@@ -488,7 +488,7 @@ export default function AboutPageClient() {
                   </p>
                   <h3 className="text-3xl font-light leading-[1.1] tracking-tight text-black md:text-4xl lg:text-5xl">
                     Become the leading{" "}
-                    <span className="text-[#ff5f28]">AI-powered</span> growth
+                    <span className="text-[#ff5f28]">AI powered</span> growth
                     partner
                   </h3>
                   <p className="mt-4 max-w-md text-base leading-relaxed text-black/55 md:mt-5 md:text-lg">
@@ -503,7 +503,7 @@ export default function AboutPageClient() {
         </div>
       </div>
 
-      {/* Black — Why Unicorn */}
+      {/* Black Why Unicorn */}
       <div ref={whyRef} className="relative z-30 bg-black">
         <section className="relative mx-auto w-full max-w-[90rem] px-5 py-20 pb-28 md:px-8 md:py-28 md:pb-36 lg:px-12 lg:py-32 lg:pb-40">
             <div
@@ -530,8 +530,8 @@ export default function AboutPageClient() {
                 data-reveal-item
                 className="max-w-lg text-base leading-relaxed text-white/55 md:text-right md:text-lg lg:text-xl"
               >
-                Our approach blends strategic thinking, AI-led execution, and
-                regional insight — so leadership teams can move faster with less
+                Our approach blends strategic thinking, AI led execution, and
+                regional insight, so leadership teams can move faster with less
                 risk.
               </p>
             </div>
@@ -629,7 +629,7 @@ export default function AboutPageClient() {
           </section>
       </div>
 
-      {/* White — How we work */}
+      {/* White How we work */}
       <div ref={howRef} className="relative z-40 overflow-hidden bg-white">
         <section className="relative mx-auto w-full max-w-[90rem] px-5 py-20 md:px-8 md:py-28 lg:px-12 lg:py-32">
           <div

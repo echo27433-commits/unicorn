@@ -45,7 +45,7 @@ const ContactHeader = forwardRef<HTMLElement>(function ContactHeader(_, ref) {
                   </h1>
 
                   <p className="mt-6 max-w-[30.5rem] text-[0.875rem] leading-relaxed text-white/55 sm:mt-5 sm:text-sm md:mt-7 md:text-[0.95rem]">
-                    Tell us about your project, challenge, or ambition — our
+                    Tell us about your project, challenge, or ambition. Our
                     team across the region is ready to help you design, ship,
                     and scale.
                   </p>

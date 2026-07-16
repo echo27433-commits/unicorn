@@ -319,7 +319,7 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
                 >
                   <Image
                     src={src}
-                    alt={`${service.title} — visual ${i + 1}`}
+                    alt={`${service.title} visual ${i + 1}`}
                     fill
                     sizes="(max-width: 640px) 100vw, 50vw"
                     className="object-cover"
@@ -434,7 +434,7 @@ export default function ServiceDetailClient({ service }: { service: Service }) {
                 Ready to apply {service.title}?
               </h3>
               <p className="mt-3 text-base leading-relaxed text-black/55 md:text-lg">
-                Tell us about your environment and goals — we&apos;ll map a practical path from pilot to scale.
+                Tell us about your environment and goals. We&apos;ll map a practical path from pilot to scale.
               </p>
             </div>
             <div data-reveal-item>

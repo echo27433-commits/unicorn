@@ -17,7 +17,7 @@ const caseStudies = [
     title: "Nesto Hypermarkets",
     accent: "Hypermarkets",
     description:
-      "28% increase in repeat shoppers — personalized WhatsApp journeys that turned low engagement into measurable loyalty.",
+      "28% increase in repeat shoppers, personalized WhatsApp journeys that turned low engagement into measurable loyalty.",
     image:
       "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1000&q=75",
     imageAlt: "Modern supermarket aisle with product shelves",
@@ -30,7 +30,7 @@ const caseStudies = [
     title: "Masdar",
     accent: "Masdar",
     description:
-      "45% increase in registrations — live event engagement that replaced fragmented communication with real-time participation.",
+      "45% increase in registrations, live event engagement that replaced fragmented communication with real time participation.",
     image:
       "https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=1000&q=75",
     imageAlt: "Solar panels under a clear sky",
@@ -43,7 +43,7 @@ const caseStudies = [
     title: "Mark and Save",
     accent: "Save",
     description:
-      "AI Vision for shelf intelligence, shopper analytics, and store operations — turning cameras into real-time retail visibility.",
+      "AI Vision for shelf intelligence, shopper analytics, and store operations, turning cameras into real time retail visibility.",
     image:
       "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1000&q=75",
     imageAlt: "Hypermarket aisle with product shelves monitored for stock visibility",

@@ -123,7 +123,7 @@ export default function Footer() {
             Intelligence that compounds
           </p>
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/55 md:text-xs">
-            AI-native from day one
+            AI native from day one
           </p>
         </div>
       </div>

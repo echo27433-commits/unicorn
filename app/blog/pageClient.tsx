@@ -15,10 +15,10 @@ gsap.registerPlugin(ScrollTrigger);
 const posts = [
   {
     slug: "future-of-ai-powered-customer-loyalty-gcc",
-    title: "The Future of AI-Powered Customer Loyalty in the GCC",
+    title: "The Future of AI Powered Customer Loyalty in the GCC",
     category: "Loyalty",
     excerpt:
-      "How regional brands can turn loyalty from points programs into intelligent, outcome-driven engagement systems.",
+      "How regional brands can turn loyalty from points programs into intelligent, outcome driven engagement systems.",
     readTime: "6 min",
     image:
       "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=1200&q=80",
@@ -28,7 +28,7 @@ const posts = [
     title: "Why Enterprise Loyalty Programs Fail",
     category: "Loyalty",
     excerpt:
-      "The structural reasons large loyalty initiatives stall — and what AI-native platforms change about the playbook.",
+      "The structural reasons large loyalty initiatives stall, and what AI native platforms change about the playbook.",
     readTime: "5 min",
     image:
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
@@ -48,7 +48,7 @@ const posts = [
     title: "Computer Vision Use Cases for Retail",
     category: "Computer Vision",
     excerpt:
-      "Shelf intelligence, shopper analytics, and operational visibility — practical CV deployments that move the needle.",
+      "Shelf intelligence, shopper analytics, and operational visibility, practical CV deployments that move the needle.",
     readTime: "6 min",
     image:
       "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=1200&q=80",
@@ -58,7 +58,7 @@ const posts = [
     title: "The GCC Digital Transformation Opportunity",
     category: "Transformation",
     excerpt:
-      "Why the region is uniquely positioned for AI-led growth — and how enterprises can capture it with clarity.",
+      "Why the region is uniquely positioned for AI led growth, and how enterprises can capture it with clarity.",
     readTime: "8 min",
     image:
       "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
@@ -78,14 +78,14 @@ const posts = [
     title: "Building Omnichannel Customer Experiences",
     category: "Experience",
     excerpt:
-      "Unifying journeys across channels so every touchpoint feels connected, intelligent, and brand-consistent.",
+      "Unifying journeys across channels so every touchpoint feels connected, intelligent, and brand consistent.",
     readTime: "6 min",
     image:
       "https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=1200&q=80",
   },
   {
     slug: "ai-powered-marketing-beyond-personalization",
-    title: "AI-Powered Marketing: Beyond Personalization",
+    title: "AI Powered Marketing: Beyond Personalization",
     category: "Marketing",
     excerpt:
       "Moving from segmented campaigns to systems that continuously learn, optimize, and compound performance.",
@@ -240,7 +240,7 @@ export default function BlogPageClient() {
                 className="mt-5 max-w-xl text-sm leading-relaxed text-white/55 md:text-base"
               >
                 Thought leadership on loyalty, conversational AI, computer
-                vision, and digital transformation — built for enterprise
+                vision, and digital transformation, built for enterprise
                 leaders across the GCC.
               </p>
             </div>

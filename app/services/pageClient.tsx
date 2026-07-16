@@ -105,7 +105,7 @@ export default function ServicesPageClient() {
               data-reveal-item
               className="max-w-lg text-base leading-relaxed text-black/55 md:text-right md:text-lg lg:text-xl"
             >
-              End-to-end capabilities that turn data into decisions and digital
+              End to end capabilities that turn data into decisions and digital
               presence into measurable growth.
             </p>
           </div>

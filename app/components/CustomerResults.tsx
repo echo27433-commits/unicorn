@@ -217,7 +217,7 @@ export default function CustomerResults() {
           </h2>
           <p className="max-w-lg text-base leading-relaxed text-black/55 md:text-right md:text-lg lg:text-xl">
             We build intelligent platforms that help brands converse, convert,
-            and grow — from AI assistants to enterprise engagement systems.
+            and grow, from AI assistants to enterprise engagement systems.
           </p>
         </div>
 
@@ -239,7 +239,7 @@ export default function CustomerResults() {
             <div className="relative z-[1]">
               <Image
                 src="/The_Echo_Logo_v2 (2).webp"
-                alt="ECHO — powered by unicorn"
+                alt="ECHO powered by unicorn"
                 width={640}
                 height={180}
                 sizes="(max-width: 768px) 70vw, 320px"
@@ -254,8 +254,8 @@ export default function CustomerResults() {
               </h3>
 
               <p className="mt-7 max-w-[30.5rem] text-base leading-relaxed text-black/55 md:mt-8 md:text-lg">
-                Echo is our AI-powered platform for enterprise conversations,
-                loyalty, and growth — helping teams automate engagement and
+                Echo is our AI powered platform for enterprise conversations,
+                loyalty, and growth, helping teams automate engagement and
                 deliver measurable outcomes at scale.
               </p>
             </div>
@@ -324,7 +324,7 @@ export default function CustomerResults() {
               Our <span className="text-[#ff5f28]">Services</span>
             </h3>
             <p className="max-w-md text-base leading-relaxed text-black/55 md:text-right md:text-lg">
-              End-to-end capabilities that turn data into decisions and digital
+              End to end capabilities that turn data into decisions and digital
               presence into measurable growth.
             </p>
           </div>
