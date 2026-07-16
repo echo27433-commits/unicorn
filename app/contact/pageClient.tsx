@@ -319,8 +319,9 @@ export default function ContactPageClient() {
                     data-reveal-item
                     className="mt-5 max-w-lg text-sm leading-relaxed text-black/55 md:text-base"
                   >
-                    Headquartered in Business Bay, Dubai, with teams across
-                    the USA and India. Click a location or pin to explore.
+                    HQ in Business Bay, Dubai, UAE — with teams across Saudi
+                    Arabia, Bahrain, Qatar and India. Click a location or pin
+                    to explore.
                   </p>
                 </div>
 

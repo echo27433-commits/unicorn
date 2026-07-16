@@ -154,8 +154,8 @@ export default function OurLocation() {
             data-location-header
             className="mt-5 max-w-[34rem] text-sm leading-relaxed text-white/55 md:mt-6 md:text-[0.95rem]"
           >
-            Headquartered in UAE, with teams across Saudi / Qatar / Bahrain and
-            India.
+            HQ in Dubai, UAE — with teams across Saudi Arabia, Bahrain, Qatar
+            and India.
           </p>
         </div>
 
