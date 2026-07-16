@@ -11,6 +11,7 @@ const serviceGroups = [
     title: "AI & Data Intelligence",
     accent: "Intelligence",
     from: "left" as const,
+    image: "/ai.webp",
     description:
       "Models, vision, and analytics that turn raw data into decisions you can act on.",
     items: [
@@ -24,6 +25,7 @@ const serviceGroups = [
     title: "Digital Growth",
     accent: "Growth",
     from: "right" as const,
+    image: "/digi.webp",
     description:
       "Channels, content, and conversion systems that turn attention into pipeline.",
     items: [
@@ -35,8 +37,6 @@ const serviceGroups = [
     ],
   },
 ];
-
-const SERVICE_IMAGE = "/servies/soe.webp";
 
 function useReveal(threshold = 0.12) {
   const ref = useRef<HTMLDivElement>(null);
@@ -75,18 +75,18 @@ function ServiceGroupBlock({
 
   const imagePanel = (
     <div
-      className={`relative overflow-hidden rounded-2xl transition-all duration-1000 ease-out ${
+      className={`relative overflow-hidden rounded-2xl transition-all duration-1000 ease-out lg:w-[112%] lg:max-w-none lg:-mx-[6%] ${
         visible ? "translate-x-0 opacity-100" : `${hiddenX} opacity-0`
       }`}
     >
       <div className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-[radial-gradient(ellipse_at_center,rgba(255,95,40,0.16),transparent_70%)] blur-2xl" aria-hidden />
-      <div className="relative aspect-[16/11] overflow-hidden rounded-2xl border border-black/10 md:aspect-[16/10] lg:aspect-[5/4]">
+      <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-black/10 md:aspect-[16/9] lg:aspect-[16/11]">
         <Image
-          src={SERVICE_IMAGE}
+          src={group.image}
           alt={group.title}
           fill
           className="object-cover"
-          sizes="(max-width: 1024px) 100vw, 45vw"
+          sizes="(max-width: 1024px) 100vw, 52vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/10" />
       </div>
@@ -149,7 +149,7 @@ function ServiceGroupBlock({
   );
 
   return (
-    <div ref={ref} className="overflow-hidden">
+    <div ref={ref} className="overflow-x-clip lg:overflow-visible">
       <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14 xl:gap-20">
         {fromLeft ? (
           <>
