@@ -29,6 +29,7 @@ const modules = [
     eyebrow: "Reward. Retain. Repeat.",
     title: "Loyalty",
     accent: "Loyalty",
+    href: "https://www.theecho.global/product/loyalty",
     headline: "Build loyalty that lasts",
     description:
       "Echo's Loyalty Platform uses predictive analytics to trigger personalized rewards and engagement campaigns at the exact moment a customer is most likely to churn or make a repeat purchase. Turn casual shoppers into brand advocates.",
@@ -46,6 +47,7 @@ const modules = [
     eyebrow: "One inbox. Every channel.",
     title: "Omnichannel Messaging Suite",
     accent: "Omnichannel",
+    href: "https://www.theecho.global/product/omnichannel",
     headline: "Every channel, one conversation",
     description:
       "The Omnichannel Communication Suite centralizes all customer interactions across WhatsApp, SMS, email, RCS, Social, and web chat into a single unified dashboard, so your team never loses context and customers never repeat themselves.",
@@ -63,6 +65,7 @@ const modules = [
     eyebrow: "Agentic AI that understands.",
     title: "AI Conversational Platform",
     accent: "AI",
+    href: "https://www.theecho.global/product/ai-platform",
     headline: "AI that resolves, not just replies",
     description:
       "Go beyond rule based chatbots. Echo's Agentic AI understands context, intent, and sentiment to resolve queries instantly, escalate seamlessly to humans, and continuously improve from every interaction.",
@@ -345,7 +348,9 @@ export default function ProductsPageClient() {
                       ))}
                     </ul>
                     <Link
-                      href="/contact"
+                      href={mod.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="mt-8 inline-flex w-fit items-center rounded-full bg-[#ff5f28] px-6 py-3 text-sm font-medium text-white transition hover:bg-[#ff7342] md:mt-10"
                     >
                       Explore {mod.accent}
