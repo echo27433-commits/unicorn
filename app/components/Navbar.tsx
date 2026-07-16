@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import Button from "./Button";
+import { ArrowUpRightIcon } from "./Button";
+import CalendlyCta from "./CalendlyCta";
 
 const navLinks = [
   { label: "Home", href: "/#home", match: "/" },
@@ -105,13 +106,10 @@ export default function Navbar() {
           </ul>
 
           <div className="hidden shrink-0 items-center lg:flex">
-            <Button
-              href="/contact"
-              variant="primary"
-              className="!px-3 !py-2 !text-xs transition-all duration-300 ease-out xl:!px-4 xl:!text-sm"
-            >
+            <CalendlyCta className="btn btn--primary !px-3 !py-2 !text-xs transition-all duration-300 ease-out xl:!px-4 xl:!text-sm">
               Speak with our team
-            </Button>
+              <ArrowUpRightIcon />
+            </CalendlyCta>
           </div>
 
           <button
@@ -165,13 +163,13 @@ export default function Navbar() {
               })}
             </ul>
             <div className="mt-5">
-              <Link
-                href="/contact"
-                onClick={() => setMenuOpen(false)}
+              <CalendlyCta
                 className="btn btn--primary w-full justify-center"
+                onClick={() => setMenuOpen(false)}
               >
                 Speak with our team
-              </Link>
+                <ArrowUpRightIcon />
+              </CalendlyCta>
             </div>
           </div>
         ) : null}

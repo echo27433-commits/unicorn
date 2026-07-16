@@ -99,7 +99,7 @@ export default function BrandsTrust() {
             data-brands-header
             className="inline-flex items-center rounded-lg border border-[#ff5f28]/40 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#ff5f28] md:text-xs"
           >
-            Brands Trust Us
+            Brand that trust us
           </span>
 
           <h2
@@ -114,9 +114,9 @@ export default function BrandsTrust() {
             data-brands-header
             className="mt-6 max-w-xl text-sm leading-relaxed text-white/55 md:mt-7 md:text-base"
           >
-            From energy and retail to mobility and enterprise platforms, we
-            help organizations design, ship, and scale digital products that
-            deliver measurable impact.
+            From energy and retail to mobility and enterprise, we help
+            organizations ship digital products that deliver{" "}
+            <span className="whitespace-nowrap">measurable impact.</span>
           </p>
 
           <Link

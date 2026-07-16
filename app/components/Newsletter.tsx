@@ -1,7 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+
+import CalendlyCta from "./CalendlyCta";
 
 export default function Newsletter() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -62,10 +63,7 @@ export default function Newsletter() {
               noise, just signal.
             </p>
 
-            <Link
-              href="/contact"
-              className="btn btn--primary group mt-12 inline-flex items-center gap-3 md:mt-14 md:text-lg"
-            >
+            <CalendlyCta className="btn btn--primary group mt-12 inline-flex items-center gap-3 md:mt-14 md:text-lg">
               Speak with our team
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#ff5f28] transition-transform duration-200 group-hover:translate-x-0.5">
                 <svg
@@ -83,7 +81,7 @@ export default function Newsletter() {
                   />
                 </svg>
               </span>
-            </Link>
+            </CalendlyCta>
           </div>
         </div>
       </div>

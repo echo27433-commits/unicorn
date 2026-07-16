@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Ubuntu } from "next/font/google";
 
+import CalendlyAssets from "./components/CalendlyAssets";
 import SmoothScroll from "./components/SmoothScroll";
 import "./globals.css";
 
@@ -26,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${ubuntu.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans">
+        <CalendlyAssets />
         <SmoothScroll>{children}</SmoothScroll>
       </body>
     </html>
