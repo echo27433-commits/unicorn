@@ -96,7 +96,7 @@ export default function Footer() {
               href="/contact"
               className="btn btn--primary group inline-flex shrink-0 items-center justify-center gap-2 !rounded-full px-5 py-2.5 text-sm"
             >
-              Book a Demo
+              Speak with our team
               <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white text-[#ff5f28] transition-transform duration-200 group-hover:translate-x-0.5">
                 <svg
                   className="h-3 w-3"

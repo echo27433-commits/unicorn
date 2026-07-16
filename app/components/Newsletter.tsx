@@ -66,7 +66,7 @@ export default function Newsletter() {
               href="/contact"
               className="btn btn--primary group mt-12 inline-flex items-center gap-3 md:mt-14 md:text-lg"
             >
-              Book a demo
+              Speak with our team
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-white text-[#ff5f28] transition-transform duration-200 group-hover:translate-x-0.5">
                 <svg
                   className="h-3.5 w-3.5"
