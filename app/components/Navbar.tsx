@@ -125,7 +125,9 @@ export default function Navbar() {
 
           <div className="hidden shrink-0 items-center gap-2 lg:flex xl:gap-3">
             <Link
-              href="/contact"
+              href="https://wa.me/971585785102"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn btn--secondary !px-3 !py-2 !text-xs transition-all duration-300 ease-out xl:!px-4 xl:!text-sm"
             >
               <ChatIcon className={scrolled ? "h-3.5 w-3.5" : "h-4 w-4"} />
@@ -192,7 +194,9 @@ export default function Navbar() {
             </ul>
             <div className="mt-5 flex flex-col gap-3">
               <Link
-                href="/contact"
+                href="https://wa.me/971585785102"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setMenuOpen(false)}
                 className="btn btn--secondary w-full justify-center"
               >
