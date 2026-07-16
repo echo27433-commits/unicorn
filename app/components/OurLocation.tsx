@@ -164,10 +164,8 @@ export default function OurLocation() {
           className="mt-12 h-px w-full bg-gradient-to-r from-[#ff5f28] via-[#ff5f28]/40 to-transparent md:mt-16"
         />
 
-        <div
-          className="mt-12 grid grid-cols-1 gap-8 lg:mt-16 lg:grid-cols-5 lg:gap-10"
-        >
-          <div className="flex flex-col gap-3 lg:col-span-2">
+        <div className="mt-12 flex flex-col gap-8 lg:mt-16 lg:gap-10">
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-5 lg:gap-4">
             {locations.map((loc, index) => {
               const active = activeIndex === index;
 
@@ -177,28 +175,30 @@ export default function OurLocation() {
                   type="button"
                   data-location-card
                   onClick={() => handleSelect(index)}
-                  className={`group w-full rounded-2xl border p-5 text-left transition-colors duration-300 md:p-6 ${
+                  className={`group w-full rounded-2xl border p-4 text-left transition-colors duration-300 sm:p-5 md:p-6 ${
+                    loc.id === "dubai" ? "col-span-2 lg:col-span-1" : ""
+                  } ${
                     active
                       ? "border-[#ff5f28]/40 bg-[#ff5f28]/[0.12] shadow-[0_8px_32px_-8px_rgba(255,95,40,0.25)]"
                       : "border-white/10 bg-white/[0.03] hover:border-[#ff5f28]/30 hover:bg-[#ff5f28]/[0.06]"
                   }`}
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#ff5f28]">
+                  <div className="flex items-start justify-between gap-2 sm:gap-4">
+                    <div className="min-w-0">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#ff5f28] sm:text-[11px] sm:tracking-[0.18em]">
                         {loc.timezone}
                       </p>
                       <h3
-                        className={`mt-1 text-xl font-light tracking-tight transition-colors md:text-2xl ${
+                        className={`mt-1 text-base font-light tracking-tight transition-colors sm:text-xl md:text-2xl ${
                           active ? "text-[#ff5f28]" : "text-white group-hover:text-[#ff5f28]"
                         }`}
                       >
                         {loc.country}
                       </h3>
-                      <p className="mt-0.5 text-sm font-medium text-white/45">{loc.city}</p>
+                      <p className="mt-0.5 text-xs font-medium text-white/45 sm:text-sm">{loc.city}</p>
                     </div>
                     <span
-                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-medium transition-all duration-300 ${
+                      className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-medium transition-all duration-300 sm:h-9 sm:w-9 sm:text-sm ${
                         active
                           ? "bg-[#ff5f28] text-white"
                           : "bg-white/10 text-white/55 group-hover:bg-[#ff5f28]/20 group-hover:text-[#ff5f28]"
@@ -207,35 +207,26 @@ export default function OurLocation() {
                       {index + 1}
                     </span>
                   </div>
-                  <p
-                    className={`mt-3 text-sm leading-relaxed text-white/55 transition-all duration-300 ${
-                      active
-                        ? "max-h-20 opacity-100"
-                        : "max-h-0 overflow-hidden opacity-0 lg:max-h-20 lg:opacity-100"
-                    }`}
-                  >
-                    {loc.description}
-                  </p>
                 </button>
               );
             })}
-
-            <button
-              type="button"
-              data-location-card
-              onClick={() => {
-                setMode("overview");
-                setOverviewKey((k) => k + 1);
-              }}
-              className="mt-1 text-left text-sm font-medium text-[#ff5f28] underline-offset-4 transition hover:underline"
-            >
-              View all locations
-            </button>
           </div>
 
-          <div data-location-map className="relative lg:col-span-3">
+          <button
+            type="button"
+            data-location-card
+            onClick={() => {
+              setMode("overview");
+              setOverviewKey((k) => k + 1);
+            }}
+            className="text-left text-sm font-medium text-[#ff5f28] underline-offset-4 transition hover:underline"
+          >
+            View all locations
+          </button>
+
+          <div data-location-map className="relative">
             <div className="overflow-hidden rounded-2xl border border-white/10 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.5)]">
-              <div className="h-[360px] md:h-[480px] lg:h-[520px]">
+              <div className="h-[360px] md:h-[480px] lg:h-[560px]">
                 <LocationMap
                   activeIndex={activeIndex}
                   revealedCount={revealedCount}
