@@ -1,4 +1,5 @@
-import Button from "./Button";
+import Button, { ArrowUpRightIcon } from "./Button";
+import CalendlyCta from "./CalendlyCta";
 
 const stats = [
   {
@@ -82,13 +83,10 @@ export default function Hero() {
             </p>
 
             <div className="mt-8 mb-6 flex w-full flex-col gap-2.5 sm:mt-10 sm:mb-8 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-12 md:mb-10 md:gap-5">
-              <Button
-                href="/contact"
-                variant="primary"
-                className="w-full justify-center px-4 py-2.5 text-sm sm:w-auto sm:px-[1.85rem] sm:py-[0.95rem] sm:text-base md:text-lg"
-              >
+              <CalendlyCta className="btn btn--primary w-full justify-center px-4 py-2.5 text-sm sm:w-auto sm:px-[1.85rem] sm:py-[0.95rem] sm:text-base md:text-lg">
                 Book a Call
-              </Button>
+                <ArrowUpRightIcon />
+              </CalendlyCta>
               <Button
                 href="/services"
                 variant="secondary"

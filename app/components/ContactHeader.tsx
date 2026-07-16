@@ -20,8 +20,8 @@ const ContactHeader = forwardRef<HTMLElement>(function ContactHeader(_, ref) {
       descriptionClassName="mt-6 max-w-[30.5rem] text-[0.875rem] leading-relaxed text-white/55 sm:mt-5 sm:text-sm md:mt-7 md:text-[0.95rem]"
       primaryCta={{ href: "#contact-form", label: "Send a message" }}
       secondaryCta={{
-        href: "mailto:hello@theunicorn.global",
-        label: "Email us",
+        href: "/services",
+        label: "Explore our services",
       }}
       afterCtas={
         <div className="mt-8 flex flex-wrap gap-2 sm:gap-2 md:mt-12">
