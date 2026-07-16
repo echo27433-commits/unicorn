@@ -56,7 +56,7 @@ export const workCases: WorkCase[] = [
     name: "Nesto Hypermarkets",
     accent: "Hypermarkets",
     industry: "Enterprise Retail Brand",
-    headline: "28% increase in repeat shoppers",
+    headline: "36% increase in repeat shoppers",
     summary:
       "How Echo transformed engagement for Nesto Hypermarkets, from low repeat rates to personalized journeys that compound.",
     challenge:
@@ -64,7 +64,7 @@ export const workCases: WorkCase[] = [
     solution:
       "Echo automated personalized WhatsApp campaigns, customer reminders, and targeted engagement journeys.",
     results: [
-      "28% increase in repeat shoppers",
+      "36% increase in repeat shoppers",
       "Faster and smarter campaign execution",
       "Improved customer engagement and personalization",
     ],
@@ -79,12 +79,12 @@ export const workCases: WorkCase[] = [
     imageAlt: "Modern supermarket aisle with product shelves",
     metrics: {
       title: "Repeat Shoppers Before vs After Echo",
-      description: "28% increase in repeat shoppers in just 3 months",
+      description: "36% increase in repeat shoppers in just 3 months",
       beforeLabel: "Before Echo",
       beforeValue: "22%",
       afterLabel: "After Echo (3 Months)",
-      afterValue: "28%",
-      uplift: "+28%",
+      afterValue: "36%",
+      uplift: "+36%",
     },
     growth: {
       title: "Engagement Growth Over 3 Months",
@@ -107,8 +107,8 @@ export const workCases: WorkCase[] = [
       stages: [
         { label: "Campaign Reach", value: "1.2M", rate: "26%", rateLabel: "Engagement Rate" },
         { label: "Engaged Users", value: "320K", rate: "37%", rateLabel: "Purchase Conversion" },
-        { label: "Purchases", value: "120K", rate: "28%", rateLabel: "Repeat Rate" },
-        { label: "Repeat Shoppers", value: "28%" },
+        { label: "Purchases", value: "120K", rate: "36%", rateLabel: "Repeat Rate" },
+        { label: "Repeat Shoppers", value: "36%" },
       ],
     },
   },

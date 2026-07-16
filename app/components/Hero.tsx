@@ -1,11 +1,5 @@
 import Button from "./Button";
 
-const avatars = [
-  { initials: "SL", label: "Client 1" },
-  { initials: "AR", label: "Client 2" },
-  { initials: "PM", label: "Client 3" },
-];
-
 const stats = [
   {
     value: "120+",
@@ -77,18 +71,17 @@ export default function Hero() {
             </p>
 
             <h1 className="text-[3.75rem] font-light leading-[1.06] tracking-tight text-white sm:text-6xl sm:leading-[1.04] md:text-8xl lg:text-9xl xl:text-[7rem] xl:leading-[1.01]">
-              <span className="block">Digital solutions</span>
+              <span className="block">The digital solutions</span>
               <span className="block">
                 that drive <span className="text-gradient-future">impact.</span>
               </span>
             </h1>
 
-            <p className="mt-5 max-w-[30.5rem] text-[0.8125rem] leading-relaxed text-white/55 sm:text-sm md:mt-7 md:text-[0.95rem]">
-              We partner with ambitious businesses to design and deliver digital
-              solutions that spark innovation and accelerate growth.
+            <p className="mt-5 max-w-[30.5rem] text-sm leading-relaxed text-white/55 sm:text-[0.95rem] md:mt-7 md:text-base">
+              Partnering with ambitious brands to build what's next
             </p>
 
-            <div className="mt-8 flex w-full flex-col gap-2.5 sm:mt-10 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-12 md:gap-5">
+            <div className="mt-8 mb-6 flex w-full flex-col gap-2.5 sm:mt-10 sm:mb-8 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-12 md:mb-10 md:gap-5">
               <Button
                 href="/contact"
                 variant="primary"
@@ -103,25 +96,6 @@ export default function Hero() {
               >
                 Explore Services
               </Button>
-            </div>
-
-            <div className="mt-6 flex items-center gap-3 sm:mt-8 md:mt-10">
-              <div className="flex -space-x-3">
-                {avatars.map((avatar) => (
-                  <span
-                    key={avatar.initials}
-                    title={avatar.label}
-                    className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-black bg-[#ff5f28]/25 text-[0.6rem] font-semibold tracking-wide text-white sm:h-9 sm:w-9 sm:text-[0.65rem] md:h-10 md:w-10 md:text-xs"
-                  >
-                    {avatar.initials}
-                  </span>
-                ))}
-              </div>
-              <p className="text-xs text-white/55 sm:text-sm md:text-base">
-                Trusted by{" "}
-                <span className="font-semibold text-white">100+</span> growing
-                businesses
-              </p>
             </div>
           </div>
         </div>

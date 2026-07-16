@@ -5,9 +5,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ReactLenis, useLenis } from "lenis/react";
 import type { LenisRef } from "lenis/react";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
-import { isMobileMotion, scheduleScrollRefresh } from "../lib/motion";
+import { isMobileMotion, killAllScrollTriggers, scheduleScrollRefresh } from "../lib/motion";
 import { useReducedMotion } from "../lib/useReducedMotion";
 
 import "lenis/dist/lenis.css";
@@ -15,6 +15,77 @@ import "lenis/dist/lenis.css";
 gsap.registerPlugin(ScrollTrigger);
 
 ScrollTrigger.config({ ignoreMobileResize: true });
+
+function isInternalPageNav(anchor: HTMLAnchorElement) {
+  if (anchor.target && anchor.target !== "_self") return false;
+  if (anchor.hasAttribute("download")) return false;
+
+  const href = anchor.getAttribute("href");
+  if (!href || href.startsWith("mailto:") || href.startsWith("tel:")) return false;
+
+  try {
+    const url = new URL(href, window.location.href);
+    if (url.origin !== window.location.origin) return false;
+
+    // Same page (hash / query only) — keep ScrollTriggers alive.
+    if (
+      url.pathname === window.location.pathname &&
+      url.search === window.location.search
+    ) {
+      return false;
+    }
+
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Kill ScrollTrigger pins before the App Router commits a route change.
+ * Pin spacers reparent DOM; React's unmount then throws removeChild.
+ */
+function ScrollTriggerNavCleanup() {
+  const pathname = usePathname();
+
+  useEffect(() => {
+    const onPointerDown = (event: PointerEvent) => {
+      if (event.defaultPrevented || event.button !== 0) return;
+      if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+
+      const anchor = target.closest("a");
+      if (!(anchor instanceof HTMLAnchorElement)) return;
+      if (!isInternalPageNav(anchor)) return;
+
+      killAllScrollTriggers();
+    };
+
+    const onPopState = () => {
+      killAllScrollTriggers();
+    };
+
+    // Capture phase so pins restore before Next.js handles the navigation.
+    document.addEventListener("pointerdown", onPointerDown, true);
+    window.addEventListener("popstate", onPopState);
+
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown, true);
+      window.removeEventListener("popstate", onPopState);
+    };
+  }, []);
+
+  // Backup for soft navigations that did not go through a link click.
+  useLayoutEffect(() => {
+    return () => {
+      killAllScrollTriggers();
+    };
+  }, [pathname]);
+
+  return null;
+}
 
 function LenisGsapBridge() {
   const pathname = usePathname();
@@ -120,7 +191,12 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
 
   // No Lenis tree until enabled — avoids wrapping every page in continuous work.
   if (!smoothEnabled) {
-    return <>{children}</>;
+    return (
+      <>
+        <ScrollTriggerNavCleanup />
+        {children}
+      </>
+    );
   }
 
   return (
@@ -141,6 +217,7 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
         stopInertiaOnNavigate: true,
       }}
     >
+      <ScrollTriggerNavCleanup />
       <LenisGsapBridge />
       {children}
     </ReactLenis>

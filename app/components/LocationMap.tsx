@@ -70,6 +70,7 @@ export default function LocationMap({
 }: LocationMapProps) {
   return (
     <MapContainer
+      key="location-map"
       center={[30, 20]}
       zoom={2}
       scrollWheelZoom

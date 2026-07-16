@@ -17,7 +17,7 @@ const caseStudies = [
     title: "Nesto Hypermarkets",
     accent: "Hypermarkets",
     description:
-      "28% increase in repeat shoppers, personalized WhatsApp journeys that turned low engagement into measurable loyalty.",
+      "36% increase in repeat shoppers, personalized WhatsApp journeys that turned low engagement into measurable loyalty.",
     image:
       "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=1000&q=75",
     imageAlt: "Modern supermarket aisle with product shelves",
@@ -175,10 +175,6 @@ export default function CaseStudy() {
     return () => {
       cancelRefresh();
       ctx.revert();
-      gsap.set(slides, { autoAlpha: 0, clearProps: "transform" });
-      gsap.set(slides[0], { autoAlpha: 1 });
-      gsap.set(images, { autoAlpha: 0 });
-      gsap.set(images[0], { autoAlpha: 1 });
     };
   }, []);
 

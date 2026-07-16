@@ -216,3 +216,25 @@ export function scheduleScrollRefresh(delayMs = 250): () => void {
     }
   };
 }
+
+/**
+ * Restore pin-spacers before React unmounts a page. Must run on link click
+ * (before navigation commits) — useEffect cleanup is too late and causes
+ * `removeChild` NotFoundError when ScrollTrigger has reparented nodes.
+ */
+export function killAllScrollTriggers() {
+  if (typeof window === "undefined") return;
+
+  if (refreshTimer) {
+    window.clearTimeout(refreshTimer);
+    refreshTimer = 0;
+  }
+
+  ScrollTrigger.getAll().forEach((trigger) => {
+    try {
+      trigger.kill();
+    } catch {
+      // Element may already be detached during navigation.
+    }
+  });
+}

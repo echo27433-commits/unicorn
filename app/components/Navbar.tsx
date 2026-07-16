@@ -17,25 +17,6 @@ const navLinks = [
   { label: "Contact", href: "/contact", match: "/contact" },
 ];
 
-function ChatIcon({ className = "h-4 w-4" }: { className?: string }) {
-  return (
-    <svg
-      className={`${className} shrink-0`}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      aria-hidden
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-      />
-    </svg>
-  );
-}
-
 export default function Navbar() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -123,22 +104,13 @@ export default function Navbar() {
             })}
           </ul>
 
-          <div className="hidden shrink-0 items-center gap-2 lg:flex xl:gap-3">
-            <Link
-              href="https://wa.me/971585785102"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn--secondary !px-3 !py-2 !text-xs transition-all duration-300 ease-out xl:!px-4 xl:!text-sm"
-            >
-              <ChatIcon className={scrolled ? "h-3.5 w-3.5" : "h-4 w-4"} />
-              Let&apos;s Talk
-            </Link>
+          <div className="hidden shrink-0 items-center lg:flex">
             <Button
               href="/contact"
               variant="primary"
               className="!px-3 !py-2 !text-xs transition-all duration-300 ease-out xl:!px-4 xl:!text-sm"
             >
-              Book a Call
+              Speak with our team
             </Button>
           </div>
 
@@ -192,20 +164,14 @@ export default function Navbar() {
                 );
               })}
             </ul>
-            <div className="mt-5 flex flex-col gap-3">
+            <div className="mt-5">
               <Link
-                href="https://wa.me/971585785102"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/contact"
                 onClick={() => setMenuOpen(false)}
-                className="btn btn--secondary w-full justify-center"
+                className="btn btn--primary w-full justify-center"
               >
-                <ChatIcon />
-                Let&apos;s Talk
+                Speak with our team
               </Link>
-              <Button href="/contact" variant="primary" className="w-full justify-center">
-                Book a Call
-              </Button>
             </div>
           </div>
         ) : null}
