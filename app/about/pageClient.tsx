@@ -313,7 +313,7 @@ export default function AboutPageClient() {
               </h2>
               <p
                 data-reveal-item
-                className="max-w-lg text-base leading-relaxed text-black/55 md:text-right md:text-lg lg:text-xl"
+                className="max-w-lg text-left text-base leading-relaxed text-black/55 md:text-lg lg:text-xl"
               >
                 We combine world class technology partnerships, AI innovation,
                 and deep regional expertise to deliver measurable business
@@ -408,7 +408,7 @@ export default function AboutPageClient() {
               </h2>
               <p
                 data-reveal-item
-                className="max-w-lg text-base leading-relaxed text-white/55 md:text-right md:text-lg lg:text-xl"
+                className="max-w-lg text-left text-base leading-relaxed text-white/55 md:text-lg lg:text-xl"
               >
                 Our approach blends strategic thinking, AI led execution, and
                 regional insight, so leadership teams can move faster with less
@@ -525,7 +525,7 @@ export default function AboutPageClient() {
             </h2>
             <p
               data-reveal-item
-              className="max-w-lg text-base leading-relaxed text-black/55 md:text-right md:text-lg lg:text-xl"
+              className="max-w-lg text-left text-base leading-relaxed text-black/55 md:text-lg lg:text-xl"
             >
               We align stakeholders early, identify the quickest path to
               measurable impact, and ship in clear phases.

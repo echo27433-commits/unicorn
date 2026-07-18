@@ -217,7 +217,7 @@ export default function CustomerResults() {
           <h2 className="text-4xl font-light uppercase tracking-[0.06em] text-black md:text-5xl lg:text-6xl xl:text-[4rem]">
             Products
           </h2>
-          <p className="max-w-lg text-base leading-relaxed text-black/55 md:text-right md:text-lg lg:text-xl">
+          <p className="max-w-lg text-left text-base leading-relaxed text-black/55 md:ml-auto md:text-left md:text-lg lg:text-xl">
             We build intelligent platforms that help brands converse, convert,
             and grow, from AI assistants to enterprise engagement systems.
           </p>
@@ -311,7 +311,7 @@ export default function CustomerResults() {
             <h3 className="text-4xl font-light tracking-tight text-black md:text-5xl lg:text-6xl">
               Our <span className="text-[#ff5f28]">Services</span>
             </h3>
-            <p className="max-w-md text-base leading-relaxed text-black/55 md:text-right md:text-lg">
+            <p className="max-w-md text-left text-base leading-relaxed text-black/55 md:ml-auto md:text-left md:text-lg">
               End to end capabilities that turn data into decisions and digital
               presence into measurable growth.
             </p>

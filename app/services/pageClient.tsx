@@ -20,7 +20,7 @@ export default function ServicesPageClient() {
       <section className="relative mx-auto w-full max-w-[90rem] px-5 py-20 pb-28 md:px-8 md:py-28 md:pb-36 lg:px-12 lg:py-32 lg:pb-40">
         <div
           data-reveal
-          className="flex flex-col gap-8 border-b border-black/10 pb-12 md:flex-row md:items-end md:justify-between md:gap-16 md:pb-14"
+          className="grid gap-8 border-b border-black/10 pb-12 md:grid-cols-2 md:items-end md:gap-16 md:pb-14"
         >
           <h2
             data-reveal-item
@@ -30,7 +30,7 @@ export default function ServicesPageClient() {
           </h2>
           <p
             data-reveal-item
-            className="max-w-lg text-base leading-relaxed text-black/55 md:text-right md:text-lg lg:text-xl"
+            className="max-w-lg text-left text-base leading-relaxed text-black/55 md:text-lg lg:text-xl"
           >
             End to end capabilities that turn data into decisions and digital
             presence into measurable growth.

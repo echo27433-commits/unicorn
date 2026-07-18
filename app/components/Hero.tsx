@@ -71,20 +71,22 @@ export default function Hero() {
               unicorn
             </p>
 
-            <h1 className="text-[3.75rem] font-light leading-[1.06] tracking-tight text-white sm:text-6xl sm:leading-[1.04] md:text-8xl lg:text-9xl xl:text-[7rem] xl:leading-[1.01]">
+            <h1 className="text-[8.75vw] font-light leading-[1.1] tracking-tight text-white sm:text-6xl sm:leading-[1.04] md:text-8xl lg:text-9xl xl:text-[7rem] xl:leading-[1.01]">
               <span className="block">The digital solutions</span>
               <span className="block">
                 that drive <span className="text-gradient-future">impact.</span>
               </span>
             </h1>
 
-            <p className="mt-5 max-w-[30.5rem] text-sm leading-relaxed text-white/55 sm:text-[0.95rem] md:mt-7 md:text-base">
-              Partnering with ambitious brands to build what's next
+            <p className="mt-5 max-w-[44rem] text-sm leading-relaxed text-white/55 sm:text-[0.95rem] md:mt-7 md:text-base">
+              We partner with ambitious enterprises to design, deliver, and operate
+              the digital platforms behind their growth from performance, AI and
+              loyalty to omnichannel engagement.
             </p>
 
             <div className="mt-8 mb-6 flex w-full flex-col gap-2.5 sm:mt-10 sm:mb-8 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-12 md:mb-10 md:gap-5">
               <CalendlyCta className="btn btn--primary w-full justify-center px-4 py-2.5 text-sm sm:w-auto sm:px-[1.85rem] sm:py-[0.95rem] sm:text-base md:text-lg">
-                Book a Call
+                Speak with our team
                 <ArrowUpRightIcon />
               </CalendlyCta>
               <Button

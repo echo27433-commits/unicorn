@@ -180,7 +180,7 @@ export default function WorkDetailClient({ study }: { study: WorkCase }) {
         }
         description={study.summary}
         descriptionClassName="mt-5 max-w-[34rem] text-[0.875rem] leading-relaxed text-white/55 sm:text-sm md:text-[0.95rem]"
-        primaryCta={{ href: "/contact", label: "Book a Call" }}
+        primaryCta={{ href: "/contact", label: "Speak with our team" }}
         secondaryCta={{
           href: "https://www.theecho.global/",
           label: "Explore Echo",
@@ -603,7 +603,7 @@ export default function WorkDetailClient({ study }: { study: WorkCase }) {
             </div>
             <div data-reveal-item>
               <Button href="/contact" variant="primary" className="px-6 py-3 text-base md:text-lg">
-                Book a Call
+                Speak with our team
               </Button>
             </div>
           </div>

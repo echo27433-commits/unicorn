@@ -14,7 +14,7 @@ const AboutHeader = forwardRef<HTMLElement>(function AboutHeader(_, ref) {
         </>
       }
       description="Unicorn is a global AI and technology transformation company helping organizations create meaningful customer experiences, unlock operational intelligence, and accelerate digital growth."
-      primaryCta={{ href: "/contact", label: "Book a Call" }}
+      primaryCta={{ href: "/contact", label: "Speak with our team" }}
       secondaryCta={{ href: "/services", label: "View Our Services" }}
     />
   );

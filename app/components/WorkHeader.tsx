@@ -15,7 +15,7 @@ const WorkHeader = forwardRef<HTMLElement>(function WorkHeader(_, ref) {
       }
       description="See how leading brands across industries leverage Echo to transform customer engagement, boost loyalty, and drive measurable growth."
       descriptionClassName="mt-6 max-w-[34rem] text-[0.875rem] leading-relaxed text-white/55 sm:mt-5 sm:text-sm md:mt-7 md:text-[0.95rem]"
-      primaryCta={{ href: "/contact", label: "Book a Call" }}
+      primaryCta={{ href: "/contact", label: "Speak with our team" }}
       secondaryCta={{ href: "#cases", label: "View Case Studies" }}
     />
   );

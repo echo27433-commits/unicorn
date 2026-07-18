@@ -26,7 +26,7 @@ export default function CalendlyCta({
   return (
     <button
       type="button"
-      className={className}
+      className={`cursor-pointer ${className}`}
       onClick={handleClick}
       {...props}
     >

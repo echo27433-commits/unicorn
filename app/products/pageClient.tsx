@@ -140,7 +140,7 @@ export default function ProductsPageClient() {
             </h2>
             <p
               data-reveal-item
-              className="max-w-lg text-base leading-relaxed text-white/55 md:text-right md:text-lg lg:text-xl"
+              className="max-w-lg text-left text-base leading-relaxed text-white/55 md:text-lg lg:text-xl"
             >
               Enable organizations to create seamless customer journeys through
               automation, personalization, and real time communication, turning
@@ -280,7 +280,7 @@ export default function ProductsPageClient() {
             </div>
             <p
               data-reveal-item
-              className="max-w-lg text-base leading-relaxed text-black/55 md:text-right md:text-lg lg:text-xl"
+              className="max-w-lg text-left text-base leading-relaxed text-black/55 md:text-lg lg:text-xl"
             >
               Loyalty, omnichannel messaging, and conversational AI connected
               so every customer interaction compounds.

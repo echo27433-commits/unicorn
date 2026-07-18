@@ -14,7 +14,7 @@ const ServicesHeader = forwardRef<HTMLElement>(function ServicesHeader(_, ref) {
         </>
       }
       description="AI & data intelligence and digital growth services that turn strategy into measurable outcomes."
-      primaryCta={{ href: "/contact", label: "Book a Call" }}
+      primaryCta={{ href: "/contact", label: "Speak with our team" }}
       secondaryCta={{ href: "#services", label: "Explore Services" }}
     />
   );
