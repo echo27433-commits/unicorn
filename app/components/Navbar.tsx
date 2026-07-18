@@ -14,7 +14,7 @@ const navLinks = [
   { label: "Products", href: "/products", match: "/products" },
   { label: "Services", href: "/services", match: "/services" },
   { label: "Use Cases", href: "/work", match: "/work" },
-  { label: "Blog", href: "/blog", match: "/blog" },
+  { label: "Blogs", href: "/blog", match: "/blog" },
   { label: "Contact", href: "/contact", match: "/contact" },
 ];
 
