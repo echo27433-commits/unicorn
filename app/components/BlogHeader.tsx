@@ -6,7 +6,7 @@ const BlogHeader = forwardRef<HTMLElement>(function BlogHeader(_, ref) {
   return (
     <PageHeroHeader
       ref={ref}
-      eyebrow="Blog"
+      eyebrow="Blogs"
       title={
         <>
           Insights that
