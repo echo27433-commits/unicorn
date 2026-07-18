@@ -71,11 +71,9 @@ export default function Hero() {
               unicorn
             </p>
 
-            <h1 className="text-[8.75vw] font-light leading-[1.1] tracking-tight text-white sm:text-6xl sm:leading-[1.04] md:text-8xl lg:text-9xl xl:text-[7rem] xl:leading-[1.01]">
-              <span className="block">The digital solutions</span>
-              <span className="block">
-                that drive <span className="text-gradient-future">impact.</span>
-              </span>
+            <h1 className="text-[4.5rem] font-light leading-[1.06] tracking-tight text-white sm:text-7xl sm:leading-[1.04] md:text-9xl lg:text-[8.5rem] xl:text-[9.5rem] xl:leading-[1.01]">
+              <span className="block">Digital. AI.</span>
+              <span className="block text-gradient-future">Impact.</span>
             </h1>
 
             <p className="mt-5 max-w-[44rem] text-sm leading-relaxed text-white/55 sm:text-[0.95rem] md:mt-7 md:text-base">
