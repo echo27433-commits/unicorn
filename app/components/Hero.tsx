@@ -77,9 +77,7 @@ export default function Hero() {
             </h1>
 
             <p className="mt-5 max-w-[44rem] text-sm leading-relaxed text-white/55 sm:text-[0.95rem] md:mt-7 md:text-base">
-              We partner with ambitious enterprises to design, deliver, and operate
-              the digital platforms behind their growth from performance, AI and
-              loyalty to omnichannel engagement.
+            We partner with ambitious enterprises to design, deliver, and operate the digital platforms behind their growth, from performance and AI to loyalty and omnichannel engagement.
             </p>
 
             <div className="mt-8 mb-6 flex w-full flex-col gap-2.5 sm:mt-10 sm:mb-8 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-4 md:mt-12 md:mb-10 md:gap-5">
