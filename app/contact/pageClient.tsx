@@ -132,7 +132,7 @@ export default function ContactPageClient() {
                 >
                   <div>
                     <h3 className="text-base font-semibold text-black md:text-lg">
-                      Call Center
+                      Contact Center
                     </h3>
                     <a
                       href="tel:+971585686912"

@@ -21,16 +21,15 @@ export type Service = {
 };
 
 const imgs = [
-  "/blogs/b1.webp",
-  "/blogs/b2.webp",
-  "/blogs/b3.jpg",
-  "/blogs/b4.jpg",
-  "/blogs/b5.jpg",
-  "/blogs/b6.jpg",
-  "/servies/soe.webp",
-  "/image_1.webp",
-  "/case.png",
-  "/review1.jpg",
+  "/services/1.webp",
+  "/services/2.webp",
+  "/services/3.webp",
+  "/services/4.webp",
+  "/services/5.webp",
+  "/services/6.webp",
+  "/services/7.webp",
+  "/services/8.webp",
+  "/services/9.webp",
 ];
 
 export const services: Service[] = [
@@ -270,7 +269,7 @@ export const services: Service[] = [
       "Fragmented spreadsheets and conflicting reports slow decisions. We build the warehouse models, semantic metrics, and access patterns that let teams self serve without breaking trust, with quality monitors that catch issues before leadership does.",
     stat: "04",
     statLabel: "/capability",
-    image: imgs[4],
+    image: imgs[3],
     gallery: [imgs[2], imgs[7]],
     industries: ["Enterprise retail", "Holding groups", "Multi brand operators"],
     whoFor: [
@@ -342,8 +341,8 @@ export const services: Service[] = [
       "We treat visibility as a product system: crawl health, information architecture, content that matches demand, and measurement that ties organic sessions to revenue, not vanity rankings alone.",
     stat: "01",
     statLabel: "/capability",
-    image: imgs[5],
-    gallery: [imgs[8], imgs[3]],
+    image: imgs[4],
+    gallery: [imgs[7], imgs[3]],
     industries: ["Retail", "Ecommerce", "Publishing", "Local multi site"],
     whoFor: [
       "Brands over reliant on paid acquisition",
@@ -414,8 +413,8 @@ export const services: Service[] = [
       "We rebuild acquisition systems around incrementality and creative learning. Structure, tracking, and tests come before budget scale, so every dollar pushed has a clear hypothesis and a readout leadership can trust.",
     stat: "02",
     statLabel: "/capability",
-    image: imgs[6],
-    gallery: [imgs[9], imgs[4]],
+    image: imgs[5],
+    gallery: [imgs[8], imgs[4]],
     industries: ["Retail", "D2C", "QSR", "App / loyalty"],
     whoFor: [
       "Teams with rising CAC and unclear attribution",
@@ -486,8 +485,8 @@ export const services: Service[] = [
       "Each channel gets a role: awareness, community, or conversion. We design pillars, formats, and response systems so presence feels native to the channel, and measurable against brand and commercial goals.",
     stat: "03",
     statLabel: "/capability",
-    image: imgs[7],
-    gallery: [imgs[0], imgs[8]],
+    image: imgs[6],
+    gallery: [imgs[0], imgs[7]],
     industries: ["Consumer brands", "Retail", "Hospitality", "Lifestyle"],
     whoFor: [
       "Brands posting without a narrative system",
@@ -558,8 +557,8 @@ export const services: Service[] = [
       "Speed without standards creates brand risk. We codify voice, claims, and QA into systems so generative tools accelerate draft and variant work while humans own judgment, taste, and final approval.",
     stat: "04",
     statLabel: "/capability",
-    image: imgs[8],
-    gallery: [imgs[5], imgs[1]],
+    image: imgs[7],
+    gallery: [imgs[4], imgs[1]],
     industries: ["Retail media", "Publishers", "Agencies", "Product marketing"],
     whoFor: [
       "Teams bottlenecked on content volume",
@@ -630,8 +629,8 @@ export const services: Service[] = [
       "We diagnose friction with analytics and qualitative evidence, then run a prioritized test roadmap. Winners ship; losers teach. Over time you get a living playbook of what converts for your brand.",
     stat: "05",
     statLabel: "/capability",
-    image: imgs[9],
-    gallery: [imgs[6], imgs[2]],
+    image: imgs[8],
+    gallery: [imgs[5], imgs[2]],
     industries: ["Ecommerce", "Lead gen", "Loyalty sign up", "App onboarding"],
     whoFor: [
       "Teams with traffic but soft conversion",

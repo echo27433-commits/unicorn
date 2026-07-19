@@ -1,19 +1,8 @@
 "use client";
 
-import Script from "next/script";
+import CalendlyModal from "./CalendlyModal";
 
-/** Loads Calendly popup CSS + JS once for the whole app. */
+/** Site-wide Calendly modal (opened by Speak with our team / Book a Call CTAs). */
 export default function CalendlyAssets() {
-  return (
-    <>
-      <link
-        rel="stylesheet"
-        href="https://assets.calendly.com/assets/external/widget.css"
-      />
-      <Script
-        src="https://assets.calendly.com/assets/external/widget.js"
-        strategy="lazyOnload"
-      />
-    </>
-  );
+  return <CalendlyModal />;
 }
