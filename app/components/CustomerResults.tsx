@@ -218,8 +218,8 @@ export default function CustomerResults() {
             Products
           </h2>
           <p className="max-w-lg text-left text-base leading-relaxed text-black/55 md:ml-auto md:text-left md:text-lg lg:text-xl">
-            We build intelligent platforms that help brands converse, convert,
-            and grow, from AI assistants to enterprise engagement systems.
+            Enterprise engagement platforms that combine conversational AI,
+            loyalty, and omnichannel systems into one growth engine.
           </p>
         </div>
 
@@ -312,8 +312,8 @@ export default function CustomerResults() {
               Our <span className="text-[#ff5f28]">Services</span>
             </h3>
             <p className="max-w-md text-left text-base leading-relaxed text-black/55 md:ml-auto md:text-left md:text-lg">
-              End to end capabilities that turn data into decisions and digital
-              presence into measurable growth.
+              AI services and digital transformation capabilities that turn data
+              into decisions and digital presence into measurable growth.
             </p>
           </div>
 

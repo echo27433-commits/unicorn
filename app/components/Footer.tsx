@@ -23,9 +23,9 @@ export default function Footer() {
         {/* Top: blurb + link columns */}
         <div className="flex flex-col gap-12 lg:flex-row lg:items-start lg:justify-between lg:gap-16">
           <p className="max-w-md text-sm leading-relaxed text-white/70 md:text-base lg:max-w-sm">
-            unicorn is the AI and technology partner built for ambitious brands
-            that want to design, ship, and scale digital products with measurable
-            impact.
+            unicorn delivers AI services, digital transformation, and
+            enterprise product engineering for organizations across the GCC —
+            from strategy to systems that compound growth.
           </p>
 
           <div className="flex flex-wrap gap-12 sm:gap-16 md:gap-24">
@@ -66,7 +66,7 @@ export default function Footer() {
         {/* Middle: social + CTA */}
         <div className="mt-14 flex flex-col gap-8 lg:mt-16 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
           <a
-            href="https://www.linkedin.com/company/theunicornglobal/?viewAsMember=true"
+            href="https://www.linkedin.com/company/theunicornglobal/"
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-3 text-sm text-white transition-colors hover:text-[#ff5f28]"

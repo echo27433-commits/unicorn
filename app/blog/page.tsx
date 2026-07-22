@@ -4,9 +4,9 @@ import PageMotionRoot from "../components/PageMotionRoot";
 import BlogPageClient from "./pageClient";
 
 export const metadata = {
-  title: "Blog · unicorn",
+  title: "Blogs",
   description:
-    "Insights on AI powered loyalty, conversational AI, computer vision, and digital transformation across the GCC.",
+    "Thought leadership on AI services, conversational AI, computer vision, loyalty, and digital transformation for enterprise teams across the GCC.",
 };
 
 export default function BlogPage() {

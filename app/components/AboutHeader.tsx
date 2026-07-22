@@ -13,7 +13,7 @@ const AboutHeader = forwardRef<HTMLElement>(function AboutHeader(_, ref) {
           <span className="text-gradient-future">enterprise growth.</span>
         </>
       }
-      description="Unicorn is a global AI and technology transformation company helping organizations create meaningful customer experiences, unlock operational intelligence, and accelerate digital growth."
+      description="unicorn is a global AI and technology transformation company helping enterprises deliver digital transformation, product engineering, and AI-led customer experiences across the GCC."
       primaryCta={{ href: "/contact", label: "Speak with our team" }}
       secondaryCta={{ href: "/services", label: "View Our Services" }}
     />

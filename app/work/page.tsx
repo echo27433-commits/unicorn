@@ -7,9 +7,9 @@ import WorkHeader from "../components/WorkHeader";
 import { workCases } from "../lib/work";
 
 export const metadata = {
-  title: "Work · unicorn",
+  title: "Use Cases",
   description:
-    "Customer success stories, how leading brands use Echo to transform engagement, loyalty, and measurable growth.",
+    "Enterprise case studies in AI services, loyalty, computer vision, and digital transformation — how leading brands use unicorn to drive measurable growth.",
 };
 
 export default function WorkPage() {

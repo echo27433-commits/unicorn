@@ -1,6 +1,23 @@
 import dynamic from "next/dynamic";
+import type { Metadata } from "next";
 
 import DeferredNewsletterCover from "./components/DeferredNewsletterCover";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE, SITE_URL } from "./lib/site";
+
+export const metadata: Metadata = {
+  title: {
+    absolute: `${SITE_NAME} · AI Services, Digital Transformation & Enterprise Technology`,
+  },
+  description: SITE_DESCRIPTION,
+  alternates: {
+    canonical: SITE_URL,
+  },
+  openGraph: {
+    title: `${SITE_NAME} · ${SITE_TAGLINE}`,
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+  },
+};
 
 const ScrollHeroCover = dynamic(() => import("./components/ScrollHeroCover"), {
   loading: () => (

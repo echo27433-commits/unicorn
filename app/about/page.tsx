@@ -3,9 +3,9 @@ import DeferredNewsletterCover from "../components/DeferredNewsletterCover";
 import AboutPageClient from "./pageClient";
 
 export const metadata = {
-  title: "About Us · unicorn",
+  title: "About Us",
   description:
-    "Unicorn is a global AI and technology transformation company helping organizations create meaningful customer experiences, unlock operational intelligence, and accelerate digital growth.",
+    "unicorn is a global AI and technology transformation company. We help enterprises across the GCC deliver digital transformation, product engineering, and AI-led customer experiences.",
 };
 
 export default function AboutPage() {

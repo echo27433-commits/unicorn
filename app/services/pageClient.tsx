@@ -32,8 +32,8 @@ export default function ServicesPageClient() {
             data-reveal-item
             className="max-w-lg text-left text-base leading-relaxed text-black/55 md:text-lg lg:text-xl"
           >
-            End to end capabilities that turn data into decisions and digital
-            presence into measurable growth.
+            End to end AI services and digital transformation capabilities that
+            turn data into decisions and digital presence into measurable growth.
           </p>
         </div>
 

@@ -99,24 +99,24 @@ export default function BrandsTrust() {
             data-brands-header
             className="inline-flex items-center rounded-lg border border-[#ff5f28]/40 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#ff5f28] md:text-xs"
           >
-            Brand that trust us
+            Brands that trust us
           </span>
 
           <h2
             data-brands-header
             className="mt-8 text-4xl font-light leading-[1.1] tracking-tight text-white md:mt-10 md:text-5xl lg:text-6xl xl:text-[3.75rem] xl:leading-[1.08]"
           >
-            Partnering with ambitious brands to{" "}
-            <span className="text-[#ff5f28]">build what&apos;s next.</span>
+            Trusted by enterprises shaping{" "}
+            <span className="text-[#ff5f28]">the next decade.</span>
           </h2>
 
           <p
             data-brands-header
             className="mt-6 max-w-xl text-sm leading-relaxed text-white/55 md:mt-7 md:text-base"
           >
-            From energy and retail to mobility and enterprise, we help
-            organizations ship digital products that deliver{" "}
-            <span className="whitespace-nowrap">measurable impact.</span>
+            From energy and retail to mobility and government, we engineer
+            AI-led systems and digital products for organizations that compete
+            on technology.
           </p>
 
           <Link

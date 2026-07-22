@@ -50,17 +50,17 @@ export default function Newsletter() {
 
           <div className="relative mx-auto flex max-w-3xl flex-col items-center text-center">
             <span className="inline-flex items-center rounded-lg border border-[#ff5f28]/40 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#ff5f28] md:text-xs">
-              Stay Updated
+              Next step
             </span>
 
             <h2 className="mt-8 text-4xl font-light leading-[1.1] tracking-tight text-black md:mt-10 md:text-5xl lg:text-6xl xl:text-[4.25rem] xl:leading-[1.06]">
-              Insights that help you{" "}
-              <span className="text-[#ff5f28]">build, scale &amp; lead.</span>
+              Ready to build with{" "}
+              <span className="text-[#ff5f28]">AI &amp; enterprise tech?</span>
             </h2>
 
             <p className="mt-6 max-w-2xl text-sm leading-relaxed text-black/55 md:mt-8 md:text-lg">
-              Get product updates, case studies, and digital growth ideas. No
-              noise, just signal.
+              Book a working session with our team on AI services, digital
+              transformation, or product engineering for your organization.
             </p>
 
             <CalendlyCta className="btn btn--primary group mt-12 inline-flex items-center gap-3 md:mt-14 md:text-lg">

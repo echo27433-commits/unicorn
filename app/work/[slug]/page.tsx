@@ -15,11 +15,11 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   const study = getWorkCaseBySlug(slug);
-  if (!study) return { title: "Work · unicorn" };
+  if (!study) return { title: "Use Cases" };
 
   return {
-    title: `${study.name} · Work · unicorn`,
-    description: `${study.headline}, ${study.summary}`,
+    title: `${study.name}`,
+    description: `${study.headline}. ${study.summary}`,
   };
 }
 

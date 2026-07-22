@@ -4,9 +4,9 @@ import ServicesHeader from "../components/ServicesHeader";
 import ServicesPageClient from "./pageClient";
 
 export const metadata = {
-  title: "Services · unicorn",
+  title: "Services",
   description:
-    "AI, data intelligence & digital growth services that turn strategy into measurable outcomes.",
+    "Enterprise AI services and digital growth capabilities — AI vision, analytics, predictive insights, acquisition, and content systems that turn strategy into measurable outcomes.",
 };
 
 export default function ServicesPage() {

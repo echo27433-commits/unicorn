@@ -13,7 +13,7 @@ const ServicesHeader = forwardRef<HTMLElement>(function ServicesHeader(_, ref) {
           <span className="text-gradient-future">drives growth.</span>
         </>
       }
-      description="AI, data intelligence & digital growth services that turn strategy into measurable outcomes."
+      description="AI services, data intelligence, and digital growth capabilities that turn strategy into measurable enterprise outcomes."
       primaryCta={{ href: "/contact", label: "Speak with our team" }}
       secondaryCta={{ href: "#services", label: "Explore Services" }}
     />

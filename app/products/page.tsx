@@ -3,9 +3,9 @@ import ProductsHeader from "../components/ProductsHeader";
 import ProductsPageClient from "./pageClient";
 
 export const metadata = {
-  title: "Products · unicorn",
+  title: "Products",
   description:
-    "Echo by Unicorn is an AI powered customer engagement platform. Loyalty, omnichannel messaging, and conversational AI in one ecosystem.",
+    "Echo by unicorn is an enterprise AI customer engagement platform — loyalty, omnichannel messaging, and conversational AI in one system for digital transformation at scale.",
 };
 
 export default function ProductsPage() {

@@ -15,10 +15,10 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
   const service = getServiceBySlug(slug);
-  if (!service) return { title: "Service · unicorn" };
+  if (!service) return { title: "Services" };
 
   return {
-    title: `${service.title} · unicorn`,
+    title: service.title,
     description: service.description,
   };
 }

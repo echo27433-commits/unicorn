@@ -29,7 +29,7 @@ const LocationMap = dynamic(() => import("../components/LocationMap"), {
 });
 
 const LINKEDIN_URL =
-  "https://www.linkedin.com/company/theunicornglobal/?viewAsMember=true";
+  "https://www.linkedin.com/company/theunicornglobal/";
 
 const fieldClass =
   "w-full border-0 border-b border-black/15 bg-transparent px-0 py-3 text-base text-black outline-none transition placeholder:text-black/35 focus:border-[#ff5f28] focus:ring-0";
