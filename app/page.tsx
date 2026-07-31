@@ -25,12 +25,6 @@ const ScrollHeroCover = dynamic(() => import("./components/ScrollHeroCover"), {
   ),
 });
 
-const ReviewsCover = dynamic(() => import("./components/ReviewsCover"), {
-  loading: () => (
-    <div className="min-h-[50vh] w-full bg-[#f7f7f7]" aria-hidden />
-  ),
-});
-
 const OurLocation = dynamic(() => import("./components/OurLocation"), {
   loading: () => <div className="min-h-[50vh] w-full bg-black" aria-hidden />,
 });
@@ -39,7 +33,6 @@ export default function Home() {
   return (
     <div className="bg-black">
       <ScrollHeroCover />
-      <ReviewsCover />
       <OurLocation />
       <DeferredNewsletterCover />
     </div>
