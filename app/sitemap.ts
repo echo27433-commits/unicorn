@@ -3,7 +3,6 @@ import type { MetadataRoute } from "next";
 import { getAllBlogSlugs } from "./lib/blog";
 import { getAllServiceSlugs } from "./lib/services";
 import { SITE_URL } from "./lib/site";
-import { getAllWorkSlugs } from "./lib/work";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -13,7 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about",
     "/products",
     "/services",
-    "/work",
     "/blog",
     "/contact",
   ].map((path) => ({
@@ -32,13 +30,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   );
 
-  const workRoutes: MetadataRoute.Sitemap = getAllWorkSlugs().map((slug) => ({
-    url: `${SITE_URL}/work/${slug}`,
-    lastModified: now,
-    changeFrequency: "monthly",
-    priority: 0.7,
-  }));
-
   const blogRoutes: MetadataRoute.Sitemap = getAllBlogSlugs().map((slug) => ({
     url: `${SITE_URL}/blog/${slug}`,
     lastModified: now,
@@ -46,5 +37,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...serviceRoutes, ...workRoutes, ...blogRoutes];
+  return [...staticRoutes, ...serviceRoutes, ...blogRoutes];
 }

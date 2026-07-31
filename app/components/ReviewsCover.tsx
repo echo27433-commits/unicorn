@@ -10,8 +10,7 @@ import Reviews from "./Reviews";
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * White Reviews panel slides over the black Use Cases (Case Study) section.
- * Overlay polish (radius / shadow / scale) is desktop-only — white-on-black only.
+ * White Reviews panel with desktop overlay polish (radius / shadow).
  */
 export default function ReviewsCover() {
   const caseInnerRef = useRef<HTMLElement | null>(null);
