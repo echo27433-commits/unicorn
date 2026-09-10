@@ -509,9 +509,23 @@ body {
   }
 }
 
-.leaflet-container {
+.location-map.leaflet-container {
   font-family: var(--font-ubuntu), "Ubuntu", Arial, Helvetica, sans-serif;
   background: #0a0a0a;
+}
+
+/* Black and grey basemap with enough midtone detail to read roads and labels. */
+.leaflet-container .leaflet-tile-pane {
+  filter: grayscale(1) invert(1) contrast(0.9) brightness(0.75);
+}
+
+.leaflet-container .leaflet-control-attribution {
+  background: rgba(10, 10, 10, 0.9);
+  color: #a3a3a3;
+}
+
+.leaflet-container .leaflet-control-attribution a {
+  color: #d4d4d4;
 }
 
 .map-popup .leaflet-popup-content-wrapper {

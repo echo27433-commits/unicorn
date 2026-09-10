@@ -116,9 +116,16 @@ export default function ScrollHeroCover() {
       }
     });
 
-    const cancelRefresh = scheduleScrollRefresh(250);
+    let cancelRefresh = scheduleScrollRefresh(250);
+    // Lazy product content can grow after the footer's pin positions are measured.
+    const resizeObserver = new ResizeObserver(() => {
+      cancelRefresh();
+      cancelRefresh = scheduleScrollRefresh(250);
+    });
+    resizeObserver.observe(cover);
 
     return () => {
+      resizeObserver.disconnect();
       cancelRefresh();
       hero.removeAttribute("data-waves-paused");
       ctx.revert();
