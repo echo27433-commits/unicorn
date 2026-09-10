@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 
 import DeferredNewsletterCover from "./components/DeferredNewsletterCover";
+import OurLocation from "./components/OurLocation";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TAGLINE, SITE_URL } from "./lib/site";
 
 export const metadata: Metadata = {
@@ -23,10 +24,6 @@ const ScrollHeroCover = dynamic(() => import("./components/ScrollHeroCover"), {
   loading: () => (
     <div className="min-h-[100svh] w-full bg-black" aria-hidden />
   ),
-});
-
-const OurLocation = dynamic(() => import("./components/OurLocation"), {
-  loading: () => <div className="min-h-[50vh] w-full bg-black" aria-hidden />,
 });
 
 export default function Home() {
