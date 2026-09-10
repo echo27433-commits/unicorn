@@ -37,7 +37,7 @@ function MapController({
   useEffect(() => {
     if (mode === "overview") {
       const bounds = L.latLngBounds(locations.map((l) => [l.lat, l.lng]));
-      map.fitBounds(bounds, { padding: [48, 48], maxZoom: 3, animate: true });
+      map.fitBounds(bounds, { padding: [48, 48], maxZoom: 3, animate: false });
       return;
     }
 
@@ -48,6 +48,10 @@ function MapController({
       duration: 1.6,
       easeLinearity: 0.25,
     });
+
+    return () => {
+      map.stop();
+    };
   }, [activeIndex, mode, overviewKey, map]);
 
   return null;
