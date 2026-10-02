@@ -48,6 +48,7 @@ export default function ContactPageClient() {
   const reducedMotion = useReducedMotion();
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [mode, setMode] = useState<"overview" | "focused">("overview");
   const [overviewKey, setOverviewKey] = useState(0);
@@ -72,14 +73,31 @@ export default function ContactPageClient() {
     };
   }, [reducedMotion]);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const form = event.currentTarget;
     setSubmitting(true);
+    setSubmitError(null);
 
-    window.setTimeout(() => {
-      setSubmitting(false);
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.error || "Could not send your message.");
+      }
+      form.reset();
       setSubmitted(true);
-    }, 600);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : "Could not send your message.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleSelectLocation = (index: number) => {
@@ -135,10 +153,10 @@ export default function ContactPageClient() {
                       Contact Center
                     </h3>
                     <a
-                      href="tel:+971585686912"
+                      href="tel:+971585785102"
                       className="mt-3 block text-sm leading-relaxed text-black/55 transition-colors hover:text-[#ff5f28] md:text-base"
                     >
-                      +97 158 5686912
+                      +971 58 578 5102
                     </a>
                   </div>
 
@@ -262,6 +280,12 @@ export default function ContactPageClient() {
                         className={`${fieldClass} min-h-[5.5rem] resize-y`}
                       />
                     </label>
+
+                    {submitError ? (
+                      <p role="alert" className="text-sm text-red-600">
+                        {submitError}
+                      </p>
+                    ) : null}
 
                     <div className="pt-2">
                       <button
